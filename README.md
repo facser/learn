@@ -1,13 +1,14 @@
 <!--
- * @FilePath: /Desktop/learn_linux/README.md
+ * @FilePath: \Learning\README.md
  * @Author: facser
  * @Date: 2022-07-08 14:22:23
- * @LastEditTime: 2022-07-08 16:07:08
+ * @LastEditTime: 2022-07-13 15:27:33
  * @LastEditors: facser
  * @Description: 
 -->
 # learn linux
 
-- git
+- g
 - linux
-
+- python
+- hexo

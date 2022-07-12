@@ -1,18 +1,30 @@
 <!--
- * @FilePath: /Desktop/learn_linux/git.md
+ * @FilePath: \Learning\git.md
  * @Author: facser
  * @Date: 2022-07-08 10:17:53
- * @LastEditTime: 2022-07-08 17:07:15
+ * @LastEditTime: 2022-07-13 15:59:34
  * @LastEditors: facser
  * @Description: 
 -->
-# git
+# Git
 
-详细的命令解释查询
+结合以下网站阅读分析, 体验更佳
+[Git 官方文档](https://git-scm.com/book/zh/v2)
 [linux 命令大全](https://www.linuxcool.com/)
 [linux 搜索引擎](https://linux.utils.fun/)
 
-## git 安装
+## Git 介绍
+
+> Git is a free and open source distributed version control system designed to
+> handle everything from small to very large projects with speed and efficiency
+
+Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记录员, 时光机.
+
+- 搬运工: 可以把代码运输到指定位置保存
+- 记录员: 记录代码和文件的改动
+- 时光机: 回退代码到某一个记录过的状态
+
+## Git 安装
 
 ### 检查 git 是否安装
 
@@ -21,7 +33,7 @@
  > git version 1.8.3.1
 ```
 
-### 安装
+### 安装 [git 官网](https://git-scm.com/)
 
 - Centos Redhat 系统使用 yum 安装 git
 
@@ -32,12 +44,24 @@
 - Ubuntu Debian 系统使用 apt
 
 ```bash
- $ apt-get install git
+ $ sudo apt-get install git
 ```
 
-## git 配置
+## Git 配置
 
-### 检查 system global local 配置
+### Git 配置分类
+
+一个系统可以有多个用户, 每个用户可以创建多个代码仓库
+由此 git 配置根据范围可以分为 system, global, local 3种
+相同的设置项, 优先使用范围小的配置 local > global > system
+
+|leve|file|introduce|
+|:--:|:--:|:--|
+|system|/etc/gitconfig|系统上每一个用户及他们仓库的通用配置(不常用)|
+|global|~/.gitconfig|当前系统用户, 这会对你系统上所有的仓库生效|
+|local|.git/config|针对仓库, 在仓库内默认使用 local 配置|
+
+### 检查 Git 配置
 
 查看所有配置及其所在的文件, 早期版本不支持此命令
 
@@ -45,7 +69,7 @@
  $ git config --list --show-origin
 ```
 
-查看各级别 git 配置信息
+查看各级别 git 配置信息(system global local)
 
 ```bash
  $ git config --system --list      # 查看系统的 git 配置
@@ -54,16 +78,10 @@
  $ git config --list               # 列出上述所有配置, 可能出现重复项
 ```
 
-- system: /etc/gitconfig 文件, 包含系统上每一个用户及他们仓库的通用配置, 如果在执行 git config 时带上 --system 选项，那么它就会读写该文件中的配置变量.
-- global: ~/.gitconfig 或 ~/.config/git/config 文件, 只针对当前用户, 你可以传递 --global 选项让 Git 读写此文件，这会对你系统上 所有 的仓库生效.
-- local: 当前使用仓库的 Git 目录中的 config 文件（即 .git/config）, 针对该仓库, 你可以传递 --local 选项让 Git 强制读写此文件, 虽然默认情况下用的就是它
-
-相同的配置, 优先使用范围小的配置 local > global > system
-
 ### 选择查看配置
 
 ```bash
-$ git condig <key>      
+ $ git condig <key>      
 
  $ git config user.name
  > facser
@@ -74,7 +92,7 @@ $ git condig <key>
 为当前系统用户添加用户信息
 
 ```bash
- $ git config --global user.name "<user.name>"
+ $ git config --global user.name "<user.name>"    
  $ git config --global user.email "<mail>"
 ```
 
@@ -85,7 +103,7 @@ $ git condig <key>
  $ git config --local user.email "<mail>"
 ```
 
-### 修改 git 常用配置
+### 修改 Git 常用配置
 
 - 编辑器
 
@@ -99,7 +117,14 @@ $ git condig <key>
  $ git config --global commit.template  <file>
 ```
 
-## git 仓库
+## Git 仓库
+
+### Git 仓库介绍
+
+|区域|位置|介绍|
+|:--:|:--:|:--:|
+|本地仓库|本地| 记录文件当前状态生成一个版本并保存至本地仓库|
+|远程仓库|代码托管网站| 将当前记录的版本上传到远程仓库|
 
 ### 本地创建仓库
 
@@ -107,11 +132,97 @@ $ git condig <key>
  $ git init
 ```
 
-该命令将在当前目录创建一个名为 .git 的子目录，这个子目录含有你初始化的 Git 仓库中所有的必须文件。 该命令是一个初始化的操作，还未对文件追踪。
+该命令将在当前目录创建一个名为 .git 的子目录, 这个子目录含有你初始化的 Git 仓库中所有的必须文件.
+该命令是一个初始化的操作, 还未对文件追踪.
+
+### [git status](https://git-scm.com/docs/git-status)
+
+> git-status - Show the working tree status
+
+工作区 -- git add --> 暂存区 -- git commit --> 本地仓库
+
+|区域|命令|介绍|
+|:--:|:--:|:--:|
+|工作区|git add 前|未追踪的文件, 未追踪的修改都处于工作区|
+|暂存区|git add 后 git commit 前|当前所有状态已保存, 可以准备生成新版本|
+|本地仓库|git commit 后|已生成一个版本保存到本地仓库|
+
+注: 工作区和暂存区表示的是文件的状态, 当一个文件当前状态没有被记录或者与之前状态不同, 那么它就在
+工作区, 使用 git add 记录一下之后, 它就移动到暂存区, 此时修改它, 它又会回到工作区.
+
+```bash
+ $ git status
+ >Your branch is up to date with 'origin/main'.
+ >
+ >Changes to be committed:                # 表示暂存区, 已经记录两个文件
+ >        modified:   README.md
+ >        modified:   git.md
+ >
+ >Changes not staged for commit:          # 表示工作区, 存在未记录的修改
+ >        modified:   git.md
+```
+
+仅暂存区有 `README.md` 表示该文件已被记录, 且没有被修改
+两处都有 `git.md` 表示该文件被记录过, 最新的修改没有被记录
+
+```bash
+ $ git status -s           # -s --short 显示简略信息
+ > M  README               # 表示该文件已 add 和 commit
+ > MM Rakefile             # 已 commit 的文件 最新的修改未 add
+ > A  lib/git.rb           # 从未 commit 但已 add 
+ > AM lib/git.md           # 从未 commit 但 add 过, 最新修改未 add 
+ > ?? LICENSE.txt          # 未 add 未追踪的文件
+```
+
+|缩写|介绍|
+|:--|:--:|:--:|
+|??|新增文件, 从未被追踪|
+|A |在暂存区, 未进入本地仓库|
+|M |在暂存区, 进入过本地仓库|
+|AM|在工作区, 未进入过本地仓库|
+|MM|在工作区, 进入过仓库|
+
+右边有字母表示在工作区, 最新修改未 add
+左边有字母表示已 add 过, M 表示 commit 过, A 表示未 commit 过
+
+### [git add](https://git-scm.com/docs/git-add)
+
+> git-add - Add file contents to the index
+
+追踪文件或修改, add 之后文件会进入暂存区
+
+```bash
+ $ git add <file>     # 记录指定文件修改
+ $ git add .          # 记录当前目录下所有文件修改(上层文件未记录)
+ $ git add --all      # 记录当前项目所有文件修改(推荐)
+```
+
+### [git diff](https://git-scm.com/docs/git-diff)
+
+> git-diff - Show changes between commits, commit and working tree, etc
+
+比对工作区文件和暂存区文件, 只比对保留过状态的文件, 若文件无变化则不显示,
+文件变化则显示记录的状态和当前状态.对应 status 即 AM 或 MM 文件
+
+```bash
+ $ git diff
+ > diff --git a/test.log b/test.log             # 比对 test.log 文件两个状态
+ > index 61e2b58..9b6b46c 100644
+ > --- a/test.log                               # - 开头是修改前内容
+ > +++ b/test.log                               # + 开头是修改后内容
+ > @@ -1 +1,2 @@
+ > -git add once                                # 修改前是 git add once
+ > \ No newline at end of file
+ > +git add once
+ > +before second add run git diff              # 修改后加了一句 before second add run git diff
+ > \ No newline at end of file
+
+```
+
 
 ### github 创建仓库克
 
-在 github 创建仓库后，将仓库克隆到本地
+在 github 创建仓库后, 将仓库克隆到本地
 
 ```bash
  $ git clone <Repository url>
@@ -135,36 +246,11 @@ github 上必须先创建一个仓库, 才可以将本地代码上传到 github
 
 ## 本地仓库操作
 
-工作区 -- git add --> 暂存区 -- git commit --> 本地仓库
-
-### git add
-
-将工作区的修改保存至暂存区, 追踪修改内容
-
-```bash
- $ git add <file>     # 记录指定文件修改
- $ git add .          # 记录当前目录下所有文件修改(上层文件未记录)
- $ git add --all      # 记录当前项目所有文件修改(推荐)
-```
 
 ### git diff
 
 
-### git status
 
-查看当前状态
-
-```bash
- $ git status -s           # -s --short 显示简略信息
- > M  README               # 表示该文件已 add 和 commit
- > MM Rakefile             # 已 commit 的文件 最新的修改未 add
- > A  lib/git.rb           # 从未 commit 但已 add 
- > AM lib/git.md           # 从未 commit 但 add 过, 最新修改未 add 
- > ?? LICENSE.txt          # 未 add 未追踪的文件
-```
-
-左边有字母表示已 add, 进入暂存区, M 表示 commit 过, A 表示未 commit 过
-右边有字母表示最新的修改未 add 进入暂存区
 
 ### .gitignore
 
