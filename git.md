@@ -1,8 +1,8 @@
 <!--
- * @FilePath: /Desktop/learn_linux/git.md
+ * @FilePath: \learn\git.md
  * @Author: facser
  * @Date: 2022-07-08 10:17:53
- * @LastEditTime: 2022-07-08 17:07:15
+ * @LastEditTime: 2022-07-12 12:16:42
  * @LastEditors: facser
  * @Description: 
 -->
@@ -63,7 +63,7 @@
 ### 选择查看配置
 
 ```bash
-$ git condig <key>      
+ $ git condig <key>      
 
  $ git config user.name
  > facser
@@ -74,7 +74,7 @@ $ git condig <key>
 为当前系统用户添加用户信息
 
 ```bash
- $ git config --global user.name "<user.name>"
+ $ git config --global user.name "<user.name>"    
  $ git config --global user.email "<mail>"
 ```
 
