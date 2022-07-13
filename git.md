@@ -2,7 +2,7 @@
  * @FilePath: \文档\Learning\git.md
  * @Author: facser
  * @Date: 2022-07-08 10:17:53
- * @LastEditTime: 2022-07-13 20:12:23
+ * @LastEditTime: 2022-07-13 20:29:03
  * @LastEditors: facser
  * @Description: 
 -->
@@ -267,16 +267,20 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 
 ### 远程仓库
 
-远程仓库是在继本地仓库管控后, 将本地
-在 github 创建仓库后, 将仓库克隆到本地
+远程仓库是在继本地仓库管控后代码的再备份和再管控, 远程仓库便于多人协同开发
+
+创建远程仓库需要登录代码托管平台创建仓库, 然后将仓库克隆岛本地, 或者将本地仓库
+关联到远端仓库
+
+#### 克隆远端仓库到本地
 
 ```bash
- $ git clone <Repository url>
+ $ git clone <Repository url>    # 克隆远端仓库到本地
+
+ $ git remote -v                 # 查看本地仓库关联的所有远端仓库
 ```
 
-### 本地仓库关联 github 仓库
-
-github 上必须先创建一个仓库, 才可以将本地代码上传到 github
+#### 本地仓库关联远端仓库
 
 ```bash
  $ git init                                    # 初始化本地仓库
@@ -288,7 +292,7 @@ github 上必须先创建一个仓库, 才可以将本地代码上传到 github
 
 - 本地仓库可以关联多个远程仓库
 - 本地仓库可以指定提交到某个远程仓库
-- 第一远程仓库默认命名为 origin
+- 远程仓库默认命名为 origin
 
 ### .gitignore
 
