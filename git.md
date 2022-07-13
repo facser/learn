@@ -2,7 +2,7 @@
  * @FilePath: \Learning\git.md
  * @Author: facser
  * @Date: 2022-07-08 10:17:53
- * @LastEditTime: 2022-07-13 15:59:34
+ * @LastEditTime: 2022-07-13 17:13:19
  * @LastEditors: facser
  * @Description: 
 -->
@@ -104,6 +104,12 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 ```
 
 ### 修改 Git 常用配置
+
+- 环境
+
+```bash
+ $ git config -e
+```
 
 - 编辑器
 
@@ -210,15 +216,30 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
  > index 61e2b58..9b6b46c 100644
  > --- a/test.log                               # - 开头是修改前内容
  > +++ b/test.log                               # + 开头是修改后内容
- > @@ -1 +1,2 @@
+ > @@ -1 +1,1 @@
  > -git add once                                # 修改前是 git add once
  > \ No newline at end of file
- > +git add once
- > +before second add run git diff              # 修改后加了一句 before second add run git diff
+ > +before second add run git diff              # 修改后变成 before second add run git diff
  > \ No newline at end of file
 
 ```
 
+### [git commit](https://git-scm.com/docs/git-commit)
+
+> git-commit - Record changes to the repository
+
+根据暂存区所有记录的文件生成一个版本并放入本地仓库
+每 commit 一次便生成了一个可以回溯的点, 以便于版本回退
+
+```bash
+ $ git commit -m "<commit message>"        # commit 较少可直接填写
+ $ git commit -s                           # commit 较长, 使用默认编辑器编辑 commit
+ $ git commit --amend                      # 在上次 commit 基础上修改, 并替换原来的 commit
+ $ git commit --amend --no-edit            # 使用上次 commit 且不修改, 即本次 commit 和上次合并
+
+```
+
+注: git config --global core.editor vim 修改编辑器为 vim
 
 ### github 创建仓库克
 
@@ -245,11 +266,6 @@ github 上必须先创建一个仓库, 才可以将本地代码上传到 github
 - 第一远程仓库默认命名为 origin
 
 ## 本地仓库操作
-
-
-### git diff
-
-
 
 
 ### .gitignore
