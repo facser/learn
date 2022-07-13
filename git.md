@@ -2,7 +2,7 @@
  * @FilePath: \文档\Learning\git.md
  * @Author: facser
  * @Date: 2022-07-08 10:17:53
- * @LastEditTime: 2022-07-13 20:29:03
+ * @LastEditTime: 2022-07-13 20:42:21
  * @LastEditors: facser
  * @Description: 
 -->
@@ -294,7 +294,16 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 - 本地仓库可以指定提交到某个远程仓库
 - 远程仓库默认命名为 origin
 
-### .gitignore
+## 常用流程
+
+```bash
+ $ git clone <repo url>               # 克隆远端仓库到本地
+ $ git add --all                      # 修改完后, 记录所有修改
+ $ git commit -m "<commit message>"   # 推送到本地仓库
+ $ git push -u origin master          # 将本地版本提交到远端仓库
+```
+
+## .gitignore
 
 忽略指定文件, 不对其追踪和提交, 文件名固定为 .gitignore, 同项目可创建多个
 
