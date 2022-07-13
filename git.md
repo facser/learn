@@ -2,7 +2,7 @@
  * @FilePath: \文档\Learning\git.md
  * @Author: facser
  * @Date: 2022-07-08 10:17:53
- * @LastEditTime: 2022-07-13 23:01:13
+ * @LastEditTime: 2022-07-13 23:09:59
  * @LastEditors: facser
  * @Description: 
 -->
@@ -26,14 +26,13 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 
 ## Git 安装
 
-### 检查 git 是否安装
+### [Git 官网](https://git-scm.com/)
+
 
 ```bash
- $ git --version 
+ $ git --version             # 检查 git 是否安装
  > git version 1.8.3.1
 ```
-
-### [Git 官网](https://git-scm.com/)
 
 ```bash
  $ yum install git           # Centos Redhat 系统使用 yum 安装
