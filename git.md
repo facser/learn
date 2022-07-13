@@ -2,7 +2,7 @@
  * @FilePath: \文档\Learning\git.md
  * @Author: facser
  * @Date: 2022-07-08 10:17:53
- * @LastEditTime: 2022-07-13 21:57:14
+ * @LastEditTime: 2022-07-13 23:01:13
  * @LastEditors: facser
  * @Description: 
 -->
@@ -33,18 +33,11 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
  > git version 1.8.3.1
 ```
 
-### [git 官网](https://git-scm.com/)
-
-- Centos Redhat 系统使用 yum 安装 git
+### [Git 官网](https://git-scm.com/)
 
 ```bash
- $ yum install git
-```
-
-- Ubuntu Debian 系统使用 apt
-
-```bash
- $ sudo apt-get install git
+ $ yum install git           # Centos Redhat 系统使用 yum 安装
+ $ sudo apt-get install git  # Ubuntu Debian 系统使用 apt
 ```
 
 ## Git 配置
@@ -52,31 +45,27 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 ### Git 配置分类
 
 一个系统可以有多个用户, 每个用户可以创建多个代码仓库
-由此 git 配置根据范围可以分为 system, global, local 3种
-相同的设置项, 优先使用范围小的配置 local > global > system
+由此 git 配置根据范围可以分为 `system`, `global`, `local` 3种
+相同的设置项, 优先使用范围小的配置 `local` > `global` > `system`
 
 |leve|file|introduce|
 |:--:|:--:|:--|
-|system|/etc/gitconfig|系统上每一个用户及他们仓库的通用配置(不常用)|
-|global|~/.gitconfig|当前系统用户, 这会对你系统上所有的仓库生效|
-|local|.git/config|针对仓库, 在仓库内默认使用 local 配置|
+|system|`/etc/gitconfig`|系统上每一个用户及他们仓库的通用配置(不常用)|
+|global|`~/.gitconfig`|当前系统用户, 这会对你系统上所有的仓库生效|
+|local|`.git/config`|针对仓库, 在仓库内默认使用 local 配置|
 
 ### [git config](https://git-scm.com/docs/git-config)
 
 > git-config - Get and set repository or global options
 
-查看或者修改 git 的全局配置
-
 ```bash
- $ git config --list --show-origin  # 查看所有配置及其所在的文件, 早期版本不支持此命令
+ $ git config --list --show-origin  # 查看所有配置及所在的文件, 早期版本不支持
 ```
-
-查看各级别 git 配置信息(system global local)
 
 ```bash
  $ git config --system --list      # 查看系统的 git 配置
  $ git config --global --list      # 查看系统用户的 git 配置
- $ git config --local --list       # 查看当前库 的 git 配置
+ $ git config --local --list       # 查看当前库的 git 配置
  $ git config --list               # 列出上述所有配置, 可能出现重复项
 ```
 
@@ -99,42 +88,41 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 
 ```bash
  $ git config -e                                 # 编辑配置文件
- $ git config --global core.editor vim           # 编辑器
- $ git config --global commit.template <file>    # commit 模板
+ $ git config --global core.editor vim           # 设施编辑器
+ $ git config --global commit.template <file>    # 设置 commit 模板
 ```
 
 ## Git 仓库
 
-### Git 仓库介绍
+### 介绍
 
 |区域|位置|介绍|
 |:--:|:--:|:--:|
 |本地仓库|本地| 记录文件当前状态生成一个版本并保存至本地仓库|
 |远程仓库|代码托管网站| 将当前记录的版本上传到远程仓库|
 
-### 本地创建仓库
+### 本地仓库
+
+创建本地仓库
 
 ```bash
- $ git init
+ $ git init   # 在当前目录创建.git 子目录(包含仓库所有 git 文件与版本数据)
 ```
-
-该命令将在当前目录创建一个名为 .git 的子目录, 这个子目录含有你初始化的 Git 仓库中所有的必须文件.
-该命令是一个初始化的操作, 还未对文件追踪.
 
 ### [git status](https://git-scm.com/docs/git-status)
 
 > git-status - Show the working tree status
 
-工作区 -- git add --> 暂存区 -- git commit --> 本地仓库
+工作区 -- `git add` --> 暂存区 -- `git commit` --> 本地仓库
 
 |区域|命令|介绍|
 |:--:|:--:|:--:|
-|工作区|git add 前|未追踪的文件, 未追踪的修改都处于工作区|
-|暂存区|git add 后 git commit 前|当前所有状态已保存, 可以准备生成新版本|
-|本地仓库|git commit 后|已生成一个版本保存到本地仓库|
+|工作区|add 前|未追踪的文件, 未追踪的修改都处于工作区|
+|暂存区|add 后 commit 前|当前所有状态已保存, 可以准备生成新版本|
+|本地仓库|commit 后|已生成一个版本保存到本地仓库|
 
 注: 工作区和暂存区表示的是文件的状态, 当一个文件当前状态没有被记录或者与之前状态不同, 那么它就在
-工作区, 使用 git add 记录一下之后, 它就移动到暂存区, 此时修改它, 它又会回到工作区.
+工作区, 使用 `git add` 记录一下之后, 它就移动到暂存区, 此时修改它, 它又会回到工作区.
 
 ```bash
  $ git status
@@ -144,34 +132,36 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
  >        modified:   README.md           
  >        modified:   git.md
  >
- >Changes not staged for commit:          # 表示工作区, 存在未记录的修改
+ >Changes not staged for commit:          # 表示工作区, 存在未被记录的修改
  >        modified:   git.md
 ```
 
-仅暂存区有 `README.md` 表示该文件已被记录, 且没有被修改
-两处都有 `git.md` 表示该文件被记录过, 最新的修改没有被记录
+暂存区有 `README.md`, 工作区没有, 表示该文件已被记录且之后未修改
+暂存区、工作区都有 `git.md` 表示该文件被记录过, 但最新的修改没有被记录
 
 ```bash
  $ git status -s           # -s --short 显示简略信息
- > M  README               # 表示该文件已 add 和 commit
- > MM Rakefile             # 已 commit 的文件 最新的修改未 add
- > MD temp.txt             # commit 过, 当前已删除, 未记录删除 
- > A  lib/git.rb           # 从未 commit 但已 add 
+ > M  README               # 表示该文件已 add 和 commit, 未再修改
+ > A  lib/git.rb           # 从未 commit 但已 add, 未再修改
+ > MM Rakefile             # 已 commit 的文件, 最新的修改未 add
+ > MD temp.txt             # commit 过, 当前已删除, 未 add 记录删除 
  > AM lib/git.md           # 从未 commit 但 add 过, 最新修改未 add
  > ?? LICENSE.txt          # 未 add 未追踪的文件
 ```
 
-|缩写|位置|
-|:--|:--|
-|??|新增文件, 从未被追踪|
-|A |仅在暂存区, 未进入本地仓库|
-|M |仅在暂存区, 进入过本地仓库|
-|AM|在工作区暂存区均有, 未进入过本地仓库|
-|MM|在工作区暂存区均有, 进入过仓库|
-|MD|仅在暂存区, 进入过仓库|
+|缩写|位置|详细|
+|:--|:--|:--:|
+|??|工作区|新增文件, 从未被追踪|
+|AM|工作区、暂存区| 未进入过本地仓库|
+|MM|工作区、暂存区| 进入过仓库|
+|MD|暂存区| 进入过仓库|
+|A |暂存区| 未进入本地仓库|
+|M |暂存区| 进入过本地仓库|
 
-右边有字母表示在工作区, 最新修改未 add
-左边有字母表示已 add 过, M 表示 commit 过, A 表示未 commit 过
+右边有字母表示最新修改未 add 进行记录, 在工作区显示(删除文件不显示)
+左边有字母表示已 add 过修改, 在缓存区显示
+左M 表示 commit 过
+左A 表示未 commit 过
 
 ### [git add](https://git-scm.com/docs/git-add)
 
@@ -189,8 +179,8 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 
 > git-diff - Show changes between commits, commit and working tree, etc
 
-比对工作区文件和暂存区文件, 即文件当前状态与上次 add 时进行比对, 即 status 中
-状态为 AM MM 状态的文件才会比对, 未 add 过或无修改的文件不显示
+比对工作区文件和暂存区文件, 即未被记录的内容和被记录的内容比对, 即状态为
+`AM` `MM` 状态的文件才会比对, 未被记录过或无修改的文件不显示
 
 ```bash
  $ git diff
@@ -213,15 +203,15 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 每 commit 一次便生成了一个可以回溯的点, 以便于版本回退
 
 ```bash
- $ git commit -m "<commit message>"    # commit 较少可直接填写
- $ git commit -s                       # commit 较长, 使用默认编辑器编辑 commit
+ $ git commit -m "<commit message>"    # message 较短可直接填写
+ $ git commit -s                       # message 较长, 使用默认编辑器编辑 commit
  $ git commit --amend                  # 在上次 commit 基础上修改, 并替换原来的 commit
  $ git commit --amend --no-edit        # 使用上次 commit 且不修改, 即本次 commit 和上次合并
 
  $ git checkout -- <file>              # 撤销工作区的修改, 回到上次 commit 状态
 ```
 
-注: git config --global core.editor vim 修改编辑器为 vim
+注: 可通过 `git config --global core.editor vim` 修改编辑器为 `vim`
 
 ### [git log](https://git-scm.com/docs/git-log)
 
@@ -238,7 +228,7 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 
 > git-reset - Reset current HEAD to the specified state
 
-通过 git log 定位回退的版本, 使用 git reset 执行回退
+通过 `git log` 定位回退的版本, 使用 `git reset` 执行回退
 
 ```bash
  $ git reset --hard HEAD^                 # 回退到上个版本
@@ -247,12 +237,12 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 
 ### 远程仓库
 
-远程仓库是在继本地仓库管控后代码的再备份和再管控, 远程仓库便于多人协同开发
+创建远程仓库需要登录代码托管平台创建仓库, 然后将仓库克隆到本地, 或者将本地仓库
+与远端仓库关联
 
-创建远程仓库需要登录代码托管平台创建仓库, 然后将仓库克隆岛本地, 或者将本地仓库
-关联到远端仓库
-
-#### 克隆远端仓库到本地
+- 本地仓库可以关联多个远程仓库
+- 本地仓库可以提交代码到任意一个已关联的远程仓库
+- 使用克隆后, 改远程仓库默认被命名为 origin
 
 ```bash
  $ git clone <Repository url>    # 克隆远端仓库到本地
@@ -260,18 +250,12 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
  $ git remote -v                 # 查看本地仓库关联的所有远端仓库
 ```
 
-#### 本地仓库关联远端仓库
-
 ```bash
  $ git init                                  # 初始化本地仓库
  $ git add --all                             # 追踪目录下所有文件修改
  $ git commit -m "<commit message>"          # 记录修改生成一个版本到本地仓库
  $ git remote origin add <Repository url>    # 将远程仓库命名为 origin 并关联本地仓库
 ```
-
-- 本地仓库可以关联多个远程仓库
-- 本地仓库可以指定提交到某个远程仓库
-- 远程仓库默认命名为 origin
 
 ### [git push](https://git-scm.com/docs/git-push)
 
@@ -347,8 +331,8 @@ git 中通过分支来完成上述操作
 
 |密钥|位置|
 |:--:|:--:|
-|id_rsa (私钥)|/root/.ssh/id_rsa|
-|id_rsa.pub (公钥)|/root/.ssh/id_rsa.pub|
+|id_rsa (私钥)|`/root/.ssh/id_rsa`|
+|id_rsa.pub (公钥)|`/root/.ssh/id_rsa.pub`|
 
 ```bash
  $ ssh-keygen                             # 自动生成密钥
