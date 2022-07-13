@@ -2,7 +2,7 @@
  * @FilePath: \文档\Learning\git.md
  * @Author: facser
  * @Date: 2022-07-08 10:17:53
- * @LastEditTime: 2022-07-13 20:42:21
+ * @LastEditTime: 2022-07-13 21:57:14
  * @LastEditors: facser
  * @Description: 
 -->
@@ -33,7 +33,7 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
  > git version 1.8.3.1
 ```
 
-### 安装 [git 官网](https://git-scm.com/)
+### [git 官网](https://git-scm.com/)
 
 - Centos Redhat 系统使用 yum 安装 git
 
@@ -61,12 +61,14 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 |global|~/.gitconfig|当前系统用户, 这会对你系统上所有的仓库生效|
 |local|.git/config|针对仓库, 在仓库内默认使用 local 配置|
 
-### 检查 Git 配置
+### [git config](https://git-scm.com/docs/git-config)
 
-查看所有配置及其所在的文件, 早期版本不支持此命令
+> git-config - Get and set repository or global options
+
+查看或者修改 git 的全局配置
 
 ```bash
- $ git config --list --show-origin
+ $ git config --list --show-origin  # 查看所有配置及其所在的文件, 早期版本不支持此命令
 ```
 
 查看各级别 git 配置信息(system global local)
@@ -78,49 +80,27 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
  $ git config --list               # 列出上述所有配置, 可能出现重复项
 ```
 
-### 选择查看配置
-
 ```bash
- $ git condig <key>      
+ $ git config <key>                # 查看某项配置的值 
 
- $ git config user.name
+ $ git config user.name            # 查看当前用户名
  > facser
 ```
 
-### 添加用户信息
-
-为当前系统用户添加用户信息
-
 ```bash
- $ git config --global user.name "<user.name>"    
- $ git config --global user.email "<mail>"
+ $ git config --global user.name "<user.name>"   # 设置系统用户的用户名
+ $ git config --global user.email "<mail>"       # 设置系统用户邮箱
 ```
 
-为当前库添加用户信息, 库的配置会覆盖系统配置中相同的部分
-
 ```bash
- $ git config --local user.name "<user.name>"
- $ git config --local user.email "<mail>"
+ $ git config --local user.name "<user.name>"    # 设置仓库用户名
+ $ git config --local user.email "<mail>"        # 设置仓库用户邮箱
 ```
 
-### 修改 Git 常用配置
-
-- 环境
-
 ```bash
- $ git config -e
-```
-
-- 编辑器
-
-```bash
- $ git config --global core.editor vim 
-```
-
-- commit 模板
-
-```bash
- $ git config --global commit.template  <file>
+ $ git config -e                                 # 编辑配置文件
+ $ git config --global core.editor vim           # 编辑器
+ $ git config --global commit.template <file>    # commit 模板
 ```
 
 ## Git 仓库
@@ -161,7 +141,7 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
  >Your branch is up to date with 'origin/main'.
  >
  >Changes to be committed:                # 表示暂存区, 已经记录两个文件
- >        modified:   README.md
+ >        modified:   README.md           
  >        modified:   git.md
  >
  >Changes not staged for commit:          # 表示工作区, 存在未记录的修改
@@ -175,18 +155,20 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
  $ git status -s           # -s --short 显示简略信息
  > M  README               # 表示该文件已 add 和 commit
  > MM Rakefile             # 已 commit 的文件 最新的修改未 add
+ > MD temp.txt             # commit 过, 当前已删除, 未记录删除 
  > A  lib/git.rb           # 从未 commit 但已 add 
- > AM lib/git.md           # 从未 commit 但 add 过, 最新修改未 add 
+ > AM lib/git.md           # 从未 commit 但 add 过, 最新修改未 add
  > ?? LICENSE.txt          # 未 add 未追踪的文件
 ```
 
-|缩写|介绍|
-|:--|:--:|:--:|
+|缩写|位置|
+|:--|:--|
 |??|新增文件, 从未被追踪|
-|A |在暂存区, 未进入本地仓库|
-|M |在暂存区, 进入过本地仓库|
-|AM|在工作区, 未进入过本地仓库|
-|MM|在工作区, 进入过仓库|
+|A |仅在暂存区, 未进入本地仓库|
+|M |仅在暂存区, 进入过本地仓库|
+|AM|在工作区暂存区均有, 未进入过本地仓库|
+|MM|在工作区暂存区均有, 进入过仓库|
+|MD|仅在暂存区, 进入过仓库|
 
 右边有字母表示在工作区, 最新修改未 add
 左边有字母表示已 add 过, M 表示 commit 过, A 表示未 commit 过
@@ -201,15 +183,14 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
  $ git add <file>          # 记录指定文件修改
  $ git add .               # 记录当前目录下所有文件修改(上层文件未记录)
  $ git add --all           # 记录当前项目所有文件修改(推荐)
-
 ```
 
 ### [git diff](https://git-scm.com/docs/git-diff)
 
 > git-diff - Show changes between commits, commit and working tree, etc
 
-比对工作区文件和暂存区文件, 只比对保留过状态的文件, 若文件无变化则不显示,
-文件变化则显示记录的状态和当前状态.对应 status 即 AM 或 MM 文件
+比对工作区文件和暂存区文件, 即文件当前状态与上次 add 时进行比对, 即 status 中
+状态为 AM MM 状态的文件才会比对, 未 add 过或无修改的文件不显示
 
 ```bash
  $ git diff
@@ -222,7 +203,6 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
  > \ No newline at end of file
  > +before second add run git diff              # 修改后变成 before second add run git diff
  > \ No newline at end of file
-
 ```
 
 ### [git commit](https://git-scm.com/docs/git-commit)
@@ -283,24 +263,63 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 #### 本地仓库关联远端仓库
 
 ```bash
- $ git init                                    # 初始化本地仓库
- $ git add --all                               # 追踪目录下所有文件修改
- $ git commit -m "<commit message>"            # 记录修改生成一个版本到本地仓库
- $ git remote origin add <Repository url>      # 将远程仓库命名 origin 并关联本地仓库
- $ git push -u origin master                   # 提交代码到 origin 仓库 master 分支
+ $ git init                                  # 初始化本地仓库
+ $ git add --all                             # 追踪目录下所有文件修改
+ $ git commit -m "<commit message>"          # 记录修改生成一个版本到本地仓库
+ $ git remote origin add <Repository url>    # 将远程仓库命名为 origin 并关联本地仓库
 ```
 
 - 本地仓库可以关联多个远程仓库
 - 本地仓库可以指定提交到某个远程仓库
 - 远程仓库默认命名为 origin
 
-## 常用流程
+### [git push](https://git-scm.com/docs/git-push)
+
+> git-push - Update remote refs along with associated objects
+
+将本地所有新增的 commit 推送到远端仓库
 
 ```bash
- $ git clone <repo url>               # 克隆远端仓库到本地
- $ git add --all                      # 修改完后, 记录所有修改
- $ git commit -m "<commit message>"   # 推送到本地仓库
- $ git push -u origin master          # 将本地版本提交到远端仓库
+ $ git push origin master     # 提交所有 commit 到 origin 仓库的 master 分支
+ $ git push -u origin master  # 将 origin 仓库 master 分支作为拉取和推送的默认值
+
+ $ git push <repo> <branch>   # 使用过 -u 后可以省略仓库和分支
+```
+
+## 常规流程
+
+```bash
+ $ git clone <repo url>                # 克隆远端仓库到本地
+ $ git add --all                       # 修改完后, 记录所有修改
+ $ git commit -m "<commit message>"    # 推送到本地仓库
+ $ git push -u origin master           # 将本地版本提交到远端仓库
+
+ $ git commit -a -m "<commit message>" # 同时记录修改并推送到本地仓库
+```
+
+## 分支
+
+开发新需求时候为了不影响原有代码, 一般会先做备份, 在备份上开发验证
+即使失败也可重新备份源代码, 也不影响原有代码
+
+git 中通过分支来完成上述操作
+
+```bash
+ $ git branch                     # 查看所有分支及当前分支所处
+ > * master
+ >   fluid
+
+ $ git branch <branch name>       # 创建一个分支
+ 
+ $ git checkout <branch name>     # 跳转到<branch name>分支
+ $ git checkout -b <branch name>  # 创建分支并跳转到该分支 
+```
+
+当分支代码验证后, 便可以将分支的代码合并到主分支
+到主分支使用 `git merge <branch name>` 便可以将指定分支合并到主分支 
+
+```bash
+ $ git merge <branch name>     # 将 <branch name> 分支合并到当前所处分支
 ```
 
 ## .gitignore
@@ -319,16 +338,17 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 
 ## SSH key 密钥
 
-本地系统创建公钥和私钥, 将公钥内容复制到 github 账户 SSH key 设置, 将系统与 github 账户绑定
-绑定后系统可以通过 ssh 方式下载账户下的代码且 push 代码时无需输入密码
+本地仓库推送代码到远端时, git 会要求用户输入用户名和密码, 使用 ssh key 即可免密码推送
+
+本地系统创建公钥和私钥, 将公钥内容复制到托管网站账户的 SSH key 设置, 将本地系统与网站账
+户绑定, 绑定后系统可以通过 ssh 方式克隆账户下的代码且 push 代码时无需输入密码
 
 ### 生成密钥
 
-- id_rsa (私钥)
-- id_rsa.pub (公钥)
-
-使用以下命令生成密钥, 生成时会显示存放为
-一般为 /root/.ssh/id_rsa  /root/.ssh/id_rsa.pub
+|密钥|位置|
+|:--:|:--:|
+|id_rsa (私钥)|/root/.ssh/id_rsa|
+|id_rsa.pub (公钥)|/root/.ssh/id_rsa.pub|
 
 ```bash
  $ ssh-keygen                             # 自动生成密钥
