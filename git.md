@@ -1,8 +1,8 @@
 <!--
- * @FilePath: \Learning\git.md
+ * @FilePath: \文档\Learning\git.md
  * @Author: facser
  * @Date: 2022-07-08 10:17:53
- * @LastEditTime: 2022-07-13 18:38:26
+ * @LastEditTime: 2022-07-13 20:12:23
  * @LastEditors: facser
  * @Description: 
 -->
@@ -198,9 +198,10 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 追踪文件或修改, add 之后文件会进入暂存区
 
 ```bash
- $ git add <file>     # 记录指定文件修改
- $ git add .          # 记录当前目录下所有文件修改(上层文件未记录)
- $ git add --all      # 记录当前项目所有文件修改(推荐)
+ $ git add <file>          # 记录指定文件修改
+ $ git add .               # 记录当前目录下所有文件修改(上层文件未记录)
+ $ git add --all           # 记录当前项目所有文件修改(推荐)
+
 ```
 
 ### [git diff](https://git-scm.com/docs/git-diff)
@@ -232,17 +233,41 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 每 commit 一次便生成了一个可以回溯的点, 以便于版本回退
 
 ```bash
- $ git commit -m "<commit message>"        # commit 较少可直接填写
- $ git commit -s                           # commit 较长, 使用默认编辑器编辑 commit
- $ git commit --amend                      # 在上次 commit 基础上修改, 并替换原来的 commit
- $ git commit --amend --no-edit            # 使用上次 commit 且不修改, 即本次 commit 和上次合并
+ $ git commit -m "<commit message>"    # commit 较少可直接填写
+ $ git commit -s                       # commit 较长, 使用默认编辑器编辑 commit
+ $ git commit --amend                  # 在上次 commit 基础上修改, 并替换原来的 commit
+ $ git commit --amend --no-edit        # 使用上次 commit 且不修改, 即本次 commit 和上次合并
 
+ $ git checkout -- <file>              # 撤销工作区的修改, 回到上次 commit 状态
 ```
 
 注: git config --global core.editor vim 修改编辑器为 vim
 
-### github 创建仓库克
+### [git log](https://git-scm.com/docs/git-log)
 
+> git-log - Show commit logs
+
+查看各 commit 版本信息, 即所有可以回溯的点
+
+```bash
+ $ git log                     # 显示所有 commit 的版本的详细信息
+ $ git log --pretty=oneline    # 显示 commit 版本的简略信息
+```
+
+### [git reset](https://git-scm.com/docs/git-reset)
+
+> git-reset - Reset current HEAD to the specified state
+
+通过 git log 定位回退的版本, 使用 git reset 执行回退
+
+```bash
+ $ git reset --hard HEAD^                 # 回退到上个版本
+ $ git reset --hard HEAD <commit number>  # 回到指定 commit 版本
+```
+
+### 远程仓库
+
+远程仓库是在继本地仓库管控后, 将本地
 在 github 创建仓库后, 将仓库克隆到本地
 
 ```bash
@@ -264,9 +289,6 @@ github 上必须先创建一个仓库, 才可以将本地代码上传到 github
 - 本地仓库可以关联多个远程仓库
 - 本地仓库可以指定提交到某个远程仓库
 - 第一远程仓库默认命名为 origin
-
-## 本地仓库操作
-
 
 ### .gitignore
 
