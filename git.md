@@ -1,8 +1,8 @@
 <!--
- * @FilePath: \文档\Learning\git.md
+ * @FilePath: \Learning\git.md
  * @Author: facser
  * @Date: 2022-07-08 10:17:53
- * @LastEditTime: 2022-07-13 23:09:59
+ * @LastEditTime: 2022-07-14 15:21:21
  * @LastEditors: facser
  * @Description: 
 -->
@@ -87,7 +87,7 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 
 ```bash
  $ git config -e                                 # 编辑配置文件
- $ git config --global core.editor vim           # 设施编辑器
+ $ git config --global core.editor vim           # 设置编辑器
  $ git config --global commit.template <file>    # 设置 commit 模板
 ```
 
@@ -112,33 +112,37 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 
 > git-status - Show the working tree status
 
+- Untracked
+- Changes not staged for commit
+- Changes to be committed
+
 工作区 -- `git add` --> 暂存区 -- `git commit` --> 本地仓库
 
-|区域|命令|介绍|
+git 用一下3种描述表示**文件状态**, 进一步可划分为**未追踪**和**已追踪**
+
+|区域|描述|状态|
 |:--:|:--:|:--:|
-|工作区|add 前|未追踪的文件, 未追踪的修改都处于工作区|
-|暂存区|add 后 commit 前|当前所有状态已保存, 可以准备生成新版本|
-|本地仓库|commit 后|已生成一个版本保存到本地仓库|
+|Untracked|新增文件|工作区, 未被追踪|
+|Changes not staged for commit|有新修改的文件|工作区, 新修改未被追踪|
+|Changes to be committed|无修改的文件|暂存区, 修改已追踪|
 
-注: 工作区和暂存区表示的是文件的状态, 当一个文件当前状态没有被记录或者与之前状态不同, 那么它就在
-工作区, 使用 `git add` 记录一下之后, 它就移动到暂存区, 此时修改它, 它又会回到工作区.
+当一个文件通过 `git add` 追踪后, 又修改了, 此时查看 `git status` 会如何显示？
 
-```bash
+```git
  $ git status
  >Your branch is up to date with 'origin/main'.
  >
- >Changes to be committed:                # 表示暂存区, 已经记录两个文件
+ >Changes to be committed:                
  >        modified:   README.md           
- >        modified:   git.md
+ >        modified:   git.md             # git.md 已被追踪, 保存的是已追踪时内容
  >
- >Changes not staged for commit:          # 表示工作区, 存在未被记录的修改
- >        modified:   git.md
+ >Changes not staged for commit:          
+ >        modified:   git.md             # 新修改未被追踪
 ```
 
-暂存区有 `README.md`, 工作区没有, 表示该文件已被记录且之后未修改
-暂存区、工作区都有 `git.md` 表示该文件被记录过, 但最新的修改没有被记录
+通过过上面结果可知, 只要文件存在未被追踪的内容就会归入到工作区
 
-```bash
+```git
  $ git status -s           # -s --short 显示简略信息
  > M  README               # 表示该文件已 add 和 commit, 未再修改
  > A  lib/git.rb           # 从未 commit 但已 add, 未再修改
@@ -157,10 +161,8 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 |A |暂存区| 未进入本地仓库|
 |M |暂存区| 进入过本地仓库|
 
-右边有字母表示最新修改未 add 进行记录, 在工作区显示(删除文件不显示)
-左边有字母表示已 add 过修改, 在缓存区显示
-左M 表示 commit 过
-左A 表示未 commit 过
+右边有字母表示有修改未追踪, 在工作区显示(删除文件不显示)
+左边有字母表示已追踪, 无修改, M 表示 commit 过, A 表示未 commit 过
 
 ### [git add](https://git-scm.com/docs/git-add)
 
@@ -178,19 +180,18 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 
 > git-diff - Show changes between commits, commit and working tree, etc
 
-比对工作区文件和暂存区文件, 即未被记录的内容和被记录的内容比对, 即状态为
-`AM` `MM` 状态的文件才会比对, 未被记录过或无修改的文件不显示
+未被追踪和已追踪内容进行比对, 已被追踪则不比对
 
 ```bash
  $ git diff
- > diff --git a/test.log b/test.log             # 比对 test.log 文件两个状态
+ > diff --git a/test.log b/test.log    # 比对 test.log 文件两个状态
  > index 61e2b58..9b6b46c 100644
- > --- a/test.log                               # - 开头是修改前内容
- > +++ b/test.log                               # + 开头是修改后内容
+ > --- a/test.log                      # - 开头是被追踪的内容
+ > +++ b/test.log                      # + 开头是未被追踪的内容
  > @@ -1 +1,1 @@
- > -git add once                                # 修改前是 git add once
+ > -git add once                       # 修改前是 git add once
  > \ No newline at end of file
- > +before second add run git diff              # 修改后变成 before second add run git diff
+ > +before second add run git diff     # 修改后变成 before second add run git diff
  > \ No newline at end of file
 ```
 
@@ -198,8 +199,9 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 
 > git-commit - Record changes to the repository
 
-根据暂存区所有记录的文件生成一个版本并放入本地仓库
-每 commit 一次便生成了一个可以回溯的点, 以便于版本回退
+通过已追踪的内容生成一个版本放入本地仓库(.git)
+每 commit 一次便生成了一个可以回退的版本, 即回溯的点
+commit 时可以添加代码改动信息便于回退时进行定位
 
 ```bash
  $ git commit -m "<commit message>"    # message 较短可直接填写
@@ -216,7 +218,7 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 
 > git-log - Show commit logs
 
-查看各 commit 版本信息, 即所有可以回溯的点
+查看各 commit 版本信息
 
 ```bash
  $ git log                     # 显示所有 commit 的版本的详细信息
@@ -236,15 +238,16 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 
 ### 远程仓库
 
-创建远程仓库需要登录代码托管平台创建仓库, 然后将仓库克隆到本地, 或者将本地仓库
-与远端仓库关联
+远程仓库是托管在网上的项目版本库, 需要在代码平台上创建, 常见的如
 
-- 本地仓库可以关联多个远程仓库
-- 本地仓库可以提交代码到任意一个已关联的远程仓库
-- 使用克隆后, 改远程仓库默认被命名为 origin
+- [Github](https://github.com/)
+- [Gitlab](https://about.gitlab.com/)
+- [Gitee](https://gitee.com/)
+
+可以通过两种方式添加远程仓库
 
 ```bash
- $ git clone <Repository url>    # 克隆远端仓库到本地
+ $ git clone <Repository url>    # 克隆远端仓库到本地, 自动绑定链接对应的仓库
 
  $ git remote -v                 # 查看本地仓库关联的所有远端仓库
 ```
@@ -254,7 +257,12 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
  $ git add --all                             # 追踪目录下所有文件修改
  $ git commit -m "<commit message>"          # 记录修改生成一个版本到本地仓库
  $ git remote origin add <Repository url>    # 将远程仓库命名为 origin 并关联本地仓库
+ $ git push -u orighin master                # 推送本地所有版本到远程仓库
 ```
+
+- 一个本地仓库可以关联多个远程仓库
+- 本地仓库可以提交代码到任意一个已关联的远程仓库
+- 使用克隆后, 该远程仓库默认被命名为 origin
 
 ### [git push](https://git-scm.com/docs/git-push)
 
@@ -282,10 +290,7 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 
 ## 分支
 
-开发新需求时候为了不影响原有代码, 一般会先做备份, 在备份上开发验证
-即使失败也可重新备份源代码, 也不影响原有代码
-
-git 中通过分支来完成上述操作
+分支是从主线延伸出**同源**的备份, 分支可以随意修改操作而不影响主线
 
 ```bash
  $ git branch                     # 查看所有分支及当前分支所处
@@ -298,16 +303,17 @@ git 中通过分支来完成上述操作
  $ git checkout -b <branch name>  # 创建分支并跳转到该分支 
 ```
 
-当分支代码验证后, 便可以将分支的代码合并到主分支
-到主分支使用 `git merge <branch name>` 便可以将指定分支合并到主分支 
+当想要将分支代码并入到主线时, 使用 `git checkout` 跳转到**主线**
+再使用 `git merge <branch name>` 便可以将指定分支合并到主线
 
 ```bash
+ $ git branch                  # 确认当前分支是否为主线
  $ git merge <branch name>     # 将 <branch name> 分支合并到当前所处分支
 ```
 
 ## .gitignore
 
-忽略指定文件, 不对其追踪和提交, 文件名固定为 .gitignore, 同项目可创建多个
+忽略指定文件, 不对其追踪和提交, 文件名固定为 `.gitignore`, 项目内可创建**多个**
 
 ```bash
  $ cat .gitignore
@@ -321,10 +327,7 @@ git 中通过分支来完成上述操作
 
 ## SSH key 密钥
 
-本地仓库推送代码到远端时, git 会要求用户输入用户名和密码, 使用 ssh key 即可免密码推送
-
-本地系统创建公钥和私钥, 将公钥内容复制到托管网站账户的 SSH key 设置, 将本地系统与网站账
-户绑定, 绑定后系统可以通过 ssh 方式克隆账户下的代码且 push 代码时无需输入密码
+本地仓库推送代码到远端时, git 会要求用户输入用户名和密码, 设置 ssh key 即可**免密码**推送
 
 ### 生成密钥
 
@@ -333,7 +336,12 @@ git 中通过分支来完成上述操作
 |id_rsa (私钥)|`/root/.ssh/id_rsa`|
 |id_rsa.pub (公钥)|`/root/.ssh/id_rsa.pub`|
 
+生成两个密钥文件, 将公钥放到代码托管平台的账号设置中
+
 ```bash
  $ ssh-keygen                             # 自动生成密钥
  $ ssh-keygen -t rsa -C "<user.mail>"     # 生成 rsa 类型带邮箱注释信息的密钥
 ```
+
+- 密钥由系统生成, 放入用户设置, 所以是系统和账户绑定
+- 系统下的本地仓库推送代码到该账户使用 ssh 链接时即可免密

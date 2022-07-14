@@ -24,6 +24,20 @@
 - 是否易于添加或者修改代码
 - 能应对多种异常
 
+## 面向对象 OOP
+
+> Object-oriented programming
+
+面向对象编程是一种开发理念, 与之相对的是面向过程
+
+### 对象
+
+#### 继承
+
+#### 封装
+
+#### 多态
+
 ## SOLID 原则
 
 SOLID 是面向对象编程应当遵守的准则和最佳的实践方向
@@ -43,42 +57,7 @@ SOLID 是面向对象编程应当遵守的准则和最佳的实践方向
 
 译: 有且仅有一个原因引起类的变更, 简而言之, 一个类最好只负责一件事
 
-#### 引申
-
-实际开发时, 工程师在接到任务需求时, 会先划分流程, 每个流程定义一定数量的类作为工具来完成各个
-流程的操作. 对于不同的人来说, 每个流程类的划分都有各自想法. 怎么划分更为合适就是成了一个问题.
-
-一般工程师拆分时都会将相近的职责, 类似的功能放在一起. 当工程师在使用或者需求变更时发现一个类的   职责过多, 方法多, 类方法参数多, 修改其代码时候容易影响其它地方, 这时候就需要考虑对该类拆分
-
 SRP 原则在实际的重点在职责划分, 对于不同场景和需求来说, 职责的划分标准也不同.
-
-如创建一个 `phone` 类, 一开始只有基础功能 `call`,`take_photo`,`charge`. 
-
-```python
-
-class Phone:
-
-    def call():
-        pass
-
-    def take_photo():
-        pass
-
-    def charge_port():
-        pass
-
-```
-
-之后因为技术发展和客户需求, 拍照要求添加各种模式, 充电口除了充电还要兼容文件传输, 投屏, 反
-向充电等. 手机功能也越来越多. 此时
-
-```python
-class Phone:
-
-
-
-```
-
 
 ### OCP 开闭原则
 
@@ -102,41 +81,37 @@ class Phone:
 
 ## 命名
 
-### 命名格式规范
+### 介绍
 
- 驼峰法 : 大小写混用来区分逻辑断点
+创建一个自定义数据或者需要被复用的数据会对数据进行命名
+
+### 命名方式
 
 ```bash
-ErrorTestMessage            # 大驼峰
+ErrorTestMessage            # 大驼峰 大小写混用区分逻辑断点
 errTestMsg                  # 小驼峰
-```
 
-蛇形命名: 通过 "_" 来连接逻辑断点
-
-```python
-error_test_message            
-err_test_msg                  
+error_test_message          # 蛇形命名  
+err_test_msg  
 ```
 
 附录查看常用变量缩写
 
 #### 命名内容
 
+变量命名: 名词 形容词
+
 - 描述变量的意义
 - 要强调的描述放在最后
 - 命名形式一致
-函数: 动词 + 宾语
-
-变量: 名词 / 名词 + 形容词  / 形容词 + 名词
-
-布尔变量命名
-
-```python
-is_xx         # 是不是
-has_xx        # 有没有
-should_xx     # 要不要
-can_xx        # 能不能
-```
+  
+布尔值常用前缀
+|前缀|含义|
+|:-:|:-:|
+|is_xx|是不是|
+|has_xx|有没有|
+|should_xx|是否应该|
+|can_xx|能不能|
 
 强调的描述放后面
 
@@ -149,16 +124,20 @@ dict_xx       # xx 字典
 int_xx        # xx 数字
 ```
 
+函数: 动词 + 宾语
+
 附录查看函数常用动词查看附录
 
-### 分支
+## 分支
 
-#### 提前结束
+### 提前结束
 
 - 减少分支嵌套
-- 用变量来注释具体的值
+- 用变量名对具体的值进行注释
 
-#### 边界问题
+
+
+### 边界问题
 
 - LBYL:  Look Before You Leap
 - EAFP: Easier to Ask for Forgiveness than Permission
@@ -200,9 +179,9 @@ def get_list_index(value, lst):
         return type_value_err 
 ```
 
-### 附录
+## 附录
 
-#### 变量缩写
+### 变量缩写
 
 ```python
     addition              add               加
@@ -246,24 +225,29 @@ def get_list_index(value, lst):
     configuration         config            配置
 ```
 
-#### 函数常用动词
+### 函数常用动词
 
 ```python
-    添加/插入/创建/初始化/加载       add、append、insert、create、initialize、load
+    添加/插入                      add、append、insert、
+    创建/初始化                    create、initialize、
+    加载/选择                      load、pick、select
     删除/销毁                      delete、remove、destroy、drop
-    打开/开始/启动                 open、start
+    打开/启动                      open、start
     关闭/停止                      close、stop
-    获取/读取/查找/查询             get、fetch、acquire、read、search、find、query
-    设置/重置/放入/写入/释放/刷新   set、reset、put、write、release、refresh
+    获取/读取                      get、fetch、acquire、read、
+    查找/查询                      search、find、query
+    设置/重置                      set、reset
+    放入/写入                      put、write、
+    释放/刷新                      release、refresh
     发送/推送                      send、push
-    接收/拉取                     receive、pull
-    提交/撤销/取消                submit、cancel
-    收集/采集/选取/选择           collect、pick、select
-    提取/解析                    sub、extract、parse
-    编码/解码                    encode、decode
-    填充/打包/压缩               fill、pack、compress
-    清空/拆包/解压               flush、clear、unpack、decompress
-    增加/减少                    increase、decrease、reduce
-    分隔/拼接                    split、join、concat
-    过滤/校验/检测                filter、valid、check
+    接收/拉取                      receive、pull
+    提交/取消                      submit、cancel
+    收集/采集                      collect、
+    提取/解析                      sub、extract、parse
+    编码/解码                      encode、decode
+    填充/压缩                      fill、pack、compress
+    清空/解压                      flush、clear、unpack、decompress
+    增加/减少                      increase、decrease、reduce
+    分隔/拼接                      split、join、concat
+    过滤/校验/检测                 filter、valid、check
 ```
