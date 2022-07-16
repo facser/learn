@@ -1,8 +1,8 @@
 <!--
- * @FilePath: \Learning\git.md
+ * @FilePath: \文档\Learning\git.md
  * @Author: facser
  * @Date: 2022-07-08 10:17:53
- * @LastEditTime: 2022-07-14 15:21:21
+ * @LastEditTime: 2022-07-16 15:32:43
  * @LastEditors: facser
  * @Description: 
 -->
@@ -331,10 +331,10 @@ commit 时可以添加代码改动信息便于回退时进行定位
 
 ### 生成密钥
 
-|密钥|位置|
-|:--:|:--:|
-|id_rsa (私钥)|`/root/.ssh/id_rsa`|
-|id_rsa.pub (公钥)|`/root/.ssh/id_rsa.pub`|
+|密钥|linux|windows|
+|:--:|:--:|:-:|
+|id_rsa (私钥)|`/root/.ssh/id_rsa`|`C:\Users\<user>\.ssh`|
+|id_rsa.pub (公钥)|`/root/.ssh/id_rsa.pub`|`C:\Users\<user>\.ssh`|
 
 生成两个密钥文件, 将公钥放到代码托管平台的账号设置中
 
