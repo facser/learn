@@ -30,8 +30,6 @@
 
 > Procedural-Oriented Programming
 
-function(函数) = 调用 + 封装
-数据与算法分离
 
 ## 面向对象 OOP
 
@@ -128,6 +126,8 @@ err_test_msg
 
 附录:[变量缩写](#变量缩写)
 
+
+
 #### 命名内容
 
 变量命名: 名词 形容词
@@ -165,6 +165,8 @@ int_xx        # xx 数字
 
 - 减少分支嵌套
 - 用变量名对具体的值进行注释
+
+
 
 ### 边界问题
 
@@ -280,4 +282,3 @@ def get_list_index(value, lst):
     分隔/拼接                      split、join、concat
     过滤/校验/检测                 filter、valid、check
 ```
-
