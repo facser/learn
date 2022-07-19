@@ -1,8 +1,8 @@
 <!--
- * @FilePath: \Learning\Linux.md
+ * @FilePath: \文档\Learning\Linux.md
  * @Author: facser
  * @Date: 2022-07-18 15:02:16
- * @LastEditTime: 2022-07-19 17:00:07
+ * @LastEditTime: 2022-07-19 22:51:22
  * @LastEditors: facser
  * @Description: 
 -->
@@ -214,7 +214,25 @@
 
 ## 文本
 
-#### 
+### 文本搜索
+
+#### [grep](https://linux.alianga.com/c/grep.html) : global search regular expression and print out the line
+
+```bash
+ $ grep <patten> <file>                          # 从文件中筛选出符合模式的行, 可搜索多个文件
+
+ $ grep -i                                       # --ignore-case 忽略大小写
+ $ grep -E                                       # --extend-regexp 使用正则匹配
+
+ $ grep -v                                       # --revert-match 显示不匹配的所有行
+ $ grep -n                                       # --line-number 同时显示行数
+ 
+ $ grep -c                                       # --count 只显示匹配行的数量
+ $ grep -l                                       # 查询多个文件, 仅显示包含的文件名
+
+ $ grep -w                                       # --word-regexp 单词全匹配, 存在该单词的行, 不包含子字符串
+ $ grep -x                                       # --line-regexp 行全匹配, 必须与行完全一致 
+```
 
 ## 附录
 
@@ -222,13 +240,42 @@
 
 |缩写|全称|翻译|
 |:-:|:-:|:-:|
-|h    |help             |帮助|
-|a    |all              |全部
-|f    |force            |强制|
-|i    |interactive      |交互的|
-|b    |backup           |备份|
-|v    |version / verbose|版本/详细的|
-|c    |count / command  |计数/命令|
-|r / R|recursive        |递归|
-|s / S|sort             |排序|
+|h    |`help`             |帮助|
+|a    |`all`              |全部
+|f    |`force`            |强制|
+|i    |`interactive`      |交互的|
+|b    |`backup`           |备份|
+|v    |`version / verbose`|版本/详细的|
+|c    |`count / command`  |计数/命令|
+|r / R|`recursive`        |递归|
+|s / S|`sort`             |排序|
+
+### 特殊符号
+
+|符号|含义|
+|:-:     |:-|
+|`|`|管道符号, 正则中 或|
+|`>`|输出重定向, 覆盖|
+|`>>`|输出重定向, 追加|
+|`&`|程序放入后台执行|
+|`#`|注释|
+|`&&`|且, 左边成功才执行右边|
+|`||`|左边不影响右边执行|
+
+### 正则表达式
+
+|符号|模式|
+|:-:     |:-|
+|`^`     |锚定行首|
+|`$`     |锚定行尾|
+|`()`    |捆绑成一个整体|
+|`.`     |任意一个字符|
+|`?`     |前面字符或模式 0 或 1 次|
+|`{m}`   |前面字符或模式 m 次|
+|`{m, n}`|前面字符或模式次数在 m n 之间|
+|`+`     |前面字符或模式 1 次或多次|
+|`*`     |前面字符或模式任意次|
+|`|`     |或选择|
+|`[]`    |括号范围内均可|
+|`[^]`   |括号范围之外均可|
 
