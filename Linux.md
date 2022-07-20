@@ -2,7 +2,7 @@
  * @FilePath: \文档\Learning\Linux.md
  * @Author: facser
  * @Date: 2022-07-18 15:02:16
- * @LastEditTime: 2022-07-19 22:51:22
+ * @LastEditTime: 2022-07-20 22:31:05
  * @LastEditors: facser
  * @Description: 
 -->
@@ -28,19 +28,19 @@
 #### [whatis](https://www.linuxcool.com/whatis)
 
 ```bash
- $ whatis <command>                             # 显示命令的简短描述, 等同于 man -f <command>
+ $ whatis <command>                              # 显示命令的简短描述, 等同于 man -f <command>
 ```
 
 #### [info](https://wangchujiang.com/linux-command/c/info.html)
 
 ```bash
- $ info <command>                               # 显示命令的 info 文档, 内容与帮助文档相似
+ $ info <command>                                # 显示命令的 info 文档, 内容与帮助文档相似
 ```
 
 #### [which](https://wangchujiang.com/linux-command/c/which.html)
 
 ```bash
- $ which <command>                              # 查看命令所在位置
+ $ which <command>                               # 查看命令所在位置
 ```
 
 ## 文件
@@ -87,7 +87,7 @@
  $ ls -alS                                       # 参数可无顺序合并, 结果按参数显示
 ```
 
-#### [file]()
+#### [file](https://linux.alianga.com/c/file.html)
 
 ```bash
  $ file <file>                                                  # 显示文件类型
@@ -233,6 +233,67 @@
  $ grep -w                                       # --word-regexp 单词全匹配, 存在该单词的行, 不包含子字符串
  $ grep -x                                       # --line-regexp 行全匹配, 必须与行完全一致 
 ```
+
+#### [cut](https://linux.alianga.com/c/cut.html) 
+
+```bash
+ $ cut <arg> <pattern> <file>                    # 截取指定列
+
+ $ cut -f <num>                                  # 显示第 <num> 列, 以空格为分隔符, 从 1 开始
+ $ cut -d <char>                                 # 自定义分隔符
+ $ cut -c 3-6                                    # 显示每行第 3 至 6 个字符, 可填单个数字
+
+ $ cut -d ':' -f 2,3                             # 根据 ':' 分割显示第 2, 3 列 
+```
+
+### 文本
+
+#### [xargs](https://linux.alianga.com/c/xargs.html) : extended arguments
+
+```bash
+ $ cat a.log | xargs                             # 多行内容输出单行 
+ 
+ $ cat a.log | xargs -n 3                        # 重新修改格式, 每行 3 个字符串  
+ $ cat a.log | xargs -d ,                        # 以 ',' 分割整行
+```
+
+#### [sort](https://linux.alianga.com/c/sort.html)
+
+```bash
+ $ sort <file>                                   # 按每行第首字符的 ACSII 码值顺序排序, 相同则往后一个一个比较
+
+ $ sort -r <file>                                # --reverse 反向排序
+ $ sort -n <file>                                # 根据数值比较, 多位数看数值, 不再单个数字比较
+ $ sort -u <file>                                # --unique 不显示重复的行
+ $ sort -t : -k 2 -n <file>                      # 以 ':' 为分割符号, 第 2 个字符串按数字排序
+```
+
+#### [uniq](https://linux.alianga.com/c/uniq.html) : unique
+
+```bash
+ $ uniq <file>                                   # 合并相邻的重复行
+
+ $ uniq -c                                       # --count 每行添加重复次数
+ $ uniq -i                                       # --ignore-case 忽略大小写
+ $ uniq -d                                       # --repeated 只显示重复行
+
+ $ sort <file> | uniq -d                         # 先排序, 再打印相邻重复行, 显示文件所有重复行    
+```
+
+#### [tr](https://linux.alianga.com/c/tr.html) : transform
+
+```bash
+ $ tr <arg> <pattern>                            # 文本替换, 删除, 合并相邻重复
+
+ $ tr ',' ' '                                    # 将 '' 替换成空格
+ $ tr 'A-Z' 'a-z'                                # 将大写替换成小写
+ 
+ $ tr -d [0-9]                                   # 删除所有数字
+ $ tr -s 'n'                                     # 合并所有重复 'n' 字符
+```
+
+
+
 
 ## 附录
 
