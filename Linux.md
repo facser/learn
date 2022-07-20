@@ -2,7 +2,7 @@
  * @FilePath: \文档\Learning\Linux.md
  * @Author: facser
  * @Date: 2022-07-18 15:02:16
- * @LastEditTime: 2022-07-20 22:31:05
+ * @LastEditTime: 2022-07-20 22:43:13
  * @LastEditors: facser
  * @Description: 
 -->
@@ -11,8 +11,6 @@
 [linux 命令](https://www.linuxcool.com/)
 
 ## 基本概要
-
-
 
 ### 帮助和查找
 
@@ -291,9 +289,6 @@
  $ tr -d [0-9]                                   # 删除所有数字
  $ tr -s 'n'                                     # 合并所有重复 'n' 字符
 ```
-
-
-
 
 ## 附录
 
