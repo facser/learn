@@ -2,7 +2,7 @@
  * @FilePath: \文档\Learning\python\python-flat-dict.md
  * @Author: facser
  * @Date: 2022-07-25 20:08:15
- * @LastEditTime: 2022-07-25 23:04:32
+ * @LastEditTime: 2022-07-26 20:58:59
  * @LastEditors: facser
  * @Description: 
 -->
@@ -70,7 +70,106 @@ if __name__ == '__main__':
 ## 字典存取
 
 能将字典扁平化后, 考虑如何存取
+魔改魔术方法 `setitem` 和 `getitem` 通过 [] 存取数据
+
+设置一个正常字典, 存储正常数据
+ 一个扁平化字典, 存储扁平化数据
 
 ```python
 
+class Flat:
+    def __init__(self):
+        dict_depth = {}
+        dict_flat = {}
+
+    def flat_dict(self):
+        pass
+
+    def flat_to_depth(self, key, value):
+        pass
+
+    def __setitem__(self, key, value):
+        self.dict_flat[key] = value
+        self.flat_to_depth(key, value)
+        
+    def __getitem__(self, key):
+        try:
+            return self.dict_flat[key]
+        except KeyError:
+            self.flat_dict.update(dict(self.flat_dict()))
+            return self.dict_flat[key]
 ```
+
+写入: key value 直接写入 dict_flat, 解析 key 写入 dict_depth
+读取: 尝试从 dict_flat 取值, 找不到则将 dict_depth 扁平化再取值
+
+## 实现
+
+```python
+from json import dumps
+
+class Flat:
+
+    def __init__(self):
+        self.dict_flat = {}
+        self.dict_depth = {}
+
+    def flat_dict(self):
+        for key, value in self.dict_depth.items():
+            yield (key, value)
+            if isinstance(value, dict):
+                for k, v in self.flat_dict(value):
+                    k = '{key}.{k}'.format(key=key, k=k)
+                    yield (k, v)  
+    
+    def flat_to_depth(self, key, value):
+        key_list = key.split('.')
+        dic = self.dict_depth
+        for k in key_list[:-1]:
+            dic.setdefault(k, {})
+            dic = dic[k]
+        
+        dic[key_list[-1]] = value
+
+    def __setitem__(self, key, value):
+        self.dict_flat[key] = value
+        self.set_depth_dict(key, value)
+
+    def __getitem__(self, key):
+        try:
+            return self.dict_flat[key]
+        except KeyError:
+            self.dict_flat.update(dict(self.flat_dict(self.dict_depth)))
+            return self.dict_flat[key]
+
+    def __str__(self):
+        return dumps(self.dict_depth, indent=4)
+```
+
+```python
+flat = Flat()
+flat['a.b.c'] = 1
+flat['b.c.a'] = 2
+print(flat['a.b'])
+print(flat['b.c.a'])
+print(flat)
+
+
+{'c': 1}
+2
+{
+    "a": {
+        "b": {
+            "c": 1
+        }
+    },
+    "b": {
+        "c": {
+            "a": 2
+        }
+    }
+}
+```
+
+实现了 `flat_to_depth` 能快速设置深层数据
+`__str__` 能直接格式化打印结果
