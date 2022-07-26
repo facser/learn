@@ -2,7 +2,7 @@
  * @FilePath: \文档\Learning\Linux.md
  * @Author: facser
  * @Date: 2022-07-18 15:02:16
- * @LastEditTime: 2022-07-21 21:34:16
+ * @LastEditTime: 2022-07-26 22:14:33
  * @LastEditors: facser
  * @Description: 
 -->
@@ -230,7 +230,10 @@
 
  $ grep -w                                       # --word-regexp 单词全匹配, 存在该单词的行, 不包含子字符串
  $ grep -x                                       # --line-regexp 行全匹配, 必须与行完全一致 
+
+ $ egrep <regex> <file>                          # 与 grep -E 类似
 ```
+
 
 #### [cut](https://linux.alianga.com/c/cut.html) 
 
@@ -278,16 +281,41 @@
  $ sort <file> | uniq -d                         # 先排序, 再打印相邻重复行, 显示文件所有重复行    
 ```
 
+#### [wc](https://linux.alianga.com/c/wc.html) : Word count
+
+```bash
+ $ wc -c                                         # --bytes char 统计字符数量
+ $ wc -w                                         # --words 统计单词数量
+ $ wc -l                                         # --lines 统计行的数量
+```
+
 #### [tr](https://linux.alianga.com/c/tr.html) : transform
 
 ```bash
  $ tr <arg> <pattern>                            # 文本替换, 删除, 合并相邻重复
 
- $ tr ',' ' '                                    # 将 '' 替换成空格
+ $ tr ',' ' '                                    # 将 ',' 替换成空格
  $ tr 'A-Z' 'a-z'                                # 将大写替换成小写
  
  $ tr -d [0-9]                                   # 删除所有数字
  $ tr -s 'n'                                     # 合并所有重复 'n' 字符
+```
+
+注: tr 替换或删除时把字符集看做**多个字符**进行操作
+如 tr -d 'abc' 表示删除文本中所有 a b c 字符
+
+#### [sed](https://linux.alianga.com/c/sed.html) : stream editor
+
+```bash
+ $ sed <opt> <command> <file>
+
+ $ sed -i <command> <file>                       # 逐行编辑文本内容 
+
+ $ sed 's/<before>/<after>/' <file>              # s 替换指定字符(仅替换 1 次)
+ $ sed 's/<before>/<after>/g' <file>             # g 替换指定字符(全替换)
+
+ $ sed '/<regex>/d' file                         # 删除文件中符合正则的行
+ $ sed '<num>d' file                             # 删除文件某一行, 可用 ',' 扩展范围 ('1,$d' 删除所有行)
 ```
 
 ## 附录
