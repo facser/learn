@@ -2,7 +2,7 @@
  * @FilePath: \文档\Learning\Linux\Linux-1-basic.md
  * @Author: facser
  * @Date: 2022-07-27 21:20:25
- * @LastEditTime: 2022-07-27 21:31:53
+ * @LastEditTime: 2022-07-28 22:22:43
  * @LastEditors: facser
  * @Description: 
 -->
@@ -37,6 +37,84 @@
 
 ```bash
  $ which <command>                               # 查看命令所在位置
+```
+
+#### [history](https://linux.alianga.com/c/history.html)
+
+```bash
+ $ history                                       # 查看执行的命令历史
+
+ $ !!                                            # 执行上一条命令
+```
+
+### 通配符号
+
+#### `？` 任意单个字符
+
+```bash
+ $ touch ab a bc abc                             # 生成 ab a ba abc 4 个文件
+ 
+ $ ls ?b                                         # ? 可以指代任意单个字符
+ > ab
+
+ $ ls b?
+ > bc
+```
+
+#### `*` 任意多个字符
+
+```bash
+ $ touch ab a bc abc                             # 生成 ab a ba abc 4 个文件
+ 
+ $ ls *                                          # * 可以指代任意多个字符
+ > a  ab  abc  bc
+
+ $ ls a*                                    
+ > a  ab  abc
+```
+
+#### `**` 任意多级目录
+
+```bash
+ $ cat /etc/**/word                               # /etc/ 文件夹下所有 word 文件
+```
+
+#### `[]` 匹配范围
+
+```bash
+ $ touch aa ab ac aab                            # 生成 ab a ba abc 4 个文件
+
+ $ ls a[ab]                                      # 匹配 [] 内任意一个字符
+ > aa ab
+```
+
+#### 特殊符号
+
+#### `|` 管道符号
+
+```bash
+ $
+```
+
+#### `>` `>>` `<` 重定向
+
+```bash
+ $ <cmd> > <file>                                # 将输出覆盖写入文件(原文件清空后写入)
+ $ ls > file.log                                 # 将 ls 命令返回值写入 file.log 文件
+
+ $ <cmd> >> <file>                               # 将输出追加写入文件(原文件内容保留)
+ $ ls > file.log                                 # 将 ls 命令返回值写入 file.log 内容结尾
+
+ $ <cmd> < <file>                                # 将文件内容重定向为标准输入
+ $ cat < file.log                                # 读取 file.log 并打印
+```
+
+#### `&1` `&2` `/dev/null` 输出
+
+```bash
+ $ ls  2>&1                                      # 错误输出重定向到标准输出 
+
+ $ ls  >/dev/null                                # 不显示结果
 ```
 
 ### 单词缩写
