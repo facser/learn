@@ -2,7 +2,7 @@
  * @FilePath: \文档\Learning\python\python-flat-dict.md
  * @Author: facser
  * @Date: 2022-07-25 20:08:15
- * @LastEditTime: 2022-07-26 20:58:59
+ * @LastEditTime: 2022-07-30 23:50:02
  * @LastEditors: facser
  * @Description: 
 -->
@@ -106,44 +106,45 @@ class Flat:
 ## 实现
 
 ```python
-from json import dumps
-
-class Flat:
-
-    def __init__(self):
+class Flat(dict):
+    
+    def __init__(self, depth):
+        dict.__init__(self, depth)
         self.dict_flat = {}
-        self.dict_depth = {}
+        self.dict_depth = depth
 
-    def flat_dict(self):
-        for key, value in self.dict_depth.items():
+    def flat_dict(self, dic):
+        for key, value in dic.items():
             yield (key, value)
             if isinstance(value, dict):
                 for k, v in self.flat_dict(value):
                     k = '{key}.{k}'.format(key=key, k=k)
-                    yield (k, v)  
-    
-    def flat_to_depth(self, key, value):
+                    yield (k, v)
+
+    def update_depth_dict(self, key, value):
+
         key_list = key.split('.')
-        dic = self.dict_depth
+        dic = self
+
         for k in key_list[:-1]:
             dic.setdefault(k, {})
             dic = dic[k]
-        
-        dic[key_list[-1]] = value
+
+        dic.update({key_list[-1]: value})
 
     def __setitem__(self, key, value):
         self.dict_flat[key] = value
-        self.set_depth_dict(key, value)
+        self.update_depth_dict(key, value)
 
     def __getitem__(self, key):
         try:
             return self.dict_flat[key]
         except KeyError:
-            self.dict_flat.update(dict(self.flat_dict(self.dict_depth)))
+            self.dict_flat.update(dict(self.flat_dict(self)))
             return self.dict_flat[key]
 
     def __str__(self):
-        return dumps(self.dict_depth, indent=4)
+        return dumps(self, indent=4)
 ```
 
 ```python
