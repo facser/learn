@@ -2,7 +2,7 @@
  * @FilePath: \文档\Learning\python\python-flat-dict.md
  * @Author: facser
  * @Date: 2022-07-25 20:08:15
- * @LastEditTime: 2022-07-30 23:50:02
+ * @LastEditTime: 2022-07-31 15:01:10
  * @LastEditors: facser
  * @Description: 
 -->
@@ -12,10 +12,10 @@
 ## 引申
 
 字典经常被用来存取数据, 键值对的组合非常便于使用
-一个字典可以存储大量数据, 为了便于区分还可以层层分级
+一个字典可以存储大量数据, 为了便于区分还可以层层分级, 多层嵌套
 
 对于多层字典存取比较麻烦
-插入值的时候需要考虑 key 上层是否存在
+插入值多层的数据的时候需要考虑上层是否存在
 
 能否简化深层字典的存取方式
 插入值的时候能否忽略层级问题, 自动生成多级数据
@@ -72,76 +72,110 @@ if __name__ == '__main__':
 能将字典扁平化后, 考虑如何存取
 魔改魔术方法 `setitem` 和 `getitem` 通过 [] 存取数据
 
-设置一个正常字典, 存储正常数据
- 一个扁平化字典, 存储扁平化数据
+保留字典原有属性和方法, 新数据类型继承字典类
 
 ```python
 
-class Flat:
-    def __init__(self):
-        dict_depth = {}
-        dict_flat = {}
+class Flat(dict):
+
+    def __init__(self, depth):
+        dict.__init__(self, depth)
+        self.flat = OrderedDict()
+        self.char_split = '.'
 
     def flat_dict(self):
         pass
 
-    def flat_to_depth(self, key, value):
+    def update_dict(self, key, value):
         pass
 
     def __setitem__(self, key, value):
-        self.dict_flat[key] = value
-        self.flat_to_depth(key, value)
-        
+        pass
+ 
     def __getitem__(self, key):
-        try:
-            return self.dict_flat[key]
-        except KeyError:
-            self.flat_dict.update(dict(self.flat_dict()))
-            return self.dict_flat[key]
+        pass
 ```
 
-写入: key value 直接写入 dict_flat, 解析 key 写入 dict_depth
-读取: 尝试从 dict_flat 取值, 找不到则将 dict_depth 扁平化再取值
+### 写入
+
+- 解析扁平化 key 生成深度字典, 且更新到深度字典
+- 把数据写入深度字典和扁平化字典
+
+```python
+    def __setitem__(self, key, value):
+        self.update_dict(key, value)
+
+    def update_dict(self, key, value):
+        key_list = key.split(self.char_split)
+        first, last = key_list[0], key_list[-1]
+        
+        dic = self
+        for k in key_list[:-1]:
+            dic.setdefault(k, {})
+            if not isinstance(dic[k], dict):
+                dic.update({k: {}})
+            dic = dic[k]
+
+        dic.update({last: value})
+        self.flat.update(self.flat_dict({first: self[first]}))
+```
+
+### 取出
+
+```python
+    def __getitem__(self, key):
+        try:
+            return dict.__getitem__(self, key)
+        except KeyError:
+            return self.flat[key]
+```
 
 ## 实现
+
+`__str__` 能直接格式化打印结果
+添加自定义分隔符
 
 ```python
 class Flat(dict):
     
     def __init__(self, depth):
         dict.__init__(self, depth)
-        self.dict_flat = {}
-        self.dict_depth = depth
+        self.flat = OrderedDict()
+        self.char_split = '.'
 
     def flat_dict(self, dic):
         for key, value in dic.items():
             yield (key, value)
             if isinstance(value, dict):
                 for k, v in self.flat_dict(value):
-                    k = '{key}.{k}'.format(key=key, k=k)
+                    k = '{key}{char}{k}'.format(
+                        char=self.char_split,
+                        key=key, k=k)
                     yield (k, v)
 
-    def update_depth_dict(self, key, value):
+    def update_dict(self, key, value):
 
-        key_list = key.split('.')
+        key_list = key.split(self.char_split)
+        first, last = key_list[0], key_list[-1]
+        
         dic = self
-
         for k in key_list[:-1]:
             dic.setdefault(k, {})
+            if not isinstance(dic[k], dict):
+                dic.update({k: {}})
             dic = dic[k]
 
-        dic.update({key_list[-1]: value})
-
+        dic.update({last: value})
+        self.flat.update(self.flat_dict({first: self[first]}))
+   
     def __setitem__(self, key, value):
-        self.dict_flat[key] = value
-        self.update_depth_dict(key, value)
-
+        self.update_dict(key, value)
+ 
     def __getitem__(self, key):
         try:
-            return self.dict_flat[key]
+            return dict.__getitem__(self, key)
         except KeyError:
-            self.dict_flat.update(dict(self.flat_dict(self)))
-            return self.dict_flat[key]
+            return self.flat[key]
 
     def __str__(self):
         return dumps(self, indent=4)
@@ -172,5 +206,4 @@ print(flat)
 }
 ```
 
-实现了 `flat_to_depth` 能快速设置深层数据
-`__str__` 能直接格式化打印结果
+
