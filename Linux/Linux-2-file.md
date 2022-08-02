@@ -1,14 +1,13 @@
 <!--
- * @FilePath: \文档\Learning\Linux\Linux-file.md
+ * @FilePath: \文档\Learning\Linux\Linux-2-file.md
  * @Author: facser
  * @Date: 2022-07-18 15:02:16
- * @LastEditTime: 2022-07-27 21:23:03
+ * @LastEditTime: 2022-07-31 21:25:53
  * @LastEditors: facser
  * @Description: 
 -->
-# Linux File Folder
 
-## 文件
+# Linux File
 
 ### 常用目录
 

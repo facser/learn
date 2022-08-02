@@ -4,6 +4,25 @@
 如何设计代码逻辑？
 
 ---
+写程序让机器看懂
+
+用代码描述 人理解 的过程或对象
+
+## 接口 API
+
+(Application Programming Interface)
+
+编程的本质: 调用 API 封装
+
+控制
+实现: 库 模块
+
+描述模拟现实事物和队形
+属性 行为
+
+## 函数
+
+调用和封装
 
 ## 代码质量
 
@@ -30,6 +49,7 @@
 
 > Procedural-Oriented Programming
 
+数据和算法分开
 
 ## 面向对象 OOP
 
