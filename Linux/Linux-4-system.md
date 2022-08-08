@@ -2,7 +2,7 @@
  * @FilePath: \文档\Learning\Linux\Linux-4-system.md
  * @Author: facser
  * @Date: 2022-07-18 15:02:16
- * @LastEditTime: 2022-08-08 22:14:46
+ * @LastEditTime: 2022-08-08 22:29:37
  * @LastEditors: facser
  * @Description: 
 -->
@@ -67,7 +67,7 @@
  $ systemctl list-units --type=service           # 查看所有已启动的服务
 ```
 
-#### [netstat]() : network statistics
+#### [netstat](https://linux.alianga.com/c/netstat.html) : network statistics
 
 ```bash
  $ netstat <opt>                                 # 显示网络端口信息
@@ -75,4 +75,21 @@
  $ netstat -t                                    # 显示 TCP 网络端口信息
  $ netstat -u                                    # 显示 UDP 网络端口信息
  $ netstat -l                                    # --listening 显示处于监听状态的端口
+```
+
+#### [ifconfig](https://linux.alianga.com/c/ifconfig.html) : network interfaces configuring
+
+```bash
+ $ ifconfig                                      # 显示网络接口配置和参数
+```
+
+#### [kill](https://linux.alianga.com/c/kill.html)
+
+```bash
+ $ kill <opt> <pid>                              # 杀死进程
+ $ kill -9 <pid>                                 # 强制杀死 <pid> 进程
+
+ $ killall <name>                                # 杀死所有名字为 <name> 进程
+ $ pkill -o <name>                               # 杀死 <name> 进程中进程号最小的
+ $ pkill -n <name>                               # 杀死 <name> 进程中进程号最大的
 ```
