@@ -2,7 +2,7 @@
  * @FilePath: \文档\Learning\BASH\BASH-1-basic.md
  * @Author: facser
  * @Date: 2022-08-09 21:20:45
- * @LastEditTime: 2022-08-09 22:47:56
+ * @LastEditTime: 2022-08-10 22:14:00
  * @LastEditors: facser
  * @Description: 
 -->
@@ -27,7 +27,7 @@ shell 命令基本按照上述格式, 命令与选项, 参数之间以空格分�
 #### [echo](https://linux.alianga.com/c/echo.html)
 
 ```bash
- $ echo <string>                                 # 打印 string 内容
+ $ echo <string>                                 # 打印 string 内容, 不激活转义符号
  $ echo -e <string>                              # 激活字符中的转义字符
 
  $ echo "first \nsecond"                        
@@ -45,6 +45,9 @@ shell 命令基本按照上述格式, 命令与选项, 参数之间以空格分�
 
  $ printf "%s length is %.3f" "line" "4.53245"   # 字符串格式化 
  > line length is 4.523
+
+ $ printf "%-6s_%s" "left" "right"               # 默认右对齐, 带 - 左对齐, 数字表示占位
+ > left  _rightf
 ```
 
 ### 变量引用
@@ -67,12 +70,43 @@ BASH 只有字符串一种数据类型, 想要操作字符串或者引用变量�
 
 建议字符串操作时, 添加引号使变量操作更加明确(易于区分编辑器中字符串与变量)
 
+### 引号
 
+#### 单引号与双引号
 
+BASH 区分单引号和双引号, 单引号内全部为当做字符(转义符有效), 双引号会激活变量引用
 
+```bash
+ $ name="facser"
 
+ $ echo 'hellow\t$name'                          # 单引号禁止变量名扩展, 原样打印
+ > hellow  $name
 
+ $ echo "hellow\t$name"                          # 双引号允许变量名扩展
+ > hellow  facser
+```
 
+#### 反引号
+
+反引号用于执行命令, 一般用于将命令结果赋值给变量
+
+```bash
+ $ time=`date`                                   # 将 data 命令结果赋值给 time
+ $ echo "$time"                                  # 打印变量值
+ > Wed Aug 10 21:49:38 HKT 2022
+
+ $ time=$(date)                                  # 与反引号效果一致
+```
+
+由于反引号易于与单引号混淆, 建议使用 `$()` 方式, 便于区分
+
+### 变量
+
+#### 环境变量
+
+```bash
+ $ env                                           # 显示所有环境变量
+```
 
 ## 常用转义符号
 
