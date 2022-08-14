@@ -2,13 +2,17 @@
  * @FilePath: \文档\Learning\BASH\BASH-1-basic.md
  * @Author: facser
  * @Date: 2022-08-09 21:20:45
- * @LastEditTime: 2022-08-10 22:14:00
+ * @LastEditTime: 2022-08-14 13:40:09
  * @LastEditors: facser
  * @Description: 
 -->
 # BASH
 
-## BASH Basic
+对于脚本语言还是比较喜欢 `python` 但是时不时要用到 `shell`, 每次看一点没多久又忘了, 所以想系统性学习一下, 避免浪费时间.
+
+[BASH 教程](https://wangdoc.com/bash/)
+
+## Bash Basic
 
 BASH 基础语法
 
@@ -27,7 +31,7 @@ shell 命令基本按照上述格式, 命令与选项, 参数之间以空格分�
 #### [echo](https://linux.alianga.com/c/echo.html)
 
 ```bash
- $ echo <string>                                 # 打印 string 内容, 不激活转义符号
+ $ echo <opt> <string>                           # 打印 string 内容, 不激活转义符号
  $ echo -e <string>                              # 激活字符中的转义字符
 
  $ echo "first \nsecond"                        
@@ -37,6 +41,8 @@ shell 命令基本按照上述格式, 命令与选项, 参数之间以空格分�
  > first 
  > second
 ```
+
+注: 更多转义符号浏览 [转义符号](#常用转义符号)
 
 #### [printf](https://linux.alianga.com/c/printf.html)
 
@@ -104,8 +110,63 @@ BASH 区分单引号和双引号, 单引号内全部为当做字符(转义符有
 
 #### 环境变量
 
+BASH 环境中的变量, 系统自定义的全局变量, 变量名全为大写, 用于保存环境信息
+
 ```bash
  $ env                                           # 显示所有环境变量
+
+ $ echo $HOME                                    # 打印用户目录
+ > /home/facser
+
+ $ echo $PATH                                    # 运行环境目录组成的列表
+
+ $ export <var>=<val>                            # 自定义环境变量, 新开窗口或重启失效
+ $ unset <var>                                   # 删除变量, 环境变量和自定义变量均可
+ $ set <var>                                     # 显示所有 shell 变量
+```
+
+注: 更多环境变量浏览 [环境变量](#常用环境变量)
+
+#### 自定义变量
+
+```bash
+ $ <var>=<val>                                   # 变量定义, 等号两边不允许空格
+ 
+ $ $<char>                                       # 如 $? #! 等特殊含义变量
+ $ echo $?                                       # 上个命令返回值
+ > 0                                             # 0 表示命令执行成功, 其它只表示失败或错误
+```
+
+注: 更多特殊变量
+
+```bash
+ $ ${variable:-value}                            # 变量为空或不存在返回 value
+ $ ${variable:+value}                            # 变量存在且不为空返回 value
+
+ $ ${variable:=value}                            # 变量为空或不存在设置变量为 value, 返回 values
+ $ ${variable:?message}                          # 变量为空或不存在打印 message, 并退出
+
+ $ echo "hellow ${name:-facser}"
+ > hellow facser
+```
+
+```bash
+ $ declare <opt> <var>=<val>                     # 定义特殊类型变量
+
+ $ declare -i int1=8 int2=6 sum                  # 定义整数变量, 可直接数学运算
+ $ sum=int1*int2; echo $sum                      # 声明整数变量可直接数学运算
+ > 14
+ 
+ $ declare -a arr=(1 2 3)                        # 定义数组变量
+```
+
+```bash
+ $ let <var>=<expression>                        # 声明含算术表达式的变量
+
+ $ let "sum = 7 + 8"                                 
+ $ let "add = sum++"
+ $ echo "sum: $sum  add: $add"
+ > sum: 15 add: 16
 ```
 
 ## 常用转义符号
@@ -116,3 +177,18 @@ BASH 区分单引号和双引号, 单引号内全部为当做字符(转义符有
 |`\r`|回车, 回到行首|
 |`\t`|Tab 键|
 |`\b`|光标左移 1 位|
+
+## 常用环境变量
+
+|变量|含义|
+|:-:|:-:|
+|`HOME`|用户目录|
+
+## 特殊变量
+
+|变量|含义|
+|:-:|:-:|
+|`$?`|上一个命令的返回值|
+|`$!`|上一个命令的 pid|
+|`$$`|当前 shell 进程|
+|`$@`|当前函数或脚本的所有参数|
