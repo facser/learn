@@ -47,6 +47,8 @@
  $ [[ expr ]]                                    # 较上述额外支持正则, 括号内空格是必须的
 ```
 
+注: 单括号需要注意变量引用为空导致命令报错或逻辑错误
+
 #### 数值比较
 
 ```bash
@@ -77,4 +79,49 @@
 ```bash
  $ [ -e file ]                                   # exist 文件存在为 true
  $ [ -d file ]                                   # dir 文件存在, 且是目录为 true
+```
+
+#### 正则判断
+
+```bash
+ $ [[ expression]]                               # 仅双括号支持正则表达式
+
+ $ [[ "abc" =~ "b" ]]                            # true 判断 abc 是否包含 b 
+ $ [[ "01:01:01" =~ "([0-9]{2}\:){2}[0-9]{2}" ]] # true 正则匹配时间格式
+```
+
+#### 逻辑判断
+
+```bash
+ $ [ ! expression ]                              # 单括号逻辑非
+ $ [[ ! expression ]]                            # 双括号逻辑非
+
+ $ [ true -a true ]                              # true 单括号逻辑与
+ $ [[ true && false ]]                           # false 双括号逻辑与
+
+ $ [ false -o true ]                             # true 单括号逻辑或
+ $ [[ false || true ]]                           # true 双括号逻辑或
+```
+
+### 逻辑运算
+
+#### 逻辑与
+
+```bash
+ $ command && command                            # 前一条命令成功才会执行后一条
+
+ $ true && echo "true"                           # true 返回值 0, 继续执行
+ > true
+
+ $ ! false && echo "not false"                   # 前一条命令返回值 0, 继续执行
+ > not false
+```
+
+#### 逻辑或
+
+```bash
+ $ command || command                            # 前一条失败后才会继续执行后一条
+
+ $ false || echo "false"                         # false 返回值 1, 执行下一条
+ > false
 ```
