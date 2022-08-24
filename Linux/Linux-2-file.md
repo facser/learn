@@ -21,6 +21,34 @@
 |`/home`|Home Directories      |普通用户的主目录|
 |`/proc`|Process Information   |虚拟文件系统, 以映射系统与进程在内存中的信息|
 
+### 特殊文件
+
+|位置|说明|
+|:-|:-:|
+|`/etc/environment`                    |任意用户打开命令行加载, 系统环境变量|
+|`/etc/profile`                        |任意用户打开命令行加载|
+|`/etc/bash.bashrc`                    |任意用户打开命令行加载|
+|`~/.profile`                          |当前用户打开命令行时执行的文件|
+|`~/.bashrc`                           |当前用户打开命令行时执行的文件|
+|`/ect/rc.d/rc.local`                  |系统启动时执行的文件(centos, redhat)|
+|`/lib/systemd/system/rc-local.service`|系统启动时执行的文件(Ubuntu)|
+
+注: 打开命令行加载顺序和表格顺序一致
+
+### Root 用户
+
+```bash
+ $ sudo passwd root
+ > Enter new UNIX password:                      # 设置 root 用户密码
+ > Retype new UNIX password:                     # 重复输入 root 密码
+ > passwd: password updated successfully         # 设置成功
+
+ $ su root                                       # 切换 root 用户
+\# exit                                          # 退出 root, 普通用户 $, root 用户 #
+
+ $ su <user>                                     # 切换用户
+```
+
 ### 文件查看
 
 #### [tree](https://www.linuxcool.com/tree)
