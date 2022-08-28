@@ -28,15 +28,14 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 
 ### [Git 官网](https://git-scm.com/)
 
-
 ```bash
- $ git --version             # 检查 git 是否安装
+ $ git --version                                 # 检查 git 是否安装
  > git version 1.8.3.1
 ```
 
 ```bash
- $ yum install git           # Centos Redhat 系统使用 yum 安装
- $ sudo apt-get install git  # Ubuntu Debian 系统使用 apt
+ $ yum install git                               # Centos Redhat 系统使用 yum 安装
+ $ sudo apt-get install git                      # Ubuntu Debian 系统使用 apt
 ```
 
 ## Git 配置
@@ -58,20 +57,20 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 > git-config - Get and set repository or global options
 
 ```bash
- $ git config --list --show-origin  # 查看所有配置及所在的文件, 早期版本不支持
+ $ git config --list --show-origin               # 查看所有配置及所在的文件, 早期版本不支持
 ```
 
 ```bash
- $ git config --system --list      # 查看系统的 git 配置
- $ git config --global --list      # 查看系统用户的 git 配置
- $ git config --local --list       # 查看当前库的 git 配置
- $ git config --list               # 列出上述所有配置, 可能出现重复项
+ $ git config --system --list                    # 查看系统的 git 配置
+ $ git config --global --list                    # 查看系统用户的 git 配置
+ $ git config --local --list                     # 查看当前库的 git 配置
+ $ git config --list                             # 列出上述所有配置, 可能出现重复项
 ```
 
 ```bash
- $ git config <key>                # 查看某项配置的值 
+ $ git config <key>                              # 查看某项配置的值 
 
- $ git config user.name            # 查看当前用户名
+ $ git config user.name                          # 查看当前用户名
  > facser
 ```
 
@@ -105,7 +104,7 @@ Git 是一个开源的版本控制器, 常被用来作为代码的搬运工, 记
 创建本地仓库
 
 ```bash
- $ git init   # 在当前目录创建.git 子目录(包含仓库所有 git 文件与版本数据)
+ $ git init                                      # 在当前目录创建.git 子目录(包含仓库所有 git 文件与版本数据)
 ```
 
 ### [git status](https://git-scm.com/docs/git-status)
@@ -128,28 +127,28 @@ git 用一下3种描述表示**文件状态**, 进一步可划分为**未追踪*
 
 当一个文件通过 `git add` 追踪后, 又修改了, 此时查看 `git status` 会如何显示？
 
-```git
+```bash
  $ git status
  >Your branch is up to date with 'origin/main'.
  >
  >Changes to be committed:                
  >        modified:   README.md           
- >        modified:   git.md             # git.md 已被追踪, 保存的是已追踪时内容
+ >        modified:   git.md                     # git.md 已被追踪, 保存的是已追踪时内容
  >
  >Changes not staged for commit:          
- >        modified:   git.md             # 新修改未被追踪
+ >        modified:   git.md                     # 新修改未被追踪
 ```
 
 通过过上面结果可知, 只要文件存在未被追踪的内容就会归入到工作区
 
-```git
- $ git status -s           # -s --short 显示简略信息
- > M  README               # 表示该文件已 add 和 commit, 未再修改
- > A  lib/git.rb           # 从未 commit 但已 add, 未再修改
- > MM Rakefile             # 已 commit 的文件, 最新的修改未 add
- > MD temp.txt             # commit 过, 当前已删除, 未 add 记录删除 
- > AM lib/git.md           # 从未 commit 但 add 过, 最新修改未 add
- > ?? LICENSE.txt          # 未 add 未追踪的文件
+```bash
+ $ git status -s                                 # -s --short 显示简略信息
+ > M  README                                     # 表示该文件已 add 和 commit, 未再修改
+ > A  lib/git.rb                                 # 从未 commit 但已 add, 未再修改
+ > MM Rakefile                                   # 已 commit 的文件, 最新的修改未 add
+ > MD temp.txt                                   # commit 过, 当前已删除, 未 add 记录删除 
+ > AM lib/git.md                                 # 从未 commit 但 add 过, 最新修改未 add
+ > ?? LICENSE.txt                                # 未 add 未追踪的文件
 ```
 
 |缩写|位置        |详细               |
@@ -171,9 +170,9 @@ git 用一下3种描述表示**文件状态**, 进一步可划分为**未追踪*
 追踪文件或修改, add 之后文件会进入暂存区
 
 ```bash
- $ git add <file>          # 记录指定文件修改
- $ git add .               # 记录当前目录下所有文件修改(上层文件未记录)
- $ git add --all           # 记录当前项目所有文件修改(推荐)
+ $ git add <file>                                # 记录指定文件修改
+ $ git add .                                     # 记录当前目录下所有文件修改(上层文件未记录)
+ $ git add --all                                 # 记录当前项目所有文件修改(推荐)
 ```
 
 ### [git diff](https://git-scm.com/docs/git-diff)
@@ -184,14 +183,14 @@ git 用一下3种描述表示**文件状态**, 进一步可划分为**未追踪*
 
 ```bash
  $ git diff
- > diff --git a/test.log b/test.log    # 比对 test.log 文件两个状态
+ > diff --git a/test.log b/test.log              # 比对 test.log 文件两个状态
  > index 61e2b58..9b6b46c 100644
- > --- a/test.log                      # - 开头是被追踪的内容
- > +++ b/test.log                      # + 开头是未被追踪的内容
+ > --- a/test.log                                # - 开头是被追踪的内容
+ > +++ b/test.log                                # + 开头是未被追踪的内容
  > @@ -1 +1,1 @@
- > -git add once                       # 修改前是 git add once
+ > -git add once                                 # 修改前是 git add once
  > \ No newline at end of file
- > +before second add run git diff     # 修改后变成 before second add run git diff
+ > +before second add run git diff               # 修改后变成 before second add run git diff
  > \ No newline at end of file
 ```
 
@@ -204,12 +203,12 @@ git 用一下3种描述表示**文件状态**, 进一步可划分为**未追踪*
 commit 时可以添加代码改动信息便于回退时进行定位
 
 ```bash
- $ git commit -m "<commit message>"    # message 较短可直接填写
- $ git commit -s                       # message 较长, 使用默认编辑器编辑 commit
- $ git commit --amend                  # 在上次 commit 基础上修改, 并替换原来的 commit
- $ git commit --amend --no-edit        # 使用上次 commit 且不修改, 即本次 commit 和上次合并
+ $ git commit -m "<commit message>"              # message 较短可直接填写
+ $ git commit -s                                 # message 较长, 使用默认编辑器编辑 commit
+ $ git commit --amend                            # 在上次 commit 基础上修改, 并替换原来的 commit
+ $ git commit --amend --no-edit                  # 使用上次 commit 且不修改, 即本次 commit 和上次合并
 
- $ git checkout -- <file>              # 撤销工作区的修改, 回到上次 commit 状态
+ $ git checkout --<file>                         # 撤销工作区的修改, 回到上次 commit 状态
 ```
 
 注: 可通过 `git config --global core.editor vim` 修改编辑器为 `vim`
@@ -221,8 +220,8 @@ commit 时可以添加代码改动信息便于回退时进行定位
 查看各 commit 版本信息
 
 ```bash
- $ git log                     # 显示所有 commit 的版本的详细信息
- $ git log --pretty=oneline    # 显示 commit 版本的简略信息
+ $ git log                                       # 显示所有 commit 的版本的详细信息
+ $ git log --pretty=oneline                      # 显示 commit 版本的简略信息
 ```
 
 ### [git reset](https://git-scm.com/docs/git-reset)
@@ -232,8 +231,8 @@ commit 时可以添加代码改动信息便于回退时进行定位
 通过 `git log` 定位回退的版本, 使用 `git reset` 执行回退
 
 ```bash
- $ git reset --hard HEAD^                 # 回退到上个版本
- $ git reset --hard HEAD <commit number>  # 回到指定 commit 版本
+ $ git reset --hard HEAD^                        # 回退到上个版本
+ $ git reset --hard HEAD <commit number>         # 回到指定 commit 版本
 ```
 
 ### 远程仓库
@@ -247,17 +246,17 @@ commit 时可以添加代码改动信息便于回退时进行定位
 可以通过两种方式添加远程仓库
 
 ```bash
- $ git clone <Repository url>    # 克隆远端仓库到本地, 自动绑定链接对应的仓库
+ $ git clone <Repository url>                    # 克隆远端仓库到本地, 自动绑定链接对应的仓库
 
- $ git remote -v                 # 查看本地仓库关联的所有远端仓库
+ $ git remote -v                                 # 查看本地仓库关联的所有远端仓库
 ```
 
 ```bash
- $ git init                                  # 初始化本地仓库
- $ git add --all                             # 追踪目录下所有文件修改
- $ git commit -m "<commit message>"          # 记录修改生成一个版本到本地仓库
- $ git remote origin add <Repository url>    # 将远程仓库命名为 origin 并关联本地仓库
- $ git push -u orighin master                # 推送本地所有版本到远程仓库
+ $ git init                                      # 初始化本地仓库
+ $ git add --all                                 # 追踪目录下所有文件修改
+ $ git commit -m "<commit message>"              # 记录修改生成一个版本到本地仓库
+ $ git remote origin add <Repository url>        # 将远程仓库命名为 origin 并关联本地仓库
+ $ git push -u orighin master                    # 推送本地所有版本到远程仓库
 ```
 
 - 一个本地仓库可以关联多个远程仓库
@@ -271,21 +270,21 @@ commit 时可以添加代码改动信息便于回退时进行定位
 将本地所有新增的 commit 推送到远端仓库
 
 ```bash
- $ git push origin master     # 提交所有 commit 到 origin 仓库的 master 分支
- $ git push -u origin master  # 将 origin 仓库 master 分支作为拉取和推送的默认值
+ $ git push origin master                        # 提交所有 commit 到 origin 仓库的 master 分支
+ $ git push -u origin master                     # 将 origin 仓库 master 分支作为拉取和推送的默认值
 
- $ git push <repo> <branch>   # 使用过 -u 后可以省略仓库和分支
+ $ git push <repo> <branch>                      # 使用过 -u 后可以省略仓库和分支
 ```
 
 ## 常规流程
 
 ```bash
- $ git clone <repo url>                # 克隆远端仓库到本地
- $ git add --all                       # 修改完后, 记录所有修改
- $ git commit -m "<commit message>"    # 推送到本地仓库
- $ git push -u origin master           # 将本地版本提交到远端仓库
+ $ git clone <repo url>                          # 克隆远端仓库到本地
+ $ git add --all                                 # 修改完后, 记录所有修改
+ $ git commit -m "<commit message>"              # 推送到本地仓库
+ $ git push -u origin master                     # 将本地版本提交到远端仓库
 
- $ git commit -a -m "<commit message>" # 同时记录修改并推送到本地仓库
+ $ git commit -a -m "<commit message>"           # 同时记录修改并推送到本地仓库
 ```
 
 ## 分支
@@ -293,22 +292,22 @@ commit 时可以添加代码改动信息便于回退时进行定位
 分支是从主线延伸出**同源**的备份, 分支可以随意修改操作而不影响主线
 
 ```bash
- $ git branch                     # 查看所有分支及当前分支所处
+ $ git branch                                    # 查看所有分支及当前分支所处
  > * master
  >   fluid
 
- $ git branch <branch name>       # 创建一个分支
+ $ git branch <branch name>                      # 创建一个分支
  
- $ git checkout <branch name>     # 跳转到<branch name>分支
- $ git checkout -b <branch name>  # 创建分支并跳转到该分支 
+ $ git checkout <branch name>                    # 跳转到 <branch name> 分支
+ $ git checkout -b <branch name>                 # 创建分支并跳转到该分支 
 ```
 
 当想要将分支代码并入到主线时, 使用 `git checkout` 跳转到**主线**
 再使用 `git merge <branch name>` 便可以将指定分支合并到主线
 
 ```bash
- $ git branch                  # 确认当前分支是否为主线
- $ git merge <branch name>     # 将 <branch name> 分支合并到当前所处分支
+ $ git branch                                    # 确认当前分支是否为主线
+ $ git merge <branch name>                       # 将 <branch name> 分支合并到当前所处分支
 ```
 
 ## .gitignore
@@ -317,12 +316,12 @@ commit 时可以添加代码改动信息便于回退时进行定位
 
 ```bash
  $ cat .gitignore
- > *.pyc              # 忽略当前项目内所有 .pyc 结尾的文件
- > !main.pyc          # 强制跟踪所有 main.pyc
- > /*.log             # 忽略当前目录下 .log 结尾文件, 不影响上层的文件
- > temp/              # 忽略整个项目内所有 temp 文件夹
- > /lib/*.pyc         # 忽略当前 lib 目录 下一级的 pyc 文件, lib 下多层目录不受影响  
- > lib/**/.pyc        # 忽略项目内所有 lib 文件夹内的 pyc 文件
+ > *.pyc                                         # 忽略当前项目内所有 .pyc 结尾的文件
+ > !main.pyc                                     # 强制跟踪所有 main.pyc
+ > /*.log                                        # 忽略当前目录下 .log 结尾文件, 不影响上层的文件
+ > temp/                                         # 忽略整个项目内所有 temp 文件夹
+ > /lib/*.pyc                                    # 忽略当前 lib 目录 下一级的 pyc 文件, lib 下多层目录不受影响  
+ > lib/**/.pyc                                   # 忽略项目内所有 lib 文件夹内的 pyc 文件
 ```
 
 ## SSH key 密钥
@@ -339,8 +338,8 @@ commit 时可以添加代码改动信息便于回退时进行定位
 生成两个密钥文件, 将公钥放到代码托管平台的账号设置中
 
 ```bash
- $ ssh-keygen                             # 自动生成密钥
- $ ssh-keygen -t rsa -C "<user.mail>"     # 生成 rsa 类型带邮箱注释信息的密钥
+ $ ssh-keygen                                    # 自动生成密钥
+ $ ssh-keygen -t rsa -C "<user.mail>"            # 生成 rsa 类型带邮箱注释信息的密钥
 ```
 
 - 密钥由系统生成, 放入用户设置, 所以是系统和账户绑定
