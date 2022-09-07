@@ -35,20 +35,6 @@
 
 注: 打开命令行加载顺序和表格顺序一致
 
-### Root 用户
-
-```bash
- $ sudo passwd root
- > Enter new UNIX password:                      # 设置 root 用户密码
- > Retype new UNIX password:                     # 重复输入 root 密码
- > passwd: password updated successfully         # 设置成功
-
- $ su root                                       # 切换 root 用户
-\# exit                                          # 退出 root, 普通用户 $, root 用户 #
-
- $ su <user>                                     # 切换用户
-```
-
 ### 文件查看
 
 #### [tree](https://www.linuxcool.com/tree)

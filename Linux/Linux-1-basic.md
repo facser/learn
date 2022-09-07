@@ -47,6 +47,31 @@
  $ !!                                            # 执行上一条命令
 ```
 
+### Root 用户
+
+```bash
+ $ sudo passwd root
+ > Enter new UNIX password:                      # 设置 root 用户密码
+ > Retype new UNIX password:                     # 重复输入 root 密码
+ > passwd: password updated successfully         # 设置成功
+
+ $ su root                                       # 切换 root 用户
+\# exit                                          # 退出 root, 普通用户 $, root 用户 #
+
+ $ su <user>                                     # 切换用户
+```
+
+sudo 免密码
+
+```bash
+ $ sudo vi /etc/sudoers                          # 编辑配置文件
+
+ > %sudo ALL=(ALL:ALL) ALL                       # 找到这一栏, 建议注释掉复制一行修改
+ > %sudo ALL=(ALL:ALL) NOPASSWD:ALL              # 修改后, 强制保存退出
+```
+
+注: 该文件必须强制写入, 不能修改文件权限, 否则报错
+
 ### 通配符号
 
 #### `？` 任意单个字符
