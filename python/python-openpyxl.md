@@ -107,25 +107,75 @@ python excel 模块
 
 ## 样式
 
-- font
-- Color
-- Border
-
 ### 字体
 
 ```python
+ from openpyxl.styles import Font
+
+ cell.font = Font(
+   name="微软雅黑",                                  # 字体
+   size=15,                                         # 字体大小
+   color="0000FF",                                  # 字体颜色，用16进制rgb表示
+   bold=True,                                       # 是否加粗，True/False
+   italic=True,                                     # 是否斜体，True/False
+   strike=None,                                     # 是否使用删除线，True/False
+   underline=None,                                  # 下划线, 可选'singleAccounting', 'double', 'single', 'doubleAccounting'
+ )
 
 ```
 
-### 颜色
+### 填充颜色
 
 ```python
+ from openpyxl.styles import PatternFill
 
+ cell.fill = PatternFill(
+    patternType="solid",                         # 填充类型
+    fgColor="F562a4",                            # 前景色，16进制rgb
+    bgColor="0000ff",                            # 背景色，16进制rgb
+ )
+
+ patternType:                                    # patternType 可选值
+     none、solid、darkGray、mediumGray、lightGray、
+     lightDown、lightGray、lightGrid
 ```
 
 ### 边框
 
 ```python
+ from openpyxl.styles import Border, Side
+
+ side = Side(
+   style="medium",                               # 边框样式
+   color="ff66dd",                               # 边框颜色，16进制rgb表示
+ )
+
+ style:                                          # style 可选值
+     dashDot、dashDotDot、dashed、dotted、double、
+     hair、medium、mediumDashDot、mediumDashDotDot、
+     mediumDashed、slantDashDot、thick、thin
+
+ cell.border = Border(
+    top=side,                                    # 上边框使用定义的 side
+    bottom=side,                                 # 下边框使用定义的 side
+    left=side,                                   # 左边框使用定义的 side
+    right=side,                                  # 右边框使用定义的 side
+    diagonal=side                                # 对角线使用定义的 side
+)
 
 ```
 
+### 对齐
+
+```python
+ from openpyxl.styles import Alignment
+
+ cell.alignment = Alignment(
+    horizontal='left',                           # 水平对齐，可选general、left、center、right、fill、justify、centerContinuous、distributed
+    vertical='top',                              # 垂直对齐， 可选top、center、bottom、justify、distributed
+    text_rotation=0,                             # 字体旋转，0~180整数
+    wrap_text=False,                             # 是否自动换行
+    shrink_to_fit=False,                         # 是否缩小字体填充
+    indent=0,                                    # 缩进值
+)
+```
