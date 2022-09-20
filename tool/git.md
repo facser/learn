@@ -255,7 +255,7 @@ commit 时可以添加代码改动信息便于回退时进行定位
  $ git init                                      # 初始化本地仓库
  $ git add --all                                 # 追踪目录下所有文件修改
  $ git commit -m "<commit message>"              # 记录修改生成一个版本到本地仓库
- $ git remote origin add <Repository url>        # 将远程仓库命名为 origin 并关联本地仓库
+ $ git remote add origin <Repository url>        # 将远程仓库命名为 origin 并关联本地仓库
  $ git push -u orighin master                    # 推送本地所有版本到远程仓库
 ```
 
