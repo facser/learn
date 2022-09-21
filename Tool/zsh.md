@@ -64,15 +64,12 @@ zsh能基本完美兼容bash的命令，并且使用起来更加优雅
 
 ## zsh 安装与配置
 
-
 ### 下载安装
 
 ```zsh
  $ sudo apt install zsh                          # Ubuntu 直接下载安装
 
  $ yum install zsh                               # Centos Redhat yum 安装版本低无法添加 oh-my-zsh
-
- $ git clone git://git.code.sf.net/p/zsh/code zsh # git 下载 zsh 编译安装 
 ```
 
 ### 启动与环境
@@ -94,6 +91,8 @@ zsh能基本完美兼容bash的命令，并且使用起来更加优雅
 
 ```zsh
  $ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+ $ sh -c "$(curl -fsSL https://gitee.com/pocmon/ohmyzsh/raw/master/tools/install.sh)"
 ```
 
 注: .oh-my-zsh 默认安装在 ~/.oh-my-zsh, 主题夹为 ~/.oh-my-zsh/themes
@@ -103,9 +102,8 @@ zsh能基本完美兼容bash的命令，并且使用起来更加优雅
 ```zsh
  $ vi ~/.zshrc                                   # 修改 zsh 配置文件
 
- > ZSH_THEME="<主题>"                            # 更换 .oh-my-zsh 主题
-
- > export ZSH="<.oh-my-zsh位置>"                 # 定义 .oh-my-zsh 位置   
+ > ZSH_THEME="<主题>"                              # 更换 .oh-my-zsh 主题
+ > export ZSH="<.oh-my-zsh位置>"                   # 定义 .oh-my-zsh 位置   
 ```
 
 注: .oh-my-zsh 的位置是可变的, 只要在 .zshrc 配置中指定即可
@@ -115,7 +113,7 @@ zsh能基本完美兼容bash的命令，并且使用起来更加优雅
 .oh-my-zsh 有很多主题可更换, powerlevel10k 是另外一款爆火的主题
 
 ```zsh
- $ git clone https://github.com/romkatv/powerlevel10k.git  <.oh-my-zsh 主题文件夹>
+ $ git clone --depth=1 https://gitee.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
  $ vi ~/.zshrc                                   # 修改 zsh 主题
  > ZSH_THEME="powerlevel10k/powerlevel10k" 
@@ -126,3 +124,73 @@ $ p10k configure                                 # 重新设置主题配置
 ```
 
 注: 配置生效后, 自动进入配置选项, 逐一选择即可
+
+### zsh-syntax-highlighting
+
+错误语法高亮, 正确命令绿色, 错误命令红色
+
+```bash
+ $ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+ $ vi ~/.bashrc                                  # 编辑 zsh 配置文件, plugins 添加插件
+ > plugins=(
+ >   ...
+ >   zsh-syntax-highlighting
+ > )
+
+ $ source ~/.zshrc                               # 配置立即生效
+```
+
+
+### zsh-autosuggestions
+
+补全历史命令
+
+```bash
+ $ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+ $ vi ~/.bashrc                                  # 编辑 zsh 配置文件, plugins 添加插件
+ > plugins=(
+ >   ...
+ >   zsh-autosuggestions
+ > )
+
+ $ source ~/.zshrc                               # 配置立即生效
+```
+
+### z 
+
+仅输入文件即可跳转到曾经进入的文件目录(oh-my-zsh自带,无需下载)
+
+```bash
+ $ vi ~/.bashrc                                  # 编辑 zsh 配置文件, plugins 添加插件
+ > plugins=(
+ >   ...
+ >   z
+ > )
+
+ $ source ~/.zshrc                               # 配置立即生效
+
+ $ ~/Desktop/zsh/a/b/c                           # 进入过 c 文件目录
+ $ ...                                           # 随意进入其他路径
+ $
+ $ z c                                           # z 命令加文件夹名即可回去
+
+```
+
+### extract
+
+一键解压 tar, gz, zip, rar 包(oh-my-zsh自带,无需下载)
+
+```bash
+ $ vi ~/.bashrc                                  # 编辑 zsh 配置文件, plugins 添加插件
+ > plugins=(
+ >   ...
+ >   extract
+ > )
+
+ $ x package.tar.gz                              # x 命令加压缩包即可解压
+ $ x package.zip
+
+```
+
