@@ -7,7 +7,56 @@
 
 ### 同步
 
+同步执行代码时是顺序逐行执行的, 且必须执行完当前行才能执行下一行.
+
+```python
+ import time
+
+ print(f"start at {time.strftime('%X')}")
+ time.sleep(5)
+ time.sleep(3)
+ print(f"end at {time.strftime('%X')}")
+
+ start at 10:56:24
+ end at 10:56:32
+```
+
+以上同步代码, 耗时 8s, sleep 不占用 CPU(I/O 操作执行后也不会占用 CPU), 浪费了 CPU 资源
+
 ### 异步
+
+异步执行代码也是顺序执行的, 但是遇到 I/O 阻塞等耗时操作不会等待执行结果, 直接继续执行后续.
+
+```python
+ import asyncio
+ import time
+
+ async def wait(delay: int):
+     print(f'{name} before')
+     await asyncio.sleep(delay)
+     print(f'{name} after')
+
+ async def main():
+     await asyncio.gather(wait(5), wait(3))
+
+ print(f"start at {time.strftime('%X')}")
+ asyncio.run(main())
+ print(f"end at {time.strftime('%X')}")
+
+ start at 11:17:44
+ first before
+ second before
+ second after
+ first after
+ end at 11:17:49
+
+```
+
+使用异步执行时, 只耗时 5s, 两个 wait 函数都执行完成
+
+### 协程
+
+### 多线程
 
 ## 异步实现
 
@@ -41,3 +90,5 @@
 ```python
 
 ```
+
+### event_loop
