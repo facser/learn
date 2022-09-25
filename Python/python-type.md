@@ -62,8 +62,8 @@ python 类型注解:
 
 ### 联合类型 
 
-- Optional
 - Union
+- Optional
 
 ```python
  from typing import Union
@@ -85,17 +85,22 @@ python 类型注解:
 
 ### 抽象类型
 
+ - Mapping
+ - MutableMapping
+ - Sequence
+ - Iterable
+
 数组, 元组, 集合
 
 
-### 函数类型注解
+### 函数注解
 
 ```Python
  def func(name: str, age: int) -> dict:          # 参数添加类型, 返回值添加类型
-  return {'name': name, 'age': age}
+     return {'name': name, 'age': age}
 
-  def func(name: str, age: int=18) -> str, int:  # 返回多个
-    return name, age
+  def func(name: str, age: int=18) -> str, int:  # 返回多个值
+      return name, age
 ```
 
 ### Callable
@@ -113,4 +118,73 @@ Callable[[args_type], return_type]
   foo: Callable[[str], None] = func              # 函数类型注解, 第一个参数是函数参数类型, 第二个是返回值类型
 
   fun: Callable[[int], bool] = lambda x: x is 1  # 匿名函数类型注解
+```
+
+### 泛型
+
+当对函数使用类型注解时, 参数或返回值有多种类型的可能, 我们会使用 Union 联合类型
+但是, 这依然会出现问题, 如我们希望函数参数和返回值类型应当一致
+
+```python
+ def foo(a:str | int, b:str | int) -> str | int: # 参数可以是整形也可以是字符串
+  return a + b                                   # 可能出现 a b 类型不一致情况
+
+ from typing import TypeVar
+
+ T = TypeVar('T', int, str)                      # T 类型可以字符串或整数, 第一个参数和变量名一致(T 'T')
+ def foo(a: T, b: T) -> T:                       # a b 及返回值类型一致
+     return a + b
+
+ any = TypeVar('any')                            # 任意类型的泛型
+```
+
+泛型可以使变量表示多种类型同时约束使用该类型的变量为同一类型
+
+### 自定义类型
+
+```python
+ from typing import NewType
+
+matrix = NewType('matrix', list[list[int]])      # 自定义类型并命名
+nums = NewType('nums', list[int])               
+strings = NewType('strings', str)
+
+a: matrix = matrix([[1,2], [2,3]])               # 需要实例化赋值
+b: nums = nums([1,2,3])
+c: strings = strings('str')
+```
+
+### 类型别名
+
+```python
+ 
+ matrix = list[list[int]]                        # 自定义类型并命名
+ nums = list[int]              
+ strings = str
+
+ a: matrix = matrix([[1,2], [2,3]])              # 无需实例化与正常类型解一致
+ b: nums = nums([1,2,3])
+ c: strings = strings('str')
+
+```
+
+### class
+
+通过类来定义复杂的组合类型, 类似接口
+
+```python
+ from pydantic import BaseModel
+
+ class Person(BaseModel):
+     id: int
+     name: str
+     age: int
+     email: str
+     
+ jack: Person = Person(
+     id = 3,
+     name = 'jack',
+     age = 18,
+     email = 'jack@example.com',
+ )
 ```
