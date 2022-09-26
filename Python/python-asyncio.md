@@ -27,17 +27,19 @@
 
 异步执行代码也是顺序执行的, 但是遇到 I/O 阻塞等耗时操作不会等待执行结果, 直接继续执行后续.
 
+异步无法解决庞大计算量的阻塞
+
 ```python
  import asyncio
  import time
 
- async def wait(delay: int):
+ async def wait(delay: int, name: str):
      print(f'{name} before')
      await asyncio.sleep(delay)
      print(f'{name} after')
 
  async def main():
-     await asyncio.gather(wait(5), wait(3))
+     await asyncio.gather(wait(5, 'first'), wait(3, 'second))
 
  print(f"start at {time.strftime('%X')}")
  asyncio.run(main())
@@ -54,9 +56,13 @@
 
 使用异步执行时, 只耗时 5s, 两个 wait 函数都执行完成
 
+### 同步代码表示异步
+
 ### 协程
 
 ### 多线程
+
+多线程就是实现异步的一个方式
 
 ## 异步实现
 
