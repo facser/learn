@@ -7,135 +7,263 @@
 
 ## 风格
 
-- 风格一致性
-- 代码分组, 形成代码块
-
-
-### 风格一致性
-
-- 命名规范一致性
-- 空格与换行
+- 空格
 - 对齐
+- 换行
+- 一致性
+
+#### 空格
+
+使用空格使运算语句更清晰, 分隔多个数据, 参数
+
+```python
+ 4 + 2                                           # 6 二元运算
+ 2 ** 3                                          # 8 指数运算
+ 
+ love = True                                     # 赋值
+ love is True                                    # True 逻辑判断
+ not love                                        # False 非运算
+ love > (not love)                               # True 比较运算
+ love and love                                   # True 逻辑运算
+
+ (1, 2, 3)                                       # 数据之间空格区分
+ {'name': 'facser'}                              # 键值对区分 key value
+
+ func(msg='hellow', name='facser')               # 参数之间空格区分
+```
+
+```javascript
+ !true                                           // false 非运算 一元运算
+ ~2                                              // -3 按位取反
+ [1, 2, 3]                                       // 逗号前不需要空格
+ {'key': 'value'}                                // 括号开头和结尾无需空格
+```
+
+#### 对齐
+
+通过空格与缩进区分代码所属区域
+
+```javascript
+if (count) {
+    while (count--) {                            // while 循环在 if 条件下
+        console.log(count);                      // 打印操作在 while 循环内
+    };
+
+    console.log('while cycle over');             // 循环结束后打印结果
+}
+```
+
+```python
+run_long_name_function(
+    cycle='1',                                   # 函数名较长和参数过多, 换行需要缩进
+    step='reset',
+    log='pass',
+    time=133
+)
+
+{
+    'SIT': {
+        'TA': {
+            ...
+        }
+        'BMC': {
+            ...
+        },
+        'BIOS': {
+            ...
+        },
+        'SV': {
+            ...
+        },
+    }
+}
+```
+
+时用空行分隔无关的代码, 使相关的代码形成代码块
+
+```python
+def connect_sut():                               
+    title('Connect SUT Test', 3)
+    
+    if not ping(config['BMC_host'], count=5, delay=5):
+        display(f"BMC host {config['BMC_host']} connect failed ", False)
+        exit()
+        
+    if not ping(config['OS_host'], count=5, delay=5):
+        display(f"OS host {config['OS_host']} connect failed ", False)
+        exit()
+                    
+    if not exists(config['Tool_dir']):
+        display(f"{config['Tool_dir']} not exist ", False)
+        exit()
+    
+    try:
+        run(config['Get_bios_attribute'], code=True)
+    except RuntimeError as _:
+        display('Get BIOS option failed ', False)
+        exit()
+        
+    display('Connect SUT successfully')
+```
+
+#### 对齐
+
+相同的内容对齐后更容易发现差异, 代码整体更加美观整洁
+
+```python
+http.post(username='facser',  email='facser@example.com',  phone='12345678')
+http.post(username='kertory', email='kertory@example.com', phone='12345678')
+http.post(username='victory', email='victory@example.com', phone='12345678')
+http.post(username='petter',  email='petter@example.com',  phone='12345678')
+
+```
+
+### 一致性
+
+在一个项目里只使用一种代码风格
+1. 命名法(驼峰法, 蛇形命名)不要混用, 
+2. 相似的问题尽量使用同一种解决方式
+3. 相似的结构或处理方式, 代码格式尽量保持一致
 
 
-#### 命名规范一致性
+## 命名
 
-- 驼峰命名法
-- 蛇形命名法
+- 准确 突出重点
+- 简洁
+- 一致性
+
+命名目地: 把信息放入名字里
+变量命名: 名词 形容词 
+函数命名: 动词 名词 (形容词)
 
 ```bash
-ErrorTestMessage            # 大驼峰 大小写混用区分逻辑断点
-errTestMsg                  # 小驼峰
+ErrorTestMessage            # 大驼峰命名 大小写混用区分逻辑断点
+errTestMsg                  # 小驼峰命名
 
 error_test_message          # 蛇形命名, _ 区分断点  
 err_test_msg  
 ```
 
-#### 空格与换行
-
-
-
-```javascript
-
-if (...) {
-
-}
-
-if (...)
-{
-
-}
-```
-
-```python
-
-run_long_name_function(cycle='1', step='reset', result='pass', time=133)
-
-run_long_name_function(cycle='1',
-                       step='reset',
-                       log='pass',
-                       time=133)
-
-run_long_name_function(
-    cycle='1',
-    step='reset',
-    log='pass',
-    time=133
-)
-```
-
-```python
-username = 'facser'
-password = 'hellow world'
-email = 'facser@example.com'
-phone = '12345678'
-
-username = 'facser'
-password = 'hellow world'
-email    = 'facser@example.com'
-phone    = '12345678'
-```
-
-
-
-## 命名
-
-目标: 把信息放入名字里
-
-- 准确
-- 突出重点
-- 一致
-- 长度
-
-变量命名: 名词 形容词 
-函数命名: 动词 名词 (形容词)
-
-### 准确
+### 准确 突出重点
 
 使用 **准确** **具体** **单一**的词
+通过 **前缀** **后缀** 突出重点
 
-[常用动词](#常用动词)
-
-### 突出重点
-
-通过 前缀 后缀 突出重点
-
-|前缀|含义|
-|:-:|:-:|
-|is_xx|是不是|
-|has_xx|有没有|
-|should_xx|是否应该|
-|can_xx|能不能|
-
-避免反义命名
+正向语义命名
 
 ```python
- test_pass = True                                # 推荐 True 一般与成功, 正常对应 
- test_fail = False                               # 不推荐 False 一般与错误, 失败对应
+ test_pass = True                                # 推荐  
+ test_fail = False                               # 不推荐 
+
+ able = True                                     # 值与语义对应
+ unable = False                                  # 双重否定表示肯定
 ```
 
-度量命名带上单位
+布尔值添加前缀
+前缀添加形容词
 
 ```python
- time_secs = 8
- time_hours = 2
- time_days = 3 
+ is_xx                                           # 是不是
+ should_xx                                       # 是否应该
+ has_xx                                          # 有没有
+ can_xx                                          # 能不能
+
+ max_xx                                          # 最大的 
+ min_xx                                          # 最小的
+ avg_xx                                          # 平均的
 ```
 
-### 一致
+变量后缀添加单位或类型
+需要强调或者注意的内容放在最后
+
+```python
+ time_secs = 8                                   # 时间变量添加单位 
+ size_mb = 2                                     # 添加单位 mb
+ length_str = '5'                                # 添加值类型后缀
+ book_json = {'clean code': {...}}               # 添加值类型后缀
+
+ apple_red                                       # 强调 apple 的颜色
+ red_apple                                       # 强调 apple 个体
+```
 
 ### 长度
 
-在小的作用区域内可以使用简短的变量名
-
 使用常用的单词缩写
+省略无用的内容
+在小的作用域内可以使用简短的变量名
+
+```python
+ def get_basic_manager_controller_information():
+    ali_basic_manager_controller_username = 'admin'
+    ali_basic_manager_controller_password = 'admin'
+    ali_basic_manager_controller_informations_command = 'ipmitool mc info'
+
+ def get_bmc_info():
+    username = 'admin'
+    password = 'admin'
+    cmd_info = 'ipmitool mc info'
+```
 
 [常见单词缩写](#单词缩写)
 
+[常用动词](#常用动词)
+
+### 一致性
+
+项目中表示同样的值或类似的值, 命名方式应该一致
+不同函数的参数命名尽量保持一致
+不同区域的局域变量命名尽量保持一致
+
+```python
+
+def title(string='title', level=3, length=30):
+    pass
+
+def wait(delay=1, show=True, length=50):
+    pass
+
+def ping(host, count=3, delay=10, show=True):
+    pass
+
+```
+
 ## 注释
 
-注释
+代码比注释更重要
+强调使用规范和缺陷 
 
+### 代码比注释更重要
+
+注释是代码的补充, 先写好代码, 再使用注释引导读者理解代码
+无需用注释解释能从代码迅速推断的内容, 避免无效注释
+
+### 强调使用规范和缺陷
+
+函数和类的注释要表明参数类型, 使用方式
+表明对可能出现的问题
+
+```python
+def title(string='title', level=3, length=30):
+    """根据 level 等级打印不同样式的标题
+
+    Args:
+        string (str, optional): 标题内容. Defaults to 'title'.
+        level (int, optional): 标题等级 (0, 1, 2, 3). Defaults to 3.
+        length (int, optional): 标题一端符号的数量. Defaults to 30.
+
+    Returns:
+        None: 无返回值
+        
+    Attention:
+        标题有4个等级, 与符号对应关系是 
+            0: '##### title #####'  
+            1: '===== title =====' 
+            2: '***** title *****'  
+            3: '----- title -----'
+    """
+    pass 
+
+```
 
 # 附录
 
