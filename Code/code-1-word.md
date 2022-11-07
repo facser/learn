@@ -29,7 +29,7 @@
  (1, 2, 3)                                       # 数据之间空格区分
  {'name': 'facser'}                              # 键值对区分 key value
 
- func(msg='hellow', name='facser')               # 参数之间空格区分
+ func(msg='hello', name='facser')                # 参数之间空格区分
 ```
 
 ```javascript
@@ -79,6 +79,18 @@ run_long_name_function(
 }
 ```
 
+相同的内容对齐后更容易发现差异, 代码整体更加美观整洁
+
+```python
+http.post(username='facser',  email='facser@example.com',  phone='12345678')
+http.post(username='kertory', email='kertory@example.com', phone='12345678')
+http.post(username='victory', email='victory@example.com', phone='12345678')
+http.post(username='petter',  email='petter@example.com',  phone='12345678')
+
+```
+
+#### 换行
+
 时用空行分隔无关的代码, 使相关的代码形成代码块
 
 ```python
@@ -104,18 +116,6 @@ def connect_sut():
         exit()
         
     display('Connect SUT successfully')
-```
-
-#### 对齐
-
-相同的内容对齐后更容易发现差异, 代码整体更加美观整洁
-
-```python
-http.post(username='facser',  email='facser@example.com',  phone='12345678')
-http.post(username='kertory', email='kertory@example.com', phone='12345678')
-http.post(username='victory', email='victory@example.com', phone='12345678')
-http.post(username='petter',  email='petter@example.com',  phone='12345678')
-
 ```
 
 ### 一致性
