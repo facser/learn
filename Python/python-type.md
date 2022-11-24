@@ -181,10 +181,10 @@ c: strings = strings('str')
      age: int
      email: str
      
- jack: Person = Person(
+ victory: Person = Person(
      id = 3,
-     name = 'jack',
+     name = 'victory',
      age = 18,
-     email = 'jack@example.com',
+     email = 'victory@example.com',
  )
 ```

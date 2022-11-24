@@ -33,9 +33,9 @@
  > ./main.go:10:6: name declared but not used    // 变量 name 未使用, 报错
 
  name, _ := foo()                                // 使用匿名变量, 忽略 foo() 中一个返回值 
- fmt.Println("hellow ", name)
+ fmt.Println("hello ", name)
 
- > hellow  facser
+ > hello  facser
 ```
 
 ## 常量
@@ -104,7 +104,7 @@
  strings.Split(<str>, <split char>)              # 切割字符串成切片
  strings.Contains(<str>)                         # 判断是否包含
  strings.Index(<str>)                            # 字符串出现的位置
- strings.Join(<slice>, <join cahr>)              # 通过连接符号把切片连接成一个字符串
+ strings.Join(<slice>, <join char>)              # 通过连接符号把切片连接成一个字符串
 ```
 
 ## 附录

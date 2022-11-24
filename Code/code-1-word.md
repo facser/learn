@@ -12,7 +12,9 @@
 - 换行
 - 一致性
 
-#### 空格
+使用空格, 对齐, 换行的规则形成代码风格
+
+### 空格
 
 使用空格使运算语句更清晰, 分隔多个数据, 参数
 
@@ -27,9 +29,9 @@
  love and love                                   # True 逻辑运算
 
  (1, 2, 3)                                       # 数据之间空格区分
- {'name': 'facser'}                              # 键值对区分 key value
+ {'name': 'petter'}                              # 键值对区分 key value
 
- func(msg='hello', name='facser')                # 参数之间空格区分
+ func(msg='hello', name='petter')                # 参数之间空格区分
 ```
 
 ```javascript
@@ -39,7 +41,7 @@
  {'key': 'value'}                                // 括号开头和结尾无需空格
 ```
 
-#### 对齐
+### 对齐
 
 通过空格与缩进区分代码所属区域
 
@@ -89,7 +91,7 @@ http.post(username='petter',  email='petter@example.com',  phone='12345678')
 
 ```
 
-#### 换行
+### 空行
 
 时用空行分隔无关的代码, 使相关的代码形成代码块
 
@@ -132,22 +134,21 @@ def connect_sut():
 - 简洁
 - 一致性
 
-命名目地: 把信息放入名字里
-变量命名: 名词 形容词 
-函数命名: 动词 名词 (形容词)
+命名目地: 把信息放入名字里  
+变量命名: 名词 形容词    
+函数命名: 动词 名词 (形容词)     
 
 ```bash
-ErrorTestMessage            # 大驼峰命名 大小写混用区分逻辑断点
-errTestMsg                  # 小驼峰命名
+errTestMsg                  # 驼峰命名
 
-error_test_message          # 蛇形命名, _ 区分断点  
-err_test_msg  
+err_test_msg                # 蛇形命名, 下划线 _ 区分断点  
 ```
 
 ### 准确 突出重点
 
-使用 **准确** **具体** **单一**的词
-通过 **前缀** **后缀** 突出重点
+使用 **准确** **具体** **单一**的词    
+
+[常用动词](#常用动词)
 
 正向语义命名
 
@@ -159,8 +160,8 @@ err_test_msg
  unable = False                                  # 双重否定表示肯定
 ```
 
-布尔值添加前缀
-前缀添加形容词
+通过 **前缀** **后缀** 突出重点
+强调或者注意的内容放在最后
 
 ```python
  is_xx                                           # 是不是
@@ -173,14 +174,11 @@ err_test_msg
  avg_xx                                          # 平均的
 ```
 
-变量后缀添加单位或类型
-需要强调或者注意的内容放在最后
-
 ```python
  time_secs = 8                                   # 时间变量添加单位 
  size_mb = 2                                     # 添加单位 mb
  length_str = '5'                                # 添加值类型后缀
- book_json = {'clean code': {...}}               # 添加值类型后缀
+ book_json = {'code': {...}}                     # 添加值类型后缀
 
  apple_red                                       # 强调 apple 的颜色
  red_apple                                       # 强调 apple 个体
@@ -188,31 +186,27 @@ err_test_msg
 
 ### 长度
 
-使用常用的单词缩写
-省略无用的内容
-在小的作用域内可以使用简短的变量名
+使用常用的单词缩写   
+省略无用的内容   
+在小的作用域内可以使用简短的变量名   
 
 ```python
  def get_basic_manager_controller_information():
     ali_basic_manager_controller_username = 'admin'
     ali_basic_manager_controller_password = 'admin'
-    ali_basic_manager_controller_informations_command = 'ipmitool mc info'
+    ali_basic_manager_controller_information_command = 'ipmitool mc info'
 
  def get_bmc_info():
     username = 'admin'
     password = 'admin'
-    cmd_info = 'ipmitool mc info'
+    info_cmd = 'ipmitool mc info'
 ```
 
 [常见单词缩写](#单词缩写)
 
-[常用动词](#常用动词)
-
 ### 一致性
 
 项目中表示同样的值或类似的值, 命名方式应该一致
-不同函数的参数命名尽量保持一致
-不同区域的局域变量命名尽量保持一致
 
 ```python
 
@@ -230,7 +224,7 @@ def ping(host, count=3, delay=10, show=True):
 ## 注释
 
 代码比注释更重要
-强调使用规范和缺陷 
+注释应强调使用规范和缺陷 
 
 ### 代码比注释更重要
 
@@ -248,7 +242,7 @@ def title(string='title', level=3, length=30):
 
     Args:
         string (str, optional): 标题内容. Defaults to 'title'.
-        level (int, optional): 标题等级 (0, 1, 2, 3). Defaults to 3.
+        level  (int, optional): 标题等级 (0, 1, 2, 3). Defaults to 3.
         length (int, optional): 标题一端符号的数量. Defaults to 30.
 
     Returns:

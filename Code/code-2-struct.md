@@ -1,39 +1,43 @@
 
 # 简化代码控制流
 
+- 分支
+- 边界
+- 变量的逻辑
+
 ## 分支
 
 - 最小化嵌套
 - 正向优先
 
-### 最小化分支
+### 最小化嵌套
 
 提前退出
 优先解决简单问题
 
 ```python
 if sut_os_connect():
-    if sut_bmc_conect():
-        if sut_file_exist():
-            # edit file
+    if sut_tool_exist():
+        if sut_bmc_version():
+            # flash BMC
         else:
-            return 'file not exist'
+            return 'get BMC version failed'
     else:
-        return 'bmc connect failed'
+        return 'tool not exist'
 else:
     return 'sut os connect failed'
 
 
-if not sut_os_connect():
+if not sut_os_connect():                         # if sut_os_connect_fail
     return 'sut os connect failed'
 
-if not sut_bmc_conect():
-    return 'bmc connect failed'
+if not sut_tool_exist():                         # if sut_tool_not_exist
+    return 'tool not exist'
 
-if not sut_file_exist():
-    return 'file not exist'
+if not sut_bmc_version():                        # if sut_bmc_version_fail
+    return 'get BMC version failed'
 
-# edit file
+# flash BMC
 ```
 
 ### 正向优先
@@ -96,10 +100,13 @@ except Exception as e:
 
 ## 变量的逻辑
 
-### 少创建变量
+- 少创建无效变量
+- 减小变量作用域
+
+### 少创建无效变量
 
 变量越多负担越重
-消除中间变量
+消除无效的中间变量
 
 ```python
 
@@ -109,13 +116,10 @@ input_no_space = input_raw.strip()
 input_up = input_no_space.upper()
 input_ok = input_up in ('Y', 'N', '')
 
-if input_ok:
-    if input_up in ('Y', ''):
-        print('continue test when error occurred')
-    else:
-        print('stop test when error occurred')
+if input_up in ('Y', ''):
+    print('continue test when error occurred')
 else:
-    print('input error')
+    print('stop test when error occurred')
 
 
 note = 'Continue the test when error occurred? (default: Y  N/Y)'
@@ -123,8 +127,9 @@ if input(note).strip().upper() in ('', 'Y'):
     print('continue test when error occurred')
 else:
     print('stop test when error occurred')
+```
 
-
+```python
 bmc_cmd = 'systemctl status docker'
 cmd_ret = subprocess.Popen(bmc_cmd)
 print(bmc_cmd)
@@ -135,9 +140,33 @@ run('systemctl status docker')
 
 ### 减小变量作用域
 
-减轻变量的追踪难度
-声明变量后立即使用
+缩减变量作用域以减轻变量的追踪难度  
+减小变量的使用跨度
 
 ```python
+username = 'admin'
+password = 'admin'
+config = {}
+config_valid = {}
+tool_dir = 'tools'
+log_dir = 'reports/process.log'
+count = 0
+key = None
+value = None
 
+
+# read config
+config = {}
+config_valid = {}
+
+# set output file
+log_dir = 'reports/process.log'
+
+# test step
+username = 'admin'
+password = 'admin'
+tool_dir = 'tools'
+count = 0
 ```
+
+
