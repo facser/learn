@@ -1,20 +1,26 @@
+
 # 异步与多线程
 
-## 介绍
+- 简述
+- 异步
+- 多线程
 
-- 阻塞
+
+## 简述
+
+- 密集型操作
 - 单线程与多线程
 - 同步与异步
 
-### 阻塞
+### 密集型操作
 
 - I/O bound
 - CPU bound
 
 ```bash
 
-time |------ Device I/O ------|-- other --|
-             long time          short time
+time |------- Device I/O -------|-- other --|
+             long time           short time
 
 data <- CPU <- data -> Memory <- data -> device(Disk NIC) 
      ^          ^                 ^
@@ -23,6 +29,8 @@ data <- CPU <- data -> Memory <- data -> device(Disk NIC)
 I/O bound: I/O 密集操作, CPU 大部分时间在等硬盘和内存 I/O, CPU loading 低 
 I/O bond 因为外部设备瓶颈无法发挥 CPU 性能
 
+解决方案: 多进程 多线程 异步
+
 ```bash
 time |------ CPU operation ------|-- other --|
              long time             short time
@@ -30,9 +38,58 @@ time |------ CPU operation ------|-- other --|
 CPU bound: CPU 密集操作, CPU 大部分时间处于运算中, CPU loading 高
 I/O bond 因为 CPU 瓶颈无法发挥外部设备性能
 
+解决方案: 多核心并行运算
 
-上述两种情况由于单方面瓶颈无法发挥机器整体性能
-为了充分发挥机器的性能, 衍生了多线程和异步技术
+### 单线程与多线程
+
+单线程: 
+程序中只有一个执行流
+资源占用小, 不会出现资源数据竞争
+
+多线程: 
+程序中包含多个执行流, 多个执行流并行完成任务
+多个线程之间共享进程内的数据与资源
+
+```python
+import time
+from threading import Thread
+    
+def wait(name:str, delay:int):
+    print(f"{name:<8} {delay} {time.strftime('%X')}")
+    time.sleep(delay)
+    print(f"{name:<8} {delay} {time.strftime('%X')}")
+    
+def main() -> None:
+    first:Thread  = Thread(target=wait, args=('first', 4))
+    second:Thread = Thread(target=wait, args=('second', 2))
+    third:Thread  = Thread(target=wait, args=('third', 6))
+    
+    [p.start() for p in (first, second, third)]
+    [p.join() for p in (first, second, third)]
+  
+if __name__ == '__main__':
+    main()
+
+first    4 14:26:15
+second   2 14:26:15
+third    6 14:26:15
+second   2 14:26:17
+first    4 14:26:19
+third    6 14:26:21
+```
+
+### 同步与异步
+
+同步:
+同步执行代码时是顺序逐行执行的, 必须执行当前代码后才能继续执行下一行
+同步代码有确定的执行顺序
+同步代码遇到文件 I/O 或网络 I/O 会产生阻塞
+
+
+异步:
+执行遇到异步操作会直接返回, 继续执行后续代码, 待异步操作完成后, 主线程能收到消息
+异步的执行顺序与代码顺序不一定一致
+异步操作之间无数据依赖, 可以独立执行
 
 ```javascript
 
@@ -49,7 +106,7 @@ const readAsync = (name, file) => {
     require('fs').readFile(file, () => {
         console.log(`${name} ${(new Date()).toString()}`);
     });
-    console.log(`${name} Read Finish`)
+    console.log(`${name} Read Finish`);
 }
 
 const main = () => {
@@ -84,156 +141,13 @@ second Wed Nov 23 2022 16:45:03 GMT+0800 (China Standard Time)
 first  Wed Nov 23 2022 16:45:08 GMT+0800 (China Standard Time)
 ```
 
+## 异步
 
-```Go
-package main
-
-import (
-	"fmt"
-	"sync"
-	"time"
-)
-
-var wg sync.WaitGroup
-
-func Sum(name string, end int) {
-	defer wg.Done()
-	fmt.Println(name, end, time.Now())
-	sum := 0
-	for i := 0; i <= end; i++ {
-		sum += i
-	}
-	fmt.Println(name, end, time.Now())
-}
-
-func main() {
-	names := [...]string{"first", "second", "third"}
-	delays := [...]int{15000000000, 1000000000, 13000000000}
-	for i := 0; i < 3; i++ {
-		wg.Add(1)
-		go Sum(names[i], delays[i])
-	}
-	fmt.Println("Over")
-	wg.Wait()
-}
-
-// 异步执行 3 个百亿量级运算耗时 9s
-third    20000000000 2022-11-22 10:51:36.4803571 +0800 CST m=+0.000173601
-second   10000000000 2022-11-22 10:51:36.4804665 +0800 CST m=+0.000283101
-first    15000000000 2022-11-22 10:51:36.4804039 +0800 CST m=+0.000220401
-second   10000000000 2022-11-22 10:51:41.7277742 +0800 CST m=+5.247590701
-first    15000000000 2022-11-22 10:51:43.8958834 +0800 CST m=+7.415699901
-third    20000000000 2022-11-22 10:51:45.9174494 +0800 CST m=+9.437265801
-
-// 异步执行单个百亿量级运算耗时 8s
-third    20000000000 2022-11-22 10:51:00.7876033 +0800 CST m=+0.000169201
-third    20000000000 2022-11-22 10:51:08.1227567 +0800 CST m=+7.335322701
-```
-
-### 单线程与多线程
-
-多个线程同时运行
-
-```python
-import time
-from threading import Thread
-    
-def wait(name:str, delay:int):
-    print(f"{name:<8} {delay} {time.strftime('%X')}")
-    time.sleep(delay)
-    print(f"{name:<8} {delay} {time.strftime('%X')}")
-    
-def main() -> None:
-    first:Thread  = Thread(target=wait, args=('first', 4))
-    second:Thread = Thread(target=wait, args=('second', 2))
-    third:Thread  = Thread(target=wait, args=('third', 6))
-    
-    [p.start() for p in (first, second, third)]
-    [p.join() for p in (first, second, third)]
-  
-if __name__ == '__main__':
-    main()
-
-first    4 14:26:15
-second   2 14:26:15
-third    6 14:26:15
-second   2 14:26:17
-first    4 14:26:19
-third    6 14:26:21
-```
-
-3个线程同时运行, 相比单线程耗时更少
-
-注: 多线程需要多个核心支持, 一般一个核心执行一个线程(存在超线程技术, 一个核心同时执行两个线程),  
-线程刷量超过核心数量, 核心会在多个线程间来回切换执行
-
-### 同步与异步
-
-同步:
-同步执行代码时是顺序逐行执行的, 必须执行当前代码后才能继续执行下一行
-同步代码有确定的执行顺序
-同步代码遇到文件 I/O 或网络 I/O 会产生阻塞
-
-```python
- import time
- 
-
- print(f"start at {time.strftime('%X')}")
- time.sleep(5)
- time.sleep(3)
- print(f"close at {time.strftime('%X')}")
-
- start at 10:56:24
- close at 10:56:32
-```
-
-异步:
-执行遇到异步操作会直接返回, 继续执行后续代码, 待异步操作完成后, 主线程能收到消息
-异步的执行顺序与代码顺序不一定一致
-异步操作之间无数据依赖, 可以独立执行
-
-```javascript
-
-const wait = async (name, delay) => {
-    console.log(`${name} ${delay} ${(new Date()).toString()}`);
-    setTimeout(() => {
-        console.log(`${name} ${delay} ${(new Date()).toString()}`);
-    }, delay*1000);
-    console.log(`${name} Read Finish`)
-}
-
-const main = () => {
-    wait("first ", 4);
-    wait("second", 2);
-    wait("third ", 6);
-    console.log("Over")
-}
-  
-main()
-
-
-first  4 Wed Nov 23 2022 14:06:40 GMT+0800 (China Standard Time)
-first  Read Finish
-second 2 Wed Nov 23 2022 14:06:40 GMT+0800 (China Standard Time)
-second Read Finish
-third  6 Wed Nov 23 2022 14:06:40 GMT+0800 (China Standard Time)
-third  Read Finish
-Over
-second 2 Wed Nov 23 2022 14:06:42 GMT+0800 (China Standard Time)
-first  4 Wed Nov 23 2022 14:06:44 GMT+0800 (China Standard Time)
-third  6 Wed Nov 23 2022 14:06:46 GMT+0800 (China Standard Time)
-```
-
-异步能跳过阻塞操作, 执行后续内容, 待阻塞操作完成将回调函数插入主线程执行
-
-## 异步实现
+- 多线程异步
+- 单线程异步
+- Python 多线程异步
 
 ### 多线程异步
-
-主线程跳过异步操作, 新开线程执行跳过的操作, 使主线程运行达到异步效果
-
-
-1. Golang 多线程异步
 
 ```Go
 package main
@@ -248,19 +162,16 @@ var wg sync.WaitGroup
 
 func Delay(name string, delay int) {
 	defer wg.Done()
-	fmt.Println(name, delay, time.Now())
+	fmt.Printf("%-8s %d %v\n", name, delay, time.Now())
 	time.Sleep(time.Duration(delay) * time.Second)
-	fmt.Println(name, delay, time.Now())
+	fmt.Printf("%-8s %d %v\n", name, delay, time.Now())
 }
 
 func main() {
-	names := [...]string{"first", "second", "third"}
-    delays := [...]int{4, 3, 5}
-	for i := 0; i < 3; i++ {
-		wg.Add(1)
-		go Delay(names[i], delays[i])
-	}
-    
+    go Delay("first",  4)
+    go Delay("second", 2)
+    go Delay("third",  5)
+
 	// time.Sleep(3 * time.Second)
 	fmt.Println("Over")
 	wg.Wait()                                                                      
@@ -268,33 +179,100 @@ func main() {
 
 
 Over
-third    5 2022-11-21 10:26:36.9768235 +0800 CST m=+0.000138501
-second   3 2022-11-21 10:26:36.9770264 +0800 CST m=+0.000341101
-first    4 2022-11-21 10:26:36.9770273 +0800 CST m=+0.000341901
-second   3 2022-11-21 10:26:39.9793892 +0800 CST m=+3.002704301
-first    4 2022-11-21 10:26:40.9779395 +0800 CST m=+4.001255201
-third    5 2022-11-21 10:26:41.9782989 +0800 CST m=+5.001614301
+third    6 2022-11-29 15:30:08.3114437 +0800 CST m=+0.000274101
+first    4 2022-11-29 15:30:08.311496 +0800 CST m=+0.000326401
+second   2 2022-11-29 15:30:08.3115808 +0800 CST m=+0.000411201
+second   2 2022-11-29 15:30:10.3130423 +0800 CST m=+2.001872801
+first    4 2022-11-29 15:30:12.3132763 +0800 CST m=+4.002106801
+third    6 2022-11-29 15:30:14.3136864 +0800 CST m=+6.002517101
 
 
 Over
-third    5 2022-11-21 10:27:17.1999131 +0800 CST m=+0.000108201
-first    4 2022-11-21 10:27:17.2000231 +0800 CST m=+0.000218101
-second   3 2022-11-21 10:27:17.2000865 +0800 CST m=+0.000281801
-second   3 2022-11-21 10:27:20.2025237 +0800 CST m=+3.002719501
-first    4 2022-11-21 10:27:21.200926  +0800 CST m=+4.001121601
-third    5 2022-11-21 10:27:22.201361  +0800 CST m=+5.001556601
+third    6 2022-11-29 15:30:31.0126997 +0800 CST m=+0.000092501
+first    4 2022-11-29 15:30:31.0128042 +0800 CST m=+0.000197101
+second   2 2022-11-29 15:30:31.0128688 +0800 CST m=+0.000261701
+second   2 2022-11-29 15:30:33.0141738 +0800 CST m=+2.001566701
+first    4 2022-11-29 15:30:35.0143726 +0800 CST m=+4.001765501
+third    6 2022-11-29 15:30:37.0147045 +0800 CST m=+6.002098001
 
 
-second   2 2022-11-22 16:18:03.4051558 +0800 CST m=+0.000249701
-third    6 2022-11-22 16:18:03.405007 +0800 CST m=+0.000100801
-first    4 2022-11-22 16:18:03.4050635 +0800 CST m=+0.000157601
-second   2 2022-11-22 16:18:05.4066026 +0800 CST m=+2.001696701
+third    6 2022-11-29 15:30:55.8741324 +0800 CST m=+0.000070801
+second   2 2022-11-29 15:30:55.874294 +0800 CST m=+0.000232401
+first    4 2022-11-29 15:30:55.8742926 +0800 CST m=+0.000231201
+second   2 2022-11-29 15:30:57.8755269 +0800 CST m=+2.001465601
 Over
-first    4 2022-11-22 16:18:07.4066345 +0800 CST m=+4.001729001
-third    6 2022-11-22 16:18:09.4070635 +0800 CST m=+6.002157901
+first    4 2022-11-29 15:30:59.8752317 +0800 CST m=+4.001170301
+third    6 2022-11-29 15:31:01.8756551 +0800 CST m=+6.001593901
 ```
 
-2. Python 多线程异步
+主线程跳过异步操作, 新开线程执行跳过的操作, 使主线程运行达到异步效果
+主线程与其它线程独立, 互不影响
+
+### 单线程异步
+
+```javascript
+// 异步延时
+const wait = async (name, delay) => {
+    console.log(`${name} ${delay} ${(new Date()).toString()}`);
+    setTimeout(() => {
+        console.log(`${name} ${delay} ${(new Date()).toString()}`);
+    }, delay*1000);
+    console.log(`${name} Read Finish`)
+}
+
+const recordSync = (name, delay) => {
+    console.log(`${name} ${delay} ${(new Date()).toString()}`);
+    let sum = 0;
+    for (let i=0; i<delay; i++) {
+        sum += i;
+    };
+    console.log(`${name} ${delay} ${(new Date()).toString()}`);
+}
+
+const main = () => {
+    wait("first ", 4);
+    wait("second", 2);
+    wait("third ", 6);
+    // recordSync("third ", 4000000000)
+    console.log("Over")
+}
+  
+main()
+
+first  4 Tue Nov 22 2022 11:04:58 GMT+0800 (China Standard Time)
+first  Read Finish
+second 2 Tue Nov 22 2022 11:04:58 GMT+0800 (China Standard Time)
+second Read Finish
+third  6 Tue Nov 22 2022 11:04:58 GMT+0800 (China Standard Time)
+third  Read Finish
+Over
+second 2 Tue Nov 22 2022 11:05:00 GMT+0800 (China Standard Time)
+first  4 Tue Nov 22 2022 11:05:02 GMT+0800 (China Standard Time)
+third  6 Tue Nov 22 2022 11:05:04 GMT+0800 (China Standard Time)
+
+
+first  4 Tue Nov 29 2022 10:32:40 GMT+0800 (China Standard Time)
+first  Read Finish
+second 2 Tue Nov 29 2022 10:32:40 GMT+0800 (China Standard Time)
+second Read Finish
+third  6 Tue Nov 29 2022 10:32:40 GMT+0800 (China Standard Time)
+third  Read Finish
+third  4000000000 Tue Nov 29 2022 10:32:40 GMT+0800 (China Standard Time)
+third  4000000000 Tue Nov 29 2022 10:32:45 GMT+0800 (China Standard Time)
+Over
+second 2 Tue Nov 29 2022 10:32:45 GMT+0800 (China Standard Time)  
+first  4 Tue Nov 29 2022 10:32:45 GMT+0800 (China Standard Time)
+third  6 Tue Nov 29 2022 10:32:46 GMT+0800 (China Standard Time)
+```
+
+异步延时函数由于主线程耗时过多, 未能在设定时间点执行对应操作
+
+异步操作必须等主线程执行栈内所有指令完成后才能执行
+主线程执行进度会影响到后续异步操作
+
+定时触发(setTimeout setInterval)是由浏览器的定时器线程执行的定时计数，然后在定时时间把定时处理函数的执行请求插入到JS执行队列的尾端
+
+### Python 多线程异步
 
 ```python
 import asyncio
@@ -352,49 +330,19 @@ second   20000000 16:46:15
 third    60000000 16:46:32
 third    60000000 16:46:36                                
 ```
-> 注解 由于 GIL 的存在, asyncio.to_thread() 通常只能被用来将 IO 密集型函数变为非阻塞的.
+> 由于 GIL 的存在, asyncio.to_thread() 通常只能被用来将 IO 密集型函数变为非阻塞的
 > 对于会释放 GIL 的扩展模块或无此限制的替代性 Python 实现来说, asyncio.to_thread() 也可被用于 CPU 密集型函数.(多进程, 或无 GIL 的 Python)
 
-### 单线程异步
 
-单线程异步在遇到阻塞时挂起该操作, 等阻塞操作完成后通过回调函数或通知回到线程运行
+## 多线程
 
-```javascript
-// 异步读取文件
-const readAsync = (name, file) => {
-    console.log(`${name} ${(new Date()).toString()}`);
-    require('fs').readFile(file, () => {
-        console.log(`${name} ${(new Date()).toString()}`);
-    });
-    console.log(`${name} Read Finish`)
-}
-
-const main = () => {
-    readAsync("first ", "read/one_line_1.log")
-    readAsync("second", "read/one_line_2.log")
-    readAsync("third ", "read/one_line_3.log")
-}
-
-main()
-
-
-first  Wed Nov 23 2022 11:30:06 GMT+0800 (China Standard Time)
-first  Read Finish
-second Wed Nov 23 2022 11:30:06 GMT+0800 (China Standard Time)
-second Read Finish
-third  Wed Nov 23 2022 11:30:06 GMT+0800 (China Standard Time)
-third  Read Finish
-first  Wed Nov 23 2022 11:30:11 GMT+0800 (China Standard Time)
-third  Wed Nov 23 2022 11:30:13 GMT+0800 (China Standard Time)
-second Wed Nov 23 2022 11:30:14 GMT+0800 (China Standard Time)
-```
-
-## 多语言异步对比
+- Javascript
+- Python
+- Golang
 
 ### Javascript
 
-仅支持单线程异步, 能有效节省文件 I/O 和网络 I/O 时间
-因为只有单线程, 无法节省 CPU 密集型操作时间
+Javascript 仅支持单线
 
 ```javascript
 
@@ -445,14 +393,38 @@ third  4000000000 Wed Nov 23 2022 15:26:36 GMT+0800 (China Standard Time)
 Over
 ```
 
+JS的单线程是指一个浏览器进程中只有一个JS的执行线程，同一时刻内只会有一段代码在执行    
+JS 异步请求是浏览器的两个常驻线程共同完成的: JS 执行线程和事件触发线程  
+JS的执行线程发起异步请求，事件触发线程监视到之前的发起的HTTP请求已完成，它就会把完成事件插入到JS执行队列的尾部等待JS处理   
+
 ### Python
 
-Python 支持单线程多线程异步, 能节省文件 I/O 和网络 I/O 时间 
-由于进程中 GIL 存在, 每个进程同一时间点仅允许一个线程执行
-
-Python 单个进程中的多线程实际是多个线程快速来回切换, 不省 CPU 计算时间
+Python 支持多线程
 
 ```python
+import time
+from threading import Thread
+
+def record(name: str, end: int, ) -> None:
+    print(f"{name:<8} {end} {time.strftime('%X')}")
+    # sum(range(end), 0)
+    sum = 0
+    for i in range(end):
+        sum += i
+    print(f"{name:<8} {end} {time.strftime('%X')}")
+        
+def main():    
+    first:Thread  = Thread(target=record, args=('first',  40000000))
+    second:Thread = Thread(target=record, args=('second', 20000000))
+    third:Thread  = Thread(target=record, args=('third',  60000000))
+
+    [p.start() for p in (first, second, third)]
+    [p.join() for p in (first, second, third)]
+    
+if __name__ == '__main__':
+    main()
+
+
 first    40000000 15:27:18                       
 third    60000000 15:27:18
 second   20000000 15:27:24
@@ -470,10 +442,34 @@ third    60000000 15:28:13
 third    60000000 15:28:17
 ```
 
-Python 多进程是可以利用多核心同时执行
+由于进程中 GIL 存在, 每个进程同一时间点仅允许一个线程执行
+Python 单个进程中的多线程实际是多个线程快速来回切换, 不省 CPU 计算时间
 
 ```python
-first    40000000 15:22:03                       # python 多进程
+import time
+from multiprocessing import  Process
+
+def record(name: str, end: int, ) -> None:
+    print(f"{name:<8} {end} {time.strftime('%X')}")
+    # sum(range(end), 0)
+    sum = 0
+    for i in range(end):
+        sum += i
+    print(f"{name:<8} {end} {time.strftime('%X')}")
+        
+def main():    
+    first:Thread  = Process(target=record, args=('first',  40000000))
+    second:Thread = Process(target=record, args=('second', 20000000))
+    third:Thread  = Process(target=record, args=('third',  60000000))
+
+    [p.start() for p in (first, second, third)]
+    [p.join() for p in (first, second, third)]
+    
+if __name__ == '__main__':
+    main()
+
+
+first    40000000 15:22:03                      
 second   20000000 15:22:03
 third    60000000 15:22:03
 second   20000000 15:22:04
@@ -490,9 +486,10 @@ third    60000000 15:24:32
 third    60000000 15:24:36
 ```
 
+
 ### Golang
 
-Golang 支持多线程异步, 使用 GPM 模型自动化分配协程到线程上执行
+Golang 支持多线程, 使用 GPM 模型自动化分配协程到线程上执行
 
 ```Go
 package main
@@ -507,21 +504,20 @@ var wg sync.WaitGroup
 
 func Sum(name string, end int) {
 	defer wg.Done()
-	fmt.Println(name, end, time.Now())
+	fmt.Printf("%-8s %d %v\n", name, delay, time.Now())
 	sum := 0
-	for i := 0; i <= end; i++ {
+	for i := 0; i < end; i++ {
 		sum += i
 	}
-	fmt.Println(name, end, time.Now())
+	fmt.Printf("%-8s %d %v\n", name, delay, time.Now())
 }
 
 func main() {
-	names := [...]string{"first", "second", "third"}
-	delays := [...]int{15000000000, 1000000000, 13000000000}
-	for i := 0; i < 3; i++ {
-		wg.Add(1)
-		go Sum(names[i], delays[i])
-	}
+    wg.Add(3)
+    go Sum("first",  15000000000)
+    go Sum("second", 10000000000)
+    go Sum("third",  20000000000)
+
 	fmt.Println("Over")
 	wg.Wait()
 }
@@ -537,108 +533,4 @@ third    20000000000 2022-11-22 10:51:45.9174494 +0800 CST m=+9.437265801
 // 异步执行单个百亿量级运算
 third    20000000000 2022-11-22 10:51:00.7876033 +0800 CST m=+0.000169201
 third    20000000000 2022-11-22 10:51:08.1227567 +0800 CST m=+7.335322701
-```
-
-
-
-```javascript
-const wait = async (name, delay) => {
-    console.log(`${name} ${delay} ${(new Date()).toString()}`);
-    setTimeout(() => {
-        console.log(`${name} ${delay} ${(new Date()).toString()}`);
-    }, delay*1000);
-}
-
-const main = () => {
-    wait("first ", 4);
-    wait("second", 2);
-    wait("third ", 6);
-}
-  
-main()
-
-first  4 Tue Nov 22 2022 11:04:58 GMT+0800 (China Standard Time)
-second 2 Tue Nov 22 2022 11:04:58 GMT+0800 (China Standard Time)
-third  6 Tue Nov 22 2022 11:04:58 GMT+0800 (China Standard Time)
-second 2 Tue Nov 22 2022 11:05:00 GMT+0800 (China Standard Time)
-first  4 Tue Nov 22 2022 11:05:02 GMT+0800 (China Standard Time)
-third  6 Tue Nov 22 2022 11:05:04 GMT+0800 (China Standard Time)
-```
-
-```javascript
-
-const record = (name, delay) => {
-    console.log(`${name} ${delay} ${(new Date()).toString()}`);
-    return new Promise((resolve) => {
-        let sum = 0;
-        for (let i=0; i<delay; i++) {
-            sum += i;
-        };
-        console.log(`${name} ${delay} ${(new Date()).toString()}`);
-    });
-};
-
-
-const main = () => {
-    record("first ", 1500000000);
-    record("second", 1000000000);
-    record("third ", 2000000000);
-}
-  
-main()
-
-
-first  1500000000 Tue Nov 22 2022 11:01:47 GMT+0800 (China Standard Time)
-first  1500000000 Tue Nov 22 2022 11:01:50 GMT+0800 (China Standard Time)
-second 1000000000 Tue Nov 22 2022 11:01:50 GMT+0800 (China Standard Time)
-second 1000000000 Tue Nov 22 2022 11:01:51 GMT+0800 (China Standard Time)
-third  2000000000 Tue Nov 22 2022 11:01:51 GMT+0800 (China Standard Time)
-third  2000000000 Tue Nov 22 2022 11:01:54 GMT+0800 (China Standard Time)
-
-third  2000000000 Tue Nov 22 2022 11:02:24 GMT+0800 (China Standard Time)
-third  2000000000 Tue Nov 22 2022 11:02:27 GMT+0800 (China Standard Time)
-```
-
-
-```javascript
-
-const readSync = (name, file) => {
-    console.log(`${name} ${(new Date()).toString()}`);
-    require("fs").readFileSync(file);
-    console.log(`${name} ${(new Date()).toString()}`);
-}
-
-const readAsync = (name, file) => {
-    console.log(`${name} ${(new Date()).toString()}`);
-    require('fs').readFile(file, function (err, data) {
-        console.log(`${name} ${(new Date()).toString()}`);
-    });
-}
-
-const main = () => {
-    readSync("first ", "read/one_line_1.log")
-    readSync("second", "read/one_line_2.log")
-    readSync("third ", "read/one_line_3.log")
-
-    readAsync("first ", "read/one_line_1.log")
-    readAsync("second", "read/one_line_2.log")
-    readAsync("third ", "read/one_line_3.log")
-}
-
-main()
-
-first  Wed Nov 23 2022 11:06:10 GMT+0800 (China Standard Time)
-first  Wed Nov 23 2022 11:06:13 GMT+0800 (China Standard Time)
-second Wed Nov 23 2022 11:06:13 GMT+0800 (China Standard Time)
-second Wed Nov 23 2022 11:06:18 GMT+0800 (China Standard Time)
-third  Wed Nov 23 2022 11:06:18 GMT+0800 (China Standard Time)
-third  Wed Nov 23 2022 11:06:24 GMT+0800 (China Standard Time)
-
-
-first  Wed Nov 23 2022 11:22:25 GMT+0800 (China Standard Time)
-second Wed Nov 23 2022 11:22:25 GMT+0800 (China Standard Time)
-third  Wed Nov 23 2022 11:22:25 GMT+0800 (China Standard Time)
-second Wed Nov 23 2022 11:22:33 GMT+0800 (China Standard Time)
-third  Wed Nov 23 2022 11:22:41 GMT+0800 (China Standard Time)
-first  Wed Nov 23 2022 11:22:42 GMT+0800 (China Standard Time)
 ```

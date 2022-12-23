@@ -428,6 +428,198 @@ third  2000000000 Tue Nov 22 2022 11:02:27 GMT+0800 (China Standard Time)
 ```
 
 
+
+
+
+```javascript
+
+const record = (name, delay) => {
+    console.log(`${name} ${delay} ${(new Date()).toString()}`);
+    return new Promise((resolve) => {
+        let sum = 0;
+        for (let i=0; i<delay; i++) {
+            sum += i;
+        };
+        console.log(`${name} ${delay} ${(new Date()).toString()}`);
+    });
+};
+
+
+const main = () => {
+    record("first ", 1500000000);
+    record("second", 1000000000);
+    record("third ", 2000000000);
+}
+  
+main()
+
+
+first  1500000000 Tue Nov 22 2022 11:01:47 GMT+0800 (China Standard Time)
+first  1500000000 Tue Nov 22 2022 11:01:50 GMT+0800 (China Standard Time)
+second 1000000000 Tue Nov 22 2022 11:01:50 GMT+0800 (China Standard Time)
+second 1000000000 Tue Nov 22 2022 11:01:51 GMT+0800 (China Standard Time)
+third  2000000000 Tue Nov 22 2022 11:01:51 GMT+0800 (China Standard Time)
+third  2000000000 Tue Nov 22 2022 11:01:54 GMT+0800 (China Standard Time)
+
+third  2000000000 Tue Nov 22 2022 11:02:24 GMT+0800 (China Standard Time)
+third  2000000000 Tue Nov 22 2022 11:02:27 GMT+0800 (China Standard Time)
+```
+
+
+```javascript
+
+const readSync = (name, file) => {
+    console.log(`${name} ${(new Date()).toString()}`);
+    require("fs").readFileSync(file);
+    console.log(`${name} ${(new Date()).toString()}`);
+}
+
+const readAsync = (name, file) => {
+    console.log(`${name} ${(new Date()).toString()}`);
+    require('fs').readFile(file, function (err, data) {
+        console.log(`${name} ${(new Date()).toString()}`);
+    });
+}
+
+const main = () => {
+    readSync("first ", "read/one_line_1.log")
+    readSync("second", "read/one_line_2.log")
+    readSync("third ", "read/one_line_3.log")
+
+    readAsync("first ", "read/one_line_1.log")
+    readAsync("second", "read/one_line_2.log")
+    readAsync("third ", "read/one_line_3.log")
+}
+
+main()
+
+first  Wed Nov 23 2022 11:06:10 GMT+0800 (China Standard Time)
+first  Wed Nov 23 2022 11:06:13 GMT+0800 (China Standard Time)
+second Wed Nov 23 2022 11:06:13 GMT+0800 (China Standard Time)
+second Wed Nov 23 2022 11:06:18 GMT+0800 (China Standard Time)
+third  Wed Nov 23 2022 11:06:18 GMT+0800 (China Standard Time)
+third  Wed Nov 23 2022 11:06:24 GMT+0800 (China Standard Time)
+
+
+first  Wed Nov 23 2022 11:22:25 GMT+0800 (China Standard Time)
+second Wed Nov 23 2022 11:22:25 GMT+0800 (China Standard Time)
+third  Wed Nov 23 2022 11:22:25 GMT+0800 (China Standard Time)
+second Wed Nov 23 2022 11:22:33 GMT+0800 (China Standard Time)
+third  Wed Nov 23 2022 11:22:41 GMT+0800 (China Standard Time)
+first  Wed Nov 23 2022 11:22:42 GMT+0800 (China Standard Time)
+```
+
 JS的单线程是指一个浏览器进程中只有一个JS的执行线程，同一时刻内只会有一段代码在执行（你可以使用IE的标签式浏览试试看效果，这时打开的多个页面使用的都是同一个JS执行线程，如果其中一个页面在执行一个运算量较大的function时，其他窗口的JS就会停止工作）。
 
 而异步机制是浏览器的两个或以上常驻线程共同完成的，例如异步请求是由两个常驻线程：JS执行线程和事件触发线程共同完成的，JS的执行线程发起异步请求（这时浏览器会开一条新的HTTP请求线程来执行请求，这时JS的任务已完成，继续执行线程队列中剩下的其他任务），然后在未来的某一时刻事件触发线程监视到之前的发起的HTTP请求已完成，它就会把完成事件插入到JS执行队列的尾部等待JS处理。又例如定时触发（settimeout和setinterval）是由浏览器的定时器线程执行的定时计数，然后在定时时间把定时处理函数的执行请求插入到JS执行队列的尾端（所以用这两个函数的时候，实际的执行时间是大于或等于指定时间的，不保证能准确定时的
+
+
+```python
+ import time
+
+ def read(name, file) -> None:
+    print(f"{name:<8} {time.strftime('%X')}")
+    with open(file, 'r') as f:
+        f.read()
+    print(f"{name:<8} {time.strftime('%X')}")
+
+def main() -> None:
+    read('first',  'read/one_line_1.log')
+    read('second', 'read/one_line_2.log')
+    read('third',  'read/one_line_3.log')
+ 
+if __name__ == '__main__':
+    main()
+
+
+first    10:43:57
+first    10:44:01
+second   10:44:01
+second   10:44:05
+third    10:44:05
+third    10:44:08
+```
+
+
+```Go
+package main
+
+import (
+	"fmt"
+	"sync"
+	"time"
+)
+
+var wg sync.WaitGroup
+
+func Sum(name string, end int) {
+	defer wg.Done()
+	fmt.Println(name, end, time.Now())
+	sum := 0
+	for i := 0; i <= end; i++ {
+		sum += i
+	}
+	fmt.Println(name, end, time.Now())
+}
+
+func main() {
+	names := [...]string{"first", "second", "third"}
+	delays := [...]int{15000000000, 1000000000, 13000000000}
+	for i := 0; i < 3; i++ {
+		wg.Add(1)
+		go Sum(names[i], delays[i])
+	}
+	fmt.Println("Over")
+	wg.Wait()
+}
+
+// 异步执行 3 个百亿量级运算耗时 9s
+third    20000000000 2022-11-22 10:51:36.4803571 +0800 CST m=+0.000173601
+second   10000000000 2022-11-22 10:51:36.4804665 +0800 CST m=+0.000283101
+first    15000000000 2022-11-22 10:51:36.4804039 +0800 CST m=+0.000220401
+second   10000000000 2022-11-22 10:51:41.7277742 +0800 CST m=+5.247590701
+first    15000000000 2022-11-22 10:51:43.8958834 +0800 CST m=+7.415699901
+third    20000000000 2022-11-22 10:51:45.9174494 +0800 CST m=+9.437265801
+
+// 异步执行单个百亿量级运算耗时 8s
+third    20000000000 2022-11-22 10:51:00.7876033 +0800 CST m=+0.000169201
+third    20000000000 2022-11-22 10:51:08.1227567 +0800 CST m=+7.335322701
+```
+
+3个线程同时运行, 相比单线程耗时更少
+
+注: 多线程并行需要多个核心支持, 一般一个核心执行一个线程(存在超线程技术, 一个核心同时执行两个线程),  
+线程刷量超过核心数量, 核心会在多个线程间来回切换执行
+
+
+```javascript
+
+const wait = async (name, delay) => {
+    console.log(`${name} ${delay} ${(new Date()).toString()}`);
+    setTimeout(() => {
+        console.log(`${name} ${delay} ${(new Date()).toString()}`);
+    }, delay*1000);
+    console.log(`${name} Read Finish`)
+}
+
+const main = () => {
+    wait("first ", 4);
+    wait("second", 2);
+    wait("third ", 6);
+    console.log("Over")
+}
+  
+main()
+
+
+first  4 Wed Nov 23 2022 14:06:40 GMT+0800 (China Standard Time)
+first  Read Finish
+second 2 Wed Nov 23 2022 14:06:40 GMT+0800 (China Standard Time)
+second Read Finish
+third  6 Wed Nov 23 2022 14:06:40 GMT+0800 (China Standard Time)
+third  Read Finish
+Over
+second 2 Wed Nov 23 2022 14:06:42 GMT+0800 (China Standard Time)
+first  4 Wed Nov 23 2022 14:06:44 GMT+0800 (China Standard Time)
+third  6 Wed Nov 23 2022 14:06:46 GMT+0800 (China Standard Time)
+```
