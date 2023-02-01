@@ -1,14 +1,14 @@
 # Go interface
 
-接口是一个自定义类型, 类型判定较普通类型宽松很多, 对应变量或结构体只要实现了接口的方法就符合
+接口是一个自定义类型, 类型判定较普通类型宽松很多, 对应变量或结构体只要实现了接口的方法, 就可以以该接口类型使用
 
 type 歌唱家 interface {
     发声()
 }
 
 根据以上接口, 不管任何人甚至动物机器人, 只要能发出声音, 该个体就可以被认为是 歌唱家 类型
-接口类型和其余 int string 一样可以作为类型声明
-当参数被当做接口类型使用, 就无法使用接口之外的方法.
+接口类型和其余 int string 一样可以作为类型声明, 创建变量
+当参数被当做接口类型使用, 就只能使用接口定义之内的方法.
 
 ```go
 type singer interface {                          // 定义 singer 接口类型
@@ -16,8 +16,8 @@ type singer interface {                          // 定义 singer 接口类型
     speak()
 }
 
-func talk(item singer) {                         // 定义一个函数, 参数类型为 singer, 只要某个结构体包含 sing speak 函数, 就可以当参数
-    item.sing()                                  // 传入的参数只能使用 singer 包含的方法, 参数本身的其它发放不能使用
+func talk(item singer) {                         // 定义一个函数, 参数类型为接口类型 singer
+    item.sing()                                  // 传入的参数只能使用 singer 包含的方法, 参数本身的其它方法不能使用
     item.speak()
 }
 
