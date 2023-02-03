@@ -147,7 +147,7 @@ iota 是定义常量时使用的自增关键字
 Golang 字符串本质是单个字符的集合, 单个字符的本质是数字, 通过不同规范和字符对应(ACSII 和 Unicode)
 
 byte(uint8) ACSII 表中的一个字符, 底层是一个 0-255 数字(数字与 ACSII 表字符绑定)
-rune(int32) Unicode 编码中的一个字符(包含世界大部分语言字符), 底层是一个数字(数字与 Unicode 字符绑定)
+rune(int32) Unicode 编码中的一个字符(包含世界大部分语言字符), Unicode 表包含 ACSII 表
 
 ```go
  var a byte = 'D'                                 // 'D' 在 ACSII 中第 68 位
@@ -173,24 +173,31 @@ rune(int32) Unicode 编码中的一个字符(包含世界大部分语言字符),
  > Type: int32, value: 25991,, value: 文
 
 // 遍历字符串, 单个字符类型为 int32(rune)
-// 默认使用 unicode 规范, 字符底层是数字, 与字符关联
+// 默认使用 unicode 规范, 字符底层是数字, 与 Unicode 字符关联
+```
 
+```go
+ var num int = 68
+ var num8 int8 = 66
+ var num16 int16 = 66
+ var num32 int32 = 25991
+ var num64 int64 = -1
+ fmt.Printf("Type %T, value: %v\n", num, string(num))
 
- acsiiStr, unicodeStr := string(acsii), string(unicode)
- fmt.Printf("Type: %T, value: %v\n", acsiiStr, acsiiStr)
- fmt.Printf("Type: %T, value: %v\n", unicodeStr, unicodeStr)
+ > Type int, value: D
+ > Type int8, value: B
+ > Type int16, value: B
+ > Type int32, value: 文
+ > Type int64, value: �
 
- > Type: string, value: s
- > Type: string, value: t
- > Type: string, value: r
- > Type: string, value: 中 
- > Type: string, value: 文 
+// 任意 unicode 范围内非负数可以通过内置函数 string() 转换为对应字符
+// 所有负数转化后显示一致, 未能查询到相关解释
 ```
 
 
 ```go
- var slice, list = []byte{'s', 't', 'r'}, []rune{'中', '文'}
-
+ slice, list := []byte(str), []rune("中文")
+ fmt.Printf("Type: %T, %#v\n", slice, slice)
 ```
 
 
