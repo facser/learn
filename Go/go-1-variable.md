@@ -13,13 +13,18 @@
 ### 变量声明
 
 ```go
- var variable string                             // 声明变量和类型, 未赋值使用默认值(string 默认值 “”)
- 
+
+ var <variable name> <type> = <value>            // 变量定义, 最完整的变量定义
  var age int = 18                                // 声明变量类型并赋值
 
+ var <variable name> <type>                      // 变量定义, 只定义变量名和类型, 变量默认为对应类型的初始值
+ var str string                                  // 声明变量和类型, 未赋值使用默认值(string 默认值 "")
+
+ var <type> = <value>                            // 变量定义, 通过值自动推导变量类型
  var age = 18                                    // 声明变量, 赋值, 并使用类型推导
 
- name := "facser"                                // 声明变量, 赋值, 并使用类型推导(仅限于函数内使用)
+ <variable name> := <value>                      // 变量定义, 通过值自动推导类型, 仅能在函数内部使用
+ name := "str"                                   // 声明变量, 赋值, 并使用类型推导(仅限于函数内使用)
 
 ```
 
@@ -29,20 +34,18 @@
 
 ```go
  var name string = "facser"
- fmt.Println("hello     world")
-
+ fmt.Println("hello world")
  > ./main.go:10:6: name declared but not used    // 变量 name 未使用, 报错
 
- name, _ := foo()                                // 使用匿名变量, 忽略 foo() 中一个返回值 
+ name, _ := "facser", "variable"                 // 使用匿名变量, 忽略 foo() 中一个返回值 
  fmt.Println("hello ", name)
-
  > hello  facser
 ```
 
 ## 常量
 
 ```go
- const e = 2.7182                                // 常量声明必须要赋值
+ const e = 2.7182                                // 常量声明必须要赋值, 且不可更改
 
  const (                                         // 快速声明常量, a b c 赋值 10
     a = 10                                       // a = 10
@@ -88,14 +91,7 @@ iota 是定义常量时使用的自增关键字
 通过占位符替换值打印
 
 ```go
- fmt.Print(a ...any)                             // fmt.Print("name:", <name>, " ", "age:", <age>)
- fmt.Println(a ...any)                           // fmt.Println("name:", <name>, " ", "age:", <age>)
- 
- fmt.Printf(s string, a ...any)                  // fmt.Printf("name: %s, age: %d", <name>, <age>)
-```
-
-```go
- fmt.Println("Hello, world!")
+ fmt.Printf(<str>, <string>, <int>, <bool> ...)  // 第一个参数是字符串,后接任意类型值, 占位符需与值数量对应 
 
  fmt.Printf("common: %v \n", "common")           // 万能占用符, 自动判断类型
  fmt.Printf("string: %s \n", "string")           // 字符串变量占位符
@@ -126,12 +122,17 @@ iota 是定义常量时使用的自增关键字
 
 ### 整形类型转换
 
+数字类型数据可以通过 `<type>()` 方式进行类型之间的转换 
+
 ```go
  var num int = 8                                 // int   num = 8
  num8 := int8(num)                               // int8  num8 = 8
  num16 := int16(num)                             // int16 num16 = 8
  num32 := int32(num)                             // int32 num32 = 8
  num64 := int64(num)                             // int64 num64 = 8
+
+ numFloat32 := float32(num)                      // float32 numFloat32 = 8
+ numFloat64 := float32(num)                      // float64 numFloat64 = 8
 ```
 
 ### 进制赋值
@@ -177,6 +178,20 @@ rune(int32) Unicode 编码中的一个字符(包含世界大部分语言字符),
 ```
 
 ```go
+ slice, list := []byte("str"), []rune("中文")
+ fmt.Printf("Type: %T, value: %v\n", slice, slice)
+ > Type: []uint8, value: []byte{0x73, 0x74, 0x72}// 字符串转 byte
+ > Type: []int32, value: []int32{20013, 25991}   // 字符串转 rune
+
+ var strByte byte = 'D'
+ var strRune rune = '文'
+ fmt.Printf("Type: %T, value: %v\n", string(strByte), string(strByte))
+ fmt.Printf("Type: %T, value: %v\n", string(strRune), string(strRune))
+ > Type: string, value: D                        // byte 转 string
+ > Type: string, value: 文                       // rune 转 string
+```
+
+```go
  var num int = 68
  var num8 int8 = 66
  var num16 int16 = 66
@@ -184,54 +199,97 @@ rune(int32) Unicode 编码中的一个字符(包含世界大部分语言字符),
  var num64 int64 = -1
  fmt.Printf("Type %T, value: %v\n", num, string(num))
 
- > Type int, value: D
+ > Type int, value: D                            
  > Type int8, value: B
  > Type int16, value: B
- > Type int32, value: 文
- > Type int64, value: �
+ > Type int32, value: 文                          // 任意 unicode 范围内非负数可以通过内置函数 string() 转换为对应字符
+ > Type int64, value: �                          // 所有负数转化后显示一致, 未能查询到相关解释
 
-// 任意 unicode 范围内非负数可以通过内置函数 string() 转换为对应字符
-// 所有负数转化后显示一致, 未能查询到相关解释
 ```
 
+### 字符串操作
+
+字符串定义后可以查看但不可更改
 
 ```go
- slice, list := []byte(str), []rune("中文")
- fmt.Printf("Type: %T, %#v\n", slice, slice)
+ str := "learning"
+ fmt.Printf("Type: %T value: %c golang: %v\n", str[0], str[1], str[2])
+ > Type: uint8 value: e golang: 97
+
+ str[0] = "m"
+ > ./main.go:37:2: cannot assign to str[0] (value of type byte)
+
+ uStr := "中文"
+ fmt.Printf("Type: %T value: %v length: %v\n", uStr[0], uStr[1], len(uStr))
+ > Type: uint8 value: 184 length: 6
+
+ strRune := []rune(uStr)
+ fmt.Printf("value: %#v length: %v\n", strRune, len([]rune(strRune)))
+ > value: []int32{20013, 25991} length: 2
+
+ // 单个英文字母 1 个 byte可以表示, len() 返回字节数, 一个字母占用 1 个字节
+ // 单个中文字符由 3 个 byte 或 1 个 rune 表示, len() 返回字节数, 一个字符包含 3 个字节
+ // 以 byte 区分, 单个中文字符长度为 3, 单个字母长度为 1
+ // 通过序号取的单个字符为 byte, 通过 range 取出的单个字符为 rune
 ```
-
-
-## 字符串操作
 
 ```go
- strings.Split(<str>, <split char>)              // 切割字符串成切片
- strings.Contains(<str>)                         // 判断是否包含
- strings.Index(<str>)                            // 字符串出现的位置
- strings.Join(<slice>, <join char>)              // 通过连接符号把切片连接成一个字符串
+ strings.Split(s, sep) []string                  // 以 sep 为分隔符, 切割字符串成切片
+ strings.Contains(s, sub) bool                   // 判断 s 是否包含 sub
+ strings.Index(s, sub) int                       // sub 在 s 的序号
+ strings.Join(slice, sep) string                 // 通过 sep 把 slice 连接成一个字符串
+ strings.Replace(s, old, new, count) string      // 将 s 中的 old 替换为 new, 替换 count 次
+ strings.Count(s, sub) int                       // 返回 sub 在 s 中出现次数
 ```
 
+## 布尔值
+
+布尔值: true, false
+
+```go
+ love, happy := true, false
+ 
+ !love                                           // false  not love is true
+ love == happy                                   // false  love equal happy is wrong 
+ love != happy                                   // true   love is not only happy
+ happy && love                                   // false  love and happy is not true
+ happy || love                                   // true   love or happy is true 
+```
+
+布尔类型的值默认值是 false
+布尔值无法参数数值运算, 只能进行逻辑运算
+布尔值只能转换为字符串, 无法转换为其它类型
 
 ## 类型转换
 
-### 字符串转整形
+任意类型数据都可以转换为字符串
 
-```go
- i, err := strconv.Atoi(str)                     // string -> int 失败则 i=0, i 是 int 类型
+```go 
+s := fmt.Sprinf("%v", <variable>)                // 万能转换, any -> string
 
- i, err := strconv.ParseInt(s, base, bitSize)    // base int，s 的进制, bitSize 返回数字类型
-
- // base int s 的进制( base=16, s 为 16 进制的字符串)
- // bitSize int  (0:int, 8:int8, 16:int16, 32:int32, 64:int64)
+s := strconv.Itoa(32)                            // int -> string
+s := strconv.FormatBool(true)                    // bool -> string
+s := strconv.FormatFloat(3.1415, 'E', -1, 64)    // float64 -> string
+s := strconv.FormatInt(-42, 16)                  // int64 -> string
+s := strconv.FormatUint(42, 16)                  // uint63 -> string
 ```
 
-### 整形转字符串
+字符串转其它类型可能会失败, 转数字时还需考虑进制和类型
 
 ```go
- str := fmt.Sprintf("%v", i)                     // number -> string, 任意数字类型转字符串
+ i, err := strconv.Atoi("-42")                   // string -> int
+ b, err := strconv.ParseBool("true")             // string -> bool
+ f, err := strconv.ParseFloat("3.1415", 64)      // string -> float64
+ i, err := strconv.ParseInt("-42", 10, 64)       // string -> int64
+ u, err := strconv.ParseUint("42", 10, 32)       // string -> uint32
 
- str := strconv.Itoa(i)                          // int -> string, int 类型转字符串
+// ParseFloat (str, bitSize)  bitSize:{32:float32, 64:float64}
+
+// ParseInt  ParseUint (str, base, bitSize)
+// str string: 待转换的字符串
+// base int: str 的进制( base=16, s 为 16 进制的字符串)
+// bitSize int: {0:int, 8:int8, 16:int16, 32:int32, 64:int64}
 ```
-
 
 ## 附录
 
