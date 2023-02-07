@@ -42,7 +42,7 @@ Git 是一个开源的文件版本控制器
 |`local` |`.git/config`   |在仓库内默认使用 local 配置(优先级最高)    |
 
 ```bash
- $ git config --list --show-origin               # 查看所有配置及所在的文件, 早期版本不支持
+ $ git config --list --show-origin               # 查看所有配置及所在的文件
 
  $ git config --system --list                    # 查看系统的 git 配置
  $ git config --global --list                    # 查看系统当前用户的 git 配置
@@ -70,13 +70,12 @@ Git 是一个开源的文件版本控制器
 
 |区域   |位置       |介绍                                    |
 | :---: |    :--:  |                  :--:                  |
-|本地仓库|当前 .git |记录文件当前状态生成一个版本并保存至本地仓库|
+|本地仓库|仓库目录下 `.git` |记录文件当前状态生成一个版本并保存至本地仓库|
 |远程仓库|网络平台  |将当前记录的所有版本上传到远程仓库         |
 
 ### 本地仓库
 
 在本地任意位置使用 `git init` 即可创建一个本地仓库
-
 
 
 - Untracked
