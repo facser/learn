@@ -296,11 +296,11 @@ s := strconv.FormatUint(42, 16)                  // uint63 -> string
 ### 关键字
 
 ```go
-    break        default      func         interface    select
-    case         defer        go           map          struct
-    chan         else         goto         package      switch
-    const        fallthrough  if           range        type
-    continue     for          import       return       var
+   break        default      func         interface    select
+   case         defer        go           map          struct
+   chan         else         goto         package      switch
+   const        fallthrough  if           range        type
+   continue     for          import       retrun       var
 ```
 
 ### 保留字

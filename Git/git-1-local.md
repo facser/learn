@@ -28,95 +28,116 @@ git 用一下3种描述表示**文件状态**, 进一步可划分为**未追踪*
 工作区 -- `git add` --> 暂存区 -- `git commit` --> 本地仓库
 
 |区域|描述|状态|
-|:--:|:--:|:--:|
+|:--|:--:|:--:|
 |`Untracked files`|新增文件|文件处于工作区, 未被追踪|
 |`Changes not staged for commit`|有新修改的文件|文件处于工作区, 新修改未被追踪|
 |`Changes to be committed`|无修改的文件|文件处于暂存区, 修改已追踪|
 
-1. 新增文件
-
 ```bash
- $ touch first_file.txt                          # 在 repository 创建新文件 first_file.txt  
- 
- $ git status                                    # 查看状态, 有新增文件未被记录
- > Untracked files:
-        first_file.txt
+ $ git status                                    # 查看本地仓库状态, 有新增文件未被记录
+ > Untracked files:                              # 新增文件 first_file.txt
+ >      first_file.txt
+ >
+ > Changes to be committed:                      # ADD 新文件 first_file.txt, 待 commit
+ >      new file:   first_file.txt
+ >
+ > Changes not staged for commit:                # 已被记录文件 first_file.txt，又有新修改但未被记录
+ >      modified:   first_file.txt
 ```
 
-2. 新增修改
-
 > git-add - Add file contents to the index
+
+追踪本地仓库的修改, 追踪的文件内容进入暂存区, 等待新的 ADD 覆盖或者 commit 生成版本
 
 ```bash
  $ git add <file>                                # 记录指定文件修改
  $ git add .                                     # 记录当前目录下所有文件修改(上层文件未记录)
  $ git add --all                                 # 记录仓库目录下所有文件修改(推荐)
-```
-
-```bash
- $ git add --all                                 # 记录 repository 目录下所有修改
 
  $ git status                                    # 新增文件已被记录
- > Changes to be committed:
-        new file:   first_file.txt
-```
+ > Changes not staged for commit:                # 文件被修改但未被记录
+         modified:   first_file.txt
 
-```bash
- $ echo "first change" >> first_file.txt         # 修改文件内容
+ $ git add --all                                 # 记录 repository 目录下所有修改
 
- $ git status                                    # 查看状态
- > Changes to be committed:
-        new file:   first_file.txt
-
-  Changes not staged for commit:
-        modified:   first_file.txt
-
- $ git add --all                                 # 记录所有修改
- $ git status                                    # 查看状态, 新修改已被记录
- > Changes to be committed:
-        new file:   first_file.txt
+ $ git status
+ > Changes to be committed:                      # 文件修改已被记录, 待 commit
+         modified:   first_file.txt
 ```
 
 > git-commit - Record changes to the repository
 
-
-
-当一个文件通过 `git add` 追踪后, 又修改了, 此时查看 `git status` 会如何显示？
+将暂存区的文件内容生成可回溯的版本
 
 ```bash
+ $ git commit -m "<commit message>"              # message 较短描述可直接填写
+ $ git commit -s                                 # message 较长, 使用默认编辑器编辑 commit
+ $ git commit --amend                            # 在上次 commit 基础上修改, 并替换原来的 commit
+ $ git commit --amend --no-edit                  # 使用上次 commit 且不修改, 即本次 commit 和上次合并
+
+ $ git checkout --<file>                         # 撤销工作区的修改, 回到上次 commit 状态
+
  $ git status
- >Your branch is up to date with 'origin/main'.
- >
- >Changes to be committed:                
- >        modified:   README.md           
- >        modified:   git.md                     # git.md 已被追踪, 保存的是已追踪时内容
- >
- >Changes not staged for commit:          
- >        modified:   git.md                     # 新修改未被追踪
+ > Changes to be committed:                      # 文件修改已被记录, 待 commit
+         modified:   first_file.txt
+
+ $ git commit -m "first commit"                  # 暂存区文件内容生成版本
+ >  1 file changed, 1 insertion(+)
+
+ $ git status                                    # 修改已保存生成版本
+ > nothing to commit, working tree clean
+
+ $ git log                                       # 查看 commit 版本信息
+ > commit 38c1df5cf2bed00f5b7365ee4913916e25238009 (HEAD -> master)
+ > Author: facser <root@facser>
+ > Date:   Mon Feb 13 20:42:18 2023 +0800
+
+    first commit                                 # 本次版本描述 
 ```
 
-通过过上面结果可知, 只要文件存在未被追踪的内容就会归入到工作区
+> git-log - Show commit logs
 
 ```bash
- $ git status -s                                 # -s --short 显示简略信息
- > M  README                                     # 表示该文件已 add 和 commit, 未再修改
- > A  lib/git.rb                                 # 从未 commit 但已 add, 未再修改
- > MM Rakefile                                   # 已 commit 的文件, 最新的修改未 add
- > MD temp.txt                                   # commit 过, 当前已删除, 未 add 记录删除 
- > AM lib/git.md                                 # 从未 commit 但 add 过, 最新修改未 add
- > ?? LICENSE.txt                                # 未 add 未追踪的文件
+ $ git log                                       # 显示所有 commit 的版本的详细信息
+
+ $ git log --pretty=oneline                      # 显示 commit 版本的简略信息
+ > 38c1df5cf2bed00f5b7365ee4913916e25238009 (HEAD -> master) first commit
+ > d2716b6e88567c3fdfe390580d48ca82b581c04f (HEAD -> master) add file and line
 ```
 
-|缩写|位置        |详细               |
-|:-- |:--        |        :--:       |
-|??  |工作区      |新增文件, 从未被追踪|
-|AM  |工作区 暂存区| 未进入过本地仓库   |
-|MM  |工作区 暂存区| 进入过仓库        |
-|MD  |暂存区      | 进入过仓库         |
-|A   |暂存区      | 未进入本地仓库     |
-|M   |暂存区      | 进入过本地仓库     |
+> git-reset - Reset current HEAD to the specified state
 
-右边有字母表示有修改未追踪, 在工作区显示(删除文件不显示)
-左边有字母表示已追踪, 无修改, M 表示 commit 过, A 表示未 commit 过
+通过 `git log` 定位回退的版本, 使用 `git reset` 执行回退
 
-### [git add](https://git-scm.com/docs/git-add)
+```bash
+ $ git reset --hard HEAD <commit number>         # 回到指定 commit 版本
+
+ $ git reset --hard HEAD^                        # 回退到上个版本
+ > HEAD is now at d2716b6 add file and line
+```
+
+> git-diff - Show changes between commits, commit and working tree, etc
+
+未被追踪(not ADD)和已追踪(ADD)内容进行比对, 已被追踪则不比对
+
+```bash
+ $ git diff
+ > diff --git a/file b/file                      # file 已 ADD 和未 ADD 比对
+ > index 08fe272..06fcdd7 100644
+ > --- a/file                                    # - 开头是被追踪的内容
+ > +++ b/file                                    # + 开头是未被追踪的内容
+ > @@ -1 +1,2 @@
+ > first line
+ > +second line                                  # 新增行
+```
+
+> git-push - Update remote refs along with associated objects
+
+将本地所有新增的 commit 推送到远端仓库
+
+```bash
+ $ git push origin master                        # 提交所有 commit 到 origin 仓库的 master 分支
+ $ git push -u origin master                     # 将 origin 仓库 master 分支作为拉取和推送的默认值
+
+ $ git push <repo> <branch>                      # 使用过 -u 后可以省略仓库和分支
+```
