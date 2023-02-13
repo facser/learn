@@ -42,9 +42,6 @@ Git 是一个开源的文件版本控制器
 
 ```bash
  $ git config --list --show-origin               # 查看所有配置及所在的文件, 早期版本不支持
- > file:/root/.gitconfig   color.ui=true
- > file:/root/.gitconfig   user.name=facser
- > file:/root/.gitconfig   core.editor=vim
 
  $ git config --system --list                    # 查看系统的 git 配置
  $ git config --global --list                    # 查看系统当前用户的 git 配置
@@ -74,10 +71,10 @@ Git 是一个开源的文件版本控制器
 
 ## 仓库
 
-|区域   |位置                 | 介绍                            |
-| :---: |    :--:            |                  :--:           |
-|本地仓库|当前目录 .git 文件夹 |当前仓库所有文件都存储在 .git 文件中|
-|远程仓库|网络平台            |将本地仓库上传到远程仓库            |
+|区域   |位置       |介绍                                    |
+| :---: |    :--:  |                  :--:                  |
+|本地仓库|当前 .git |记录文件当前状态生成一个版本并保存至本地仓库|
+|远程仓库|网络平台  |将当前记录的所有版本上传到远程仓库         |
 
 ### 本地仓库
 
@@ -94,7 +91,6 @@ Git 是一个开源的文件版本控制器
 |Changes to be committed|无修改的文件|暂存区, 修改已追踪|
 
 工作区 -- `git add` --> 暂存区 -- `git commit` --> 本地仓库
-
 
 ### 远程仓库
 

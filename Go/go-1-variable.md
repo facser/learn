@@ -1,7 +1,10 @@
-# Go
+# Golang  
 
 - [变量](#变量)
 - [常量](#常量)
+- [打印](#打印)
+- [整形](#整形)
+- [字符串](#字符串)
 - [附录](#附录)
 
 ## 变量
@@ -143,7 +146,7 @@ iota 是定义常量时使用的自增关键字
  hexadecimal := 0x11                             // int hexadecimal = 17  16 进制赋值 
 ```
 
-## 字符型
+## 字符串
 
 Golang 字符串本质是单个字符的集合, 单个字符的本质是数字, 通过不同规范和字符对应(ACSII 和 Unicode)
 
@@ -230,7 +233,7 @@ rune(int32) Unicode 编码中的一个字符(包含世界大部分语言字符),
  // 单个英文字母 1 个 byte可以表示, len() 返回字节数, 一个字母占用 1 个字节
  // 单个中文字符由 3 个 byte 或 1 个 rune 表示, len() 返回字节数, 一个字符包含 3 个字节
  // 以 byte 区分, 单个中文字符长度为 3, 单个字母长度为 1
- // 通过序号取的单个字符为 byte, 通过 range 取出的单个字符为 rune
+ // 通过序号取的单个字符为 byte(str[index]), 通过 range 取出的单个字符为 rune(for _, s := range str)
 ```
 
 ```go
@@ -249,9 +252,9 @@ rune(int32) Unicode 编码中的一个字符(包含世界大部分语言字符),
 ```go
  love, happy := true, false
  
- !love                                           // false  not love is true
- love == happy                                   // false  love equal happy is wrong 
- love != happy                                   // true   love is not only happy
+ !love                                           // false  not love is false
+ love == happy                                   // false  love equal happy is false 
+ love != happy                                   // true   love not equal happy
  happy && love                                   // false  love and happy is not true
  happy || love                                   // true   love or happy is true 
 ```
