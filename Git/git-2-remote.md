@@ -1,4 +1,6 @@
-## 远程仓库
+# Git Remote repository
+
+## 介绍
 
 远程仓库是托管在网上的项目版本库, 需要在代码平台上创建, 常见的如
 
@@ -12,32 +14,13 @@
  $ git clone <Repository url>                    # 克隆远端仓库到本地, 自动绑定链接对应的仓库
 
  $ git remote -v                                 # 查看本地仓库关联的所有远端仓库
-```
 
-```bash
- $ git init                                      # 初始化本地仓库
- $ git add --all                                 # 追踪目录下所有文件修改
- $ git commit -m "<commit message>"              # 记录修改生成一个版本到本地仓库
  $ git remote add origin <Repository url>        # 将远程仓库命名为 origin 并关联本地仓库
- $ git push -u orighin master                    # 推送本地所有版本到远程仓库
 ```
 
 - 一个本地仓库可以关联多个远程仓库
 - 本地仓库可以提交代码到任意一个已关联的远程仓库
 - 使用克隆后, 该远程仓库默认被命名为 origin
-
-### [git push](https://git-scm.com/docs/git-push)
-
-> git-push - Update remote refs along with associated objects
-
-将本地所有新增的 commit 推送到远端仓库
-
-```bash
- $ git push origin master                        # 提交所有 commit 到 origin 仓库的 master 分支
- $ git push -u origin master                     # 将 origin 仓库 master 分支作为拉取和推送的默认值
-
- $ git push <repo> <branch>                      # 使用过 -u 后可以省略仓库和分支
-```
 
 ## .gitignore
 

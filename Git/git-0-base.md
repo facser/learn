@@ -19,9 +19,7 @@ Git 是一个开源的文件版本控制器
 ```bash
  $ git --version                                 # 检查 git 是否安装
  > git version 1.8.3.1
-```
 
-```bash
  $ yum install git                               # Centos Redhat 系统使用 yum 安装
  $ sudo apt-get install git                      # Ubuntu Debian 系统使用 apt
 ```
@@ -59,14 +57,17 @@ Git 是一个开源的文件版本控制器
  $ git config --global core.editor vim           # 修改系统当前用户的 git 编辑器为 vim
  $ git config --global color.ui true             # 系统当前用户的 git 输出显示颜色
  $ git config --global commit.template <file>    # 设置 commit 签名模板
-```
 
-```bash
  $ git config --global user.name facser          # 设置系统当前的 git 用户名为 facser
  $ git config user.name                          # 查看当前使用的 git 用户名
 
  $ git config --global user.email abc@email      # 设置系统当前的 git 邮箱为 abc@email
  $ git config user.email                         # 查看当前使用的 git 用户名
+ 
+ $ git config --list                             # 列出上述所有配置, 可能出现重复项
+ > color.ui=true
+ > user.name=facser
+ > core.editor=vim
 ```
 
 ## 仓库
@@ -92,6 +93,22 @@ Git 是一个开源的文件版本控制器
 
 工作区 -- `git add` --> 暂存区 -- `git commit` --> 本地仓库
 
+```bash
+ $ git init                                      # 初始化本地仓库
+
+ $ git add --all                                 # 追踪本地仓库所有修改
+
+ $ git commit -m "version message"               # 生成可回溯的版本
+
+ $ git push <repository name> <branch name>      # 将本地仓库分支所有版本推送到远程仓库对应分支
+```
+
 ### 远程仓库
 
 将本地仓库上传到远程仓库, 或从远程仓库下载文件到本地
+
+```bash
+ $ git clone <repository link>                   # 克隆远程仓库项目到本地
+
+ $ git remote add origin <Repository url>        # 将远程仓库命名为 origin 并关联本地仓库
+```

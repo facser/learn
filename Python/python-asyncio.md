@@ -66,7 +66,6 @@ first  4 Tue Nov 22 2022 15:58:23 GMT+0800 (China Standard Time)
 third  6 Tue Nov 22 2022 15:58:25 GMT+0800 (China Standard Time)
 ```
 
-
 单线程异步用于处理非计算密集的如 I/O, 网络请求, 计算密集操作使用单线程异步无效果
 多线程异步通过创建新线程完成异步, 计算密集和非计算密集操作都适用, 但线程数量过多会耗费更多资源
 
@@ -76,35 +75,35 @@ third  6 Tue Nov 22 2022 15:58:25 GMT+0800 (China Standard Time)
 
 主线程跳过异步操作, 新开线程执行跳过的操作, 使主线程运行达到异步效果
 
-```Go
+```go
 package main
 
 import (
-	"fmt"
-	"sync"
-	"time"
+    "fmt"
+    "sync"
+    "time"
 )
 
 var wg sync.WaitGroup
 
 func Delay(name string, delay int) {
-	defer wg.Done()
-	fmt.Println(name, delay, time.Now())
-	time.Sleep(time.Duration(delay) * time.Second)
-	fmt.Println(name, delay, time.Now())
+    defer wg.Done()
+    fmt.Println(name, delay, time.Now())
+    time.Sleep(time.Duration(delay) * time.Second)
+    fmt.Println(name, delay, time.Now())
 }
 
 func main() {
-	names := [...]string{"first", "second", "third"}
+    names := [...]string{"first", "second", "third"}
     delays := [...]int{4, 3, 5}
-	for i := 0; i < 3; i++ {
-		wg.Add(1)
-		go Delay(names[i], delays[i])
-	}
-    
-	// time.Sleep(3 * time.Second)
-	fmt.Println("Over")
-	wg.Wait()                                              // 等待所有协程执行完成                                      
+    for i := 0; i < 3; i++ {
+        wg.Add(1)
+        go Delay(names[i], delays[i])
+    }
+
+    // time.Sleep(3 * time.Second)
+    fmt.Println("Over")
+    wg.Wait()                                              // 等待所有协程执行完成                                      
 }
 
 Over
@@ -135,7 +134,6 @@ third    6 2022-11-22 16:18:09.4070635 +0800 CST m=+6.002157901
 
 从上面代码和结果可知, main 和新开的 3 个 Delay 有 4 个线程, 执行顺序由协程耗时决定
 
-
 ### 单线程异步
 
 ```python
@@ -165,8 +163,7 @@ first    4 16:11:56
 third    6 16:11:58
 ```
 
-### CPU 
-
+### CPU
 
 ```python
 
@@ -285,38 +282,36 @@ third    60000000 16:46:36                                 # 单个协程花费 
 
 ```
 
-
-
 ```Go
 package main
 
 import (
-	"fmt"
-	"sync"
-	"time"
+    "fmt"
+    "sync"
+    "time"
 )
 
 var wg sync.WaitGroup
 
 func Sum(name string, end int) {
-	defer wg.Done()
-	fmt.Println(name, end, time.Now())
-	sum := 0
-	for i := 0; i <= end; i++ {
-		sum += i
-	}
-	fmt.Println(name, end, time.Now())
+    defer wg.Done()
+    fmt.Println(name, end, time.Now())
+    sum := 0
+    for i := 0; i <= end; i++ {
+        sum += i
+    }
+    fmt.Println(name, end, time.Now())
 }
 
 func main() {
-	names := [...]string{"first", "second", "third"}
-	delays := [...]int{15000000000, 1000000000, 13000000000}
-	for i := 0; i < 3; i++ {
-		wg.Add(1)
-		go Sum(names[i], delays[i])
-	}
-	fmt.Println("Over")
-	wg.Wait()
+    names := [...]string{"first", "second", "third"}
+    delays := [...]int{15000000000, 1000000000, 13000000000}
+    for i := 0; i < 3; i++ {
+        wg.Add(1)
+        go Sum(names[i], delays[i])
+    }
+    fmt.Println("Over")
+    wg.Wait()
 }
 
 third    20000000000 2022-11-22 10:51:36.4803571 +0800 CST m=+0.000173601
@@ -329,7 +324,6 @@ third    20000000000 2022-11-22 10:51:45.9174494 +0800 CST m=+9.437265801
 third    20000000000 2022-11-22 10:51:00.7876033 +0800 CST m=+0.000169201
 third    20000000000 2022-11-22 10:51:08.1227567 +0800 CST m=+7.335322701
 ```
-
 
 ```python
 first    40000000 15:22:03                       # python 多进程
@@ -367,7 +361,6 @@ second   20000000 15:27:59
 third    60000000 15:28:13
 third    60000000 15:28:17
 ```
-
 
 ```javascript
 const wait = async (name, delay) => {
@@ -427,10 +420,6 @@ third  2000000000 Tue Nov 22 2022 11:02:24 GMT+0800 (China Standard Time)
 third  2000000000 Tue Nov 22 2022 11:02:27 GMT+0800 (China Standard Time)
 ```
 
-
-
-
-
 ```javascript
 
 const record = (name, delay) => {
@@ -464,7 +453,6 @@ third  2000000000 Tue Nov 22 2022 11:01:54 GMT+0800 (China Standard Time)
 third  2000000000 Tue Nov 22 2022 11:02:24 GMT+0800 (China Standard Time)
 third  2000000000 Tue Nov 22 2022 11:02:27 GMT+0800 (China Standard Time)
 ```
-
 
 ```javascript
 
@@ -513,7 +501,6 @@ JS的单线程是指一个浏览器进程中只有一个JS的执行线程，同�
 
 而异步机制是浏览器的两个或以上常驻线程共同完成的，例如异步请求是由两个常驻线程：JS执行线程和事件触发线程共同完成的，JS的执行线程发起异步请求（这时浏览器会开一条新的HTTP请求线程来执行请求，这时JS的任务已完成，继续执行线程队列中剩下的其他任务），然后在未来的某一时刻事件触发线程监视到之前的发起的HTTP请求已完成，它就会把完成事件插入到JS执行队列的尾部等待JS处理。又例如定时触发（settimeout和setinterval）是由浏览器的定时器线程执行的定时计数，然后在定时时间把定时处理函数的执行请求插入到JS执行队列的尾端（所以用这两个函数的时候，实际的执行时间是大于或等于指定时间的，不保证能准确定时的
 
-
 ```python
  import time
 
@@ -540,37 +527,36 @@ third    10:44:05
 third    10:44:08
 ```
 
-
-```Go
+```go
 package main
 
 import (
-	"fmt"
-	"sync"
-	"time"
+    "fmt"
+    "sync"
+    "time"
 )
 
 var wg sync.WaitGroup
 
 func Sum(name string, end int) {
-	defer wg.Done()
-	fmt.Println(name, end, time.Now())
-	sum := 0
-	for i := 0; i <= end; i++ {
-		sum += i
-	}
-	fmt.Println(name, end, time.Now())
+    defer wg.Done()
+    fmt.Println(name, end, time.Now())
+    sum := 0
+    for i := 0; i <= end; i++ {
+        sum += i
+    }
+    fmt.Println(name, end, time.Now())
 }
 
 func main() {
-	names := [...]string{"first", "second", "third"}
-	delays := [...]int{15000000000, 1000000000, 13000000000}
-	for i := 0; i < 3; i++ {
-		wg.Add(1)
-		go Sum(names[i], delays[i])
-	}
-	fmt.Println("Over")
-	wg.Wait()
+    names := [...]string{"first", "second", "third"}
+    delays := [...]int{15000000000, 1000000000, 13000000000}
+    for i := 0; i < 3; i++ {
+        wg.Add(1)
+        go Sum(names[i], delays[i])
+    }
+    fmt.Println("Over")
+    wg.Wait()
 }
 
 // 异步执行 3 个百亿量级运算耗时 9s
@@ -591,7 +577,6 @@ third    20000000000 2022-11-22 10:51:08.1227567 +0800 CST m=+7.335322701
 注: 多线程并行需要多个核心支持, 一般一个核心执行一个线程(存在超线程技术, 一个核心同时执行两个线程),  
 线程刷量超过核心数量, 核心会在多个线程间来回切换执行
 
-
 ```javascript
 
 const wait = async (name, delay) => {
@@ -610,7 +595,6 @@ const main = () => {
 }
   
 main()
-
 
 first  4 Wed Nov 23 2022 14:06:40 GMT+0800 (China Standard Time)
 first  Read Finish

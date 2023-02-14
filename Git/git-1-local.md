@@ -140,4 +140,6 @@ git 用一下3种描述表示**文件状态**, 进一步可划分为**未追踪*
  $ git push -u origin master                     # 将 origin 仓库 master 分支作为拉取和推送的默认值
 
  $ git push <repo> <branch>                      # 使用过 -u 后可以省略仓库和分支
+ > To github.com:facser/Learning.git
+   309ae9f..74beac3  main -> main
 ```

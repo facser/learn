@@ -5,7 +5,6 @@
 - 异步
 - 多线程
 
-
 ## 简述
 
 - 密集型操作
@@ -26,7 +25,8 @@ data <- CPU <- data -> Memory <- data -> device(Disk NIC)
      ^          ^                 ^
     fast      slowly            slowly   
 ```
-I/O bound: I/O 密集操作, CPU 大部分时间在等硬盘和内存 I/O, CPU loading 低 
+
+I/O bound: I/O 密集操作, CPU 大部分时间在等硬盘和内存 I/O, CPU loading 低
 I/O bond 因为外部设备瓶颈无法发挥 CPU 性能
 
 解决方案: 多进程 多线程 异步
@@ -35,6 +35,7 @@ I/O bond 因为外部设备瓶颈无法发挥 CPU 性能
 time |------ CPU operation ------|-- other --|
              long time             short time
 ```
+
 CPU bound: CPU 密集操作, CPU 大部分时间处于运算中, CPU loading 高
 I/O bond 因为 CPU 瓶颈无法发挥外部设备性能
 
@@ -42,11 +43,11 @@ I/O bond 因为 CPU 瓶颈无法发挥外部设备性能
 
 ### 单线程与多线程
 
-单线程: 
+单线程:
 程序中只有一个执行流
 资源占用小, 不会出现资源数据竞争
 
-多线程: 
+多线程:
 程序中包含多个执行流, 多个执行流并行完成任务
 多个线程之间共享进程内的数据与资源
 
@@ -84,7 +85,6 @@ third    6 14:26:21
 同步执行代码时是顺序逐行执行的, 必须执行当前代码后才能继续执行下一行
 同步代码有确定的执行顺序
 同步代码遇到文件 I/O 或网络 I/O 会产生阻塞
-
 
 异步:
 执行遇到异步操作会直接返回, 继续执行后续代码, 待异步操作完成后, 主线程能收到消息
@@ -153,18 +153,18 @@ first  Wed Nov 23 2022 16:45:08 GMT+0800 (China Standard Time)
 package main
 
 import (
-	"fmt"
-	"sync"
-	"time"
+    "fmt"
+    "sync"
+    "time"
 )
 
 var wg sync.WaitGroup
 
 func Delay(name string, delay int) {
-	defer wg.Done()
-	fmt.Printf("%-8s %d %v\n", name, delay, time.Now())
-	time.Sleep(time.Duration(delay) * time.Second)
-	fmt.Printf("%-8s %d %v\n", name, delay, time.Now())
+    defer wg.Done()
+    fmt.Printf("%-8s %d %v\n", name, delay, time.Now())
+    time.Sleep(time.Duration(delay) * time.Second)
+    fmt.Printf("%-8s %d %v\n", name, delay, time.Now())
 }
 
 func main() {
@@ -172,9 +172,9 @@ func main() {
     go Delay("second", 2)
     go Delay("third",  5)
 
-	// time.Sleep(3 * time.Second)
-	fmt.Println("Over")
-	wg.Wait()                                                                      
+    // time.Sleep(3 * time.Second)
+    fmt.Println("Over")
+    wg.Wait()                                                                      
 }
 
 
@@ -330,9 +330,9 @@ second   20000000 16:46:15
 third    60000000 16:46:32
 third    60000000 16:46:36                                
 ```
+
 > 由于 GIL 的存在, asyncio.to_thread() 通常只能被用来将 IO 密集型函数变为非阻塞的
 > 对于会释放 GIL 的扩展模块或无此限制的替代性 Python 实现来说, asyncio.to_thread() 也可被用于 CPU 密集型函数.(多进程, 或无 GIL 的 Python)
-
 
 ## 多线程
 
@@ -393,9 +393,9 @@ third  4000000000 Wed Nov 23 2022 15:26:36 GMT+0800 (China Standard Time)
 Over
 ```
 
-JS的单线程是指一个浏览器进程中只有一个JS的执行线程，同一时刻内只会有一段代码在执行    
+JS的单线程是指一个浏览器进程中只有一个JS的执行线程，同一时刻内只会有一段代码在执行
 JS 异步请求是浏览器的两个常驻线程共同完成的: JS 执行线程和事件触发线程  
-JS的执行线程发起异步请求，事件触发线程监视到之前的发起的HTTP请求已完成，它就会把完成事件插入到JS执行队列的尾部等待JS处理   
+JS的执行线程发起异步请求，事件触发线程监视到之前的发起的HTTP请求已完成，它就会把完成事件插入到JS执行队列的尾部等待JS处理
 
 ### Python
 
@@ -486,7 +486,6 @@ third    60000000 15:24:32
 third    60000000 15:24:36
 ```
 
-
 ### Golang
 
 Golang 支持多线程, 使用 GPM 模型自动化分配协程到线程上执行
@@ -495,21 +494,21 @@ Golang 支持多线程, 使用 GPM 模型自动化分配协程到线程上执行
 package main
 
 import (
-	"fmt"
-	"sync"
-	"time"
+    "fmt"
+    "sync"
+    "time"
 )
 
 var wg sync.WaitGroup
 
 func Sum(name string, end int) {
-	defer wg.Done()
-	fmt.Printf("%-8s %d %v\n", name, delay, time.Now())
-	sum := 0
-	for i := 0; i < end; i++ {
-		sum += i
-	}
-	fmt.Printf("%-8s %d %v\n", name, delay, time.Now())
+    defer wg.Done()
+    fmt.Printf("%-8s %d %v\n", name, delay, time.Now())
+    sum := 0
+    for i := 0; i < end; i++ {
+        sum += i
+    }
+    fmt.Printf("%-8s %d %v\n", name, delay, time.Now())
 }
 
 func main() {
@@ -518,8 +517,8 @@ func main() {
     go Sum("second", 10000000000)
     go Sum("third",  20000000000)
 
-	fmt.Println("Over")
-	wg.Wait()
+    fmt.Println("Over")
+    wg.Wait()
 }
 
 // 异步执行 3 个百亿量级运算

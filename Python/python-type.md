@@ -60,7 +60,7 @@ python 类型注解:
 注: 上述除元组与字典外, 容器元素只能指定一个类型. 元组需要数量和类型一致, 字典只能使用一组 key value 类型
 (python3.9版本前容器类型需要导入 typing 模块的 List Tuple Set Dict)
 
-### 联合类型 
+### 联合类型
 
 - Union
 - Optional
@@ -85,13 +85,12 @@ python 类型注解:
 
 ### 抽象类型
 
- - Mapping
- - MutableMapping
- - Sequence
- - Iterable
+- Mapping
+- MutableMapping
+- Sequence
+- Iterable
 
 数组, 元组, 集合
-
 
 ### 函数注解
 
@@ -107,7 +106,7 @@ python 类型注解:
 
 函数, 匿名函数, 包含 __call__ 方法的对象
 
-Callable[[args_type], return_type] 
+Callable[[args_type], return_type]
 
 ```Python
  from typing import Callable

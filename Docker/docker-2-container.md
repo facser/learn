@@ -28,7 +28,6 @@ ee0c15a3a0ee        mongo               "docker-entrypoint.s…"   44 hours ago 
 |`NAMES`       |容器名称|
 |`SIZE`        |容器大小|
 
-
 ```bash
  docker stop    <CONTAINER ID | NAMES>                                         # 关闭容器
  docker start   <CONTAINER ID | NAMES>                                         # 启动容器
@@ -66,9 +65,9 @@ Options:
   -p, --publish list                                                           # 设置容器映射端口
   -P,--publish-all                                                             # 将容器设置的所有exposed端口进行随机映射
   --restart <restart option>                                                   # 容器重启策略，默认为不重启
-    on-failure[:max-retries]：                                                   # 在容器非正常退出时重启，可以设置重启次数。
-    unless-stopped：                                                             # 总是重启，除非使用stop停止容器
-    always：                                                                     # 总是重启
+    on-failure[:max-retries]：                                                 # 在容器非正常退出时重启，可以设置重启次数。
+    unless-stopped：                                                           # 总是重启，除非使用stop停止容器
+    always：                                                                   # 总是重启
   --rm                                                                         # 容器退出时则自动删除容器
   -t, --tty                                                                    # 分配一个伪终端
   -u, --user <username>                                                        # 运行用户或者UID
@@ -86,5 +85,3 @@ Options:
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                     NAMES
 ee0c15a3a0ee        mongo               "docker-entrypoint.s…"   13 seconds ago      Up 11 seconds       0.0.0.0:8589->27017/tcp   demo
 ```
-
-

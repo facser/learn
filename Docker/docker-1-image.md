@@ -6,13 +6,11 @@
 一个镜像可以生成任意数量的容器
 可以使用官方镜像或者自定义镜像
 
-
 ## 镜像命令
 
 - 镜像列表
 - 镜像查找
   
-
 ### 镜像列表
 
 ```bash
@@ -42,14 +40,13 @@
 |`CREATED`|镜像创建时间|
 |`SIZE`|镜像大小|
 
-
 ### 拉取镜像
 
 - 官方镜像
 - 私有镜像
 
 1. 官方镜像
-   
+
 拉取镜像前可以使用 docker search 查看官方及第三方镜像列表  
 未指定链接默认从官方镜像拉取
 
@@ -150,7 +147,7 @@ mongo-person                                              1.0.0                 
 
 ## 自定义镜像
 
-### 
+### docker build
 
 ```bash
  docker build [OPTIONS] PATH | URL | -
@@ -166,7 +163,6 @@ mongo-person                                              1.0.0                 
 REPOSITORY                                                TAG                       IMAGE ID            CREATED             SIZE
 nginx-base                                                v1                        43761bd5b76d        41 hours ago        700MB
 ```
-
 
 ### Dockerfile
 
@@ -259,14 +255,3 @@ CMD /bin/bash                                                                  #
 注: 创建容器时, 若执行的命令在一定时间内能完成, 则容器在执行完命令就会关闭
 ex: echo "hello docker", 创建容器在执行完 echo 命令后便关闭改容器
     /bin/bash, 该命令未收到 exit 退出前会一直执行, 该容器会保持运行状态
-
-
-
-
-
-
-
-
-
-
-
