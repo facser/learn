@@ -16,7 +16,7 @@
  > b4da33977293   mongo  "docker-entrypoint.s…"  6 seconds ago  Up 5 seconds   0.0.0.0:27017->27017/tcp, :::27017->27017/tcp   mongodb
 ```
 
-- 以 mongo 为镜像, 创建容器 mongodb, 
+- 以 mongo 为镜像, 创建容器 mongodb
 - 容器内 /data/db 目录挂载到系统 /root/Desktop/Mongo 目录下
 - 系统端口 27017 与容器内 27017 端口映射
 
@@ -105,6 +105,5 @@ test                                             # 数据库名称
 ```js
  > db.<collection>.insert(<json>)                // 指定集合插入 json 数据
  > db.<collection>.insert([<json>, <json>])      // 单次插入多个 json 数据, 与多次插入单个 json 一致
-
 
 ```

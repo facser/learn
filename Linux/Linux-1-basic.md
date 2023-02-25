@@ -10,44 +10,98 @@
 
 [linux 命令](https://www.linuxcool.com/)
 
-### 帮助和查找
+## 基础命令
 
-#### [man](https://www.linuxcool.com/man) : manual
+### 查看帮助信息
 
 ```bash
  $ man <command>                                 # man (manual) 帮助手册, 查看命令的帮助手册
  $ man -f <command>                              # 显示命令的简短描述
+ $ man -f date
+ > date (1)             - print or set the system date and time
 
- $ man -k <command>                              # 只记得部分命令, 列出所有含有字符的命令
-```
-
-#### [whatis](https://www.linuxcool.com/whatis)
-
-```bash
  $ whatis <command>                              # 显示命令的简短描述, 等同于 man -f <command>
+ $ whatis date
+ > date (1)             - print or set the system date and time
+
+ $ <command> -h/--help                           # 命令使用 -h/--help 参数
+ $ date -h
+ $ date --help
+ > Usage: date [OPTION]... [+FORMAT]
+ >   or:  date [-u|--utc|--universal] [MMDDhhmm[[CC]YY][.ss]]
+ > Display the current time in the given FORMAT, or set the system date.
 ```
 
-#### [info](https://wangchujiang.com/linux-command/c/info.html)
+### 文件目录操作
 
 ```bash
- $ info <command>                                # 显示命令的 info 文档, 内容与帮助文档相似
-```
+ $ pwd                                           # 查看当前目录
+ > /root/Desktop
 
-#### [which](https://wangchujiang.com/linux-command/c/which.html)
+ $ ls                                            # 查看当前目录下的文件及文件夹
+ > Anaconda3-2022.10-Linux-x86_64.sh  go1.19.3.linux-amd64.tar.gz
+
+ $ cd <path>                                     # 切换到 path 目录(无返回值), path 不存在则报错
+ ~/Desktop/Zip$                                  # 命令行 $ 左边即为当前目录
+```
 
 ```bash
- $ which <command>                               # 查看命令所在位置
+ $ cp <source> <destination>                     # 文件复制
+ $ mv <source> <destination>                     # 文件移动或重命名
+ $ rm <file>                                     # 删除文件
+ $ mkdir <path>                                  # 创建文件夹
+ $ touch <file>                                  # 创建文件
+ $ cat <file>                                    # 查看文件内容
+
+ $ touch learn.log                               # 创建文件 learn.log
+ $ mkdir seeds                                   # 创建文件夹 seeds  
+ $ cp learn.log seeds/                           # learn.log 复制到 seeds 文件夹下
+ $ rm learn.log                                  # 删除当前目录下的 learn.log
+ $ mv seeds/learn.log study.log                  # 将 seeds 下的 learn.log 移动到当前目录并重命名
+ $ rm -r seeds                                   # 删除 seeds 文件夹及文件夹下的所有文件
+
+ > 'learn.log'       -> crteate
+ > 'seed/'           -> crteate
+ > 'learn.log'       -> 'seed/learn.log'
+ > 'learn.log'       -> delete
+ > 'seeds/learn.log' -> 'study.log'
+ > 'seed/'           -> delete
 ```
 
-#### [history](https://linux.alianga.com/c/history.html)
+## 系统相关
+
+```bash
+ $ shutdown -h now                               # 关机
+ $ shutdown -r now                               # 重启
+
+ $ date                                          # 系统信息
+ > Sat Feb 25 20:34:10 CST 2023
+
+ $ unmae -a                                      # 查看系统内核信息
+ > inux facser 5.15.79.1-microsoft-standard-WSL2 #1 SMP Wed Nov 23 01:01:46 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux
+
+ $ ps -af                                        # 查看当前正在运行的所有进程
+ > UID        PID  PPID  C STIME TTY          TIME CMD
+ > root      1399    71  0 19:08 pts/4    00:00:00 /bin/zsh -i
+ > root      9481   490  0 20:24 pts/4    00:00:00 bash -x a.sh
+
+ $ kill <pid>                                    # 根据 pid 关掉指定进程
+ $ kill 9481
+ > [1]  + 9481 terminated  bash -x a.sh  
+```
+
+### [history](https://linux.alianga.com/c/history.html)
 
 ```bash
  $ history                                       # 查看执行的命令历史
 
  $ !!                                            # 执行上一条命令
+ $ !<command key> + Tab                          # 通过命令关键字和 Tab 键盘查找执行过的命令
+ $ control + r + <command key>                   # 快捷键进入历史列表, 通过关键字查找, 方向键和 enter 选择命令  
+
 ```
 
-### Root 用户
+## 启用 Root 用户
 
 ```bash
  $ sudo passwd root
@@ -113,7 +167,7 @@ sudo 免密码
  > aa ab
 ```
 
-#### 特殊符号
+### 特殊符号
 
 #### `|` 管道符号
 
@@ -124,14 +178,19 @@ sudo 免密码
 #### `>` `>>` `<` 重定向
 
 ```bash
- $ <cmd> > <file>                                # 将输出覆盖写入文件(原文件清空后写入)
- $ ls > file.log                                 # 将 ls 命令返回值写入 file.log 文件
+ $ <cmd> > <file>                                # 将命令返回值覆盖写入文件(原文件清空后写入)
+ $ date > file.log                               # 将 ls 命令返回值写入 file.log 文件
+ > Sat Feb 25 20:39:56 CST 2023
 
  $ <cmd> >> <file>                               # 将输出追加写入文件(原文件内容保留)
- $ ls > file.log                                 # 将 ls 命令返回值写入 file.log 内容结尾
+ $ date >> file.log                              # 将 date 命令返回值追加写入 file.log 内容结尾
+ > Sat Feb 25 20:39:56 CST 2023
+ > Sat Feb 25 20:40:51 CST 2023
 
  $ <cmd> < <file>                                # 将文件内容重定向为标准输入
  $ cat < file.log                                # 读取 file.log 并打印
+ > Sat Feb 25 20:39:56 CST 2023
+ > Sat Feb 25 20:40:51 CST 2023
 ```
 
 #### `&1` `&2` `/dev/null` 输出
@@ -156,7 +215,7 @@ sudo 免密码
 |r / R|`recursive`        |递归|
 |s / S|`sort`             |排序|
 
-### 特殊符号
+### 符号
 
 |符号|含义|
 |:-: |:-|
