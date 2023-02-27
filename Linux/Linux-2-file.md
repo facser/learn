@@ -9,7 +9,7 @@
 
 # Linux File
 
-### 常用目录
+## 常用目录
 
 |位置|全称|说明|
 |:-:|:-:|:-:|
@@ -29,31 +29,42 @@
 |`/etc/profile`                        |任意用户打开命令行加载|
 |`/etc/bash.bashrc`                    |任意用户打开命令行加载|
 |`~/.profile`                          |当前用户打开命令行时执行的文件|
-|`~/.bashrc`                           |当前用户打开命令行时执行的文件|
+|`~/.bashrc`                           |当前用户打开 bash 命令行时执行的文件|
+|`/etc/apt/source.list`                |(Ubuntu) apt 下载源文件|
+|`/var/cache/apt/archives/`            |(Ubuntu) apt 下载包安放位置|
 |`/ect/rc.d/rc.local`                  |系统启动时执行的文件(centos, redhat)|
 |`/lib/systemd/system/rc-local.service`|系统启动时执行的文件(Ubuntu)|
 
-注: 打开命令行加载顺序和表格顺序一致
+## 文件查看
 
-### 文件查看
-
-#### [tree](https://www.linuxcool.com/tree)
+### [tree](https://www.linuxcool.com/tree)
 
 ```bash
- $ tree                                          # 显示目录的树状层级图
+ $ tree <path>                                   # 显示目录的树状层级图
  $ tree -f                                       # 树状图显示绝对路径
+ > Zip/
+   ├── targe.tar.gz
+   └── main.sh
+
+ > 0 directories, 2 files
 ```
 
-#### [pwd](https://www.linuxcool.com/pwd) :  print working directory
+### [pwd](https://www.linuxcool.com/pwd) :  print working directory
 
-#### [dirs](https://www.linuxcool.com/dirs) : directories
+### [dirs](https://www.linuxcool.com/dirs) : directories
 
 ```bash
  $ pwd                                           # 显示当前路径
+ > /root/Desktop
+
  $ dirs                                          # 显示当前路径
+ > /root/Desktop
+
+ $ echo $PWD                                     # 当前路径的全局变量
+ > /root/Desktop
 ```
 
-#### [ls](https://www.linuxcool.com/ls) : list files
+### [ls](https://www.linuxcool.com/ls) : list files
 
 ```bash
  $ ls                                            # 显示当前目录下所有文件及目录
@@ -63,65 +74,84 @@
  $ ls -S                                         # sort 根据文件大小排序
 
  $ ls -alS                                       # 参数可无顺序合并, 结果按参数显示
+ > total 40
+ > drwxr-xr-x 10 root root 4096 Feb 27 20:44 .
+ > drwx------ 14 root root 4096 Feb 27 20:35 ..
+ > drwxr-xr-x  3 root root 4096 Oct 24 20:33 Blog
 ```
 
-#### [file](https://linux.alianga.com/c/file.html)
+### [file](https://linux.alianga.com/c/file.html)
 
 ```bash
- $ file <file>                                                  # 显示文件类型
- > a.py: Python script, UTF-8 Unicode text executable           # 文件名, 类型, 编码类型
+ $ file <file>                                   # 显示文件类型
+ $ file main.py
+ > main.py: Python script, ASCII text executable # 文件名, 类型, 编码类型
 ```
 
-### 文件操作
+## 文件操作
 
-#### [cd](https://www.linuxcool.com/cd) : change directory
+### [cd](https://www.linuxcool.com/cd) : change directory
 
 ```bash
- $ cd <dir>                                      # 切换到 <dir> 目录
-
+ $ cd <path>                                     # 切换到 <paht> 目录
+ 
  $ cd ..                                         # 返回上级目录
  $ cd -                                          # 回到上次所有在目录
- 
+
+ $ cd folder                                     # 目录必须存在, 否则切换失败
+ > bash: cd: folder: No such file or directory
 ```
 
 #### [mkdir](https://www.linuxcool.com/mkdir) : make directories
 
 ```bash
  $ mkdir <dir>                                   # 创建目录
+ $ mkdir -v 1st 2nd 3rd                          # 创建多个文件夹
+ > mkdir: created directory '1st'
+ > mkdir: created directory '2nd'
+ > mkdir: created directory '3rd'
 
- $ mkdir -p <dir>/<dir>                          # 创建多级目录
+ $ mkdir -p <path>                               # 创建多级目录,无论多级目录是否存在都会创建
+ $ mkdir -p 1st/2nd/3rd
+ > mkdir: created directory '1st/2nd'
+ > mkdir: created directory '1st/2nd/3rd'
 ```
 
 #### [touch](https://www.linuxcool.com/touch)
 
 ```bash
- $ touch <file> <file>                           # 文件不存在, 创建文件, 可同时创建多个
- $ touch <file>                                  # 文件存在, 修改文件读取和修改时间
+ $ touch <file> <file>                           # 文件不存在, 创建文件, 文件存在不创建, 可同时创建多个
+
+ $ touch 1st/main.sh                             # 创建时可以添加路径, 路径不存在会报错
+ > touch: cannot touch '1st/main.sh': No such file or directory
 ```
 
 #### [rm](https://www.linuxcool.com/rm) :  remove
 
 ```bash
- $ rm -f                                         # --force 强制删除文件, 不询问
- $ rm -r                                         # -R, --recursive 递归删除, 删除文件夹及下所有文件
- $ rmdir                                         # 删除空目录, 目录下有文件或文件夹报错
+ $ rm <file>                                     # 删除文件, 或删除文件夹
+ $ rm -f <file>                                  # --force 强制删除文件, 不询问
+ $ rm -r <path>                                  # -R, --recursive 递归删除, 删除文件夹及下所有文件
+ $ rmdir <path>                                  # 删除空目录, 目录下有文件或文件夹报错
+ > rmdir: failed to remove '1st': Directory not empty
 ```
 
 #### [mv](https://linux.alianga.com/c/mv.html) : move
 
 ```bash
  $ mv <file|dir> <file|dir>                      # 剪切复制并重新命名, 文件目录均可
- $ mv file_name  dir/                            # 保存文件名移动
+ $ mv <file>  <path>/                            # 保存文件名移动
 
  $ mv -v                                         # --verbose 显示过程, 打印原名及更改后名
  $ mv -f                                         # --force 强制移动, 存在同名则覆盖
  $ mv -n                                         # --no-clobber 存在同名文件则不移动
  
- $ mv -bv a.log  b.log                           # backup 备份移动, 存在同名时, 修改改名同名文件名 
- > renamed 'a.log' -> 'b.log' (backup: 'b.log~')
+ $ mv -bv main.sh mian.sh                        # backup 备份移动, 存在同名时, 修改同名文件名 
+ > renamed 'main.sh' -> 'mian.sh' (backup: 'mian.sh~')
+ > mian.sh  mian.sh~
 ```
 
-#### [cp](https://wangchujiang.com/linux-command/c/cp.html) : copy
+### [cp](https://wangchujiang.com/linux-command/c/cp.html) : copy
 
 ```bash
  $ cp <file|dir> <file|dir>                      # 复制黏贴重命名
@@ -130,9 +160,11 @@
  $ cp -f                                         # --force 强制复制, 存在同名直接覆盖
  $ cp -r                                         # -R, --recursive 递归复制
  $ cp -b                                         # backup 存在同名文件时, 目标文件改名
-
  $ cp -l                                         # --link 创建源文件的硬链接
  $ cp -s                                         # --symbolic-link 创建源文件的符号链接
+
+ $ cp -v mian.sh main.sh
+ > 'mian.sh' -> 'main.sh'
 
  $ ln <file> <file>                              # 创建文件的硬链接
  $ ln -s <file> <file>                           # --symbolic 创建文件的符号链接
@@ -141,9 +173,9 @@
 - 硬链接: 一个数据绑定两个名字, 两名字都删除才无法访问数据
 - 符号链接: 数据的"软链接" "快捷方式", 只是一个链接, 不含数据
 
-### 文件查找
+## 文件查找
 
-#### [find](https://wangchujiang.com/linux-command/c/find.html)
+### [find](https://wangchujiang.com/linux-command/c/find.html)
 
 ```bash
  $ find <dir> <options>                          # 列出在 <dir> 下符合参数的文件或目录(绝对路径)

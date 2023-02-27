@@ -39,7 +39,7 @@
  > /root/Desktop
 
  $ ls                                            # 查看当前目录下的文件及文件夹
- > Anaconda3-2022.10-Linux-x86_64.sh  go1.19.3.linux-amd64.tar.gz
+ > source.sh  target.tar.gz
 
  $ cd <path>                                     # 切换到 path 目录(无返回值), path 不存在则报错
  ~/Desktop/Zip$                                  # 命令行 $ 左边即为当前目录
@@ -68,13 +68,27 @@
  > 'seed/'           -> delete
 ```
 
+### 查看执行过命令
+
+```bash
+ $ history                                       # 查看执行的命令历史
+ > 1 ls
+ > 2 date
+
+ $ !!                                            # 执行上一条命令
+ $ !<command key> + enter                        # 通过命令关键字和 enter 执行上一个包含关键字的命令
+ $ control + r + <command key>                   # 快捷键进入历史列表, 通过关键字查找, 方向键和 enter 选择命令  
+
+ $ <up> | <down>                                 # 上 下 方向键寻找执行过的命令
+```
+
 ## 系统相关
 
 ```bash
  $ shutdown -h now                               # 关机
  $ shutdown -r now                               # 重启
 
- $ date                                          # 系统信息
+ $ date                                          # 系统时间
  > Sat Feb 25 20:34:10 CST 2023
 
  $ unmae -a                                      # 查看系统内核信息
@@ -90,17 +104,6 @@
  > [1]  + 9481 terminated  bash -x a.sh  
 ```
 
-### [history](https://linux.alianga.com/c/history.html)
-
-```bash
- $ history                                       # 查看执行的命令历史
-
- $ !!                                            # 执行上一条命令
- $ !<command key> + Tab                          # 通过命令关键字和 Tab 键盘查找执行过的命令
- $ control + r + <command key>                   # 快捷键进入历史列表, 通过关键字查找, 方向键和 enter 选择命令  
-
-```
-
 ## 启用 Root 用户
 
 ```bash
@@ -110,7 +113,7 @@
  > passwd: password updated successfully         # 设置成功
 
  $ su root                                       # 切换 root 用户
-\# exit                                          # 退出 root, 普通用户 $, root 用户 #
+ # exit                                          # 退出 root, 普通用户 $ 开头, root 用户 # 开头
 
  $ su <user>                                     # 切换用户
 ```
@@ -126,9 +129,9 @@ sudo 免密码
 
 注: 该文件必须强制写入, 不能修改文件权限, 否则报错
 
-### 通配符号
+## 通配符号
 
-#### `？` 任意单个字符
+### `？` 任意单个字符
 
 ```bash
  $ touch ab a bc abc                             # 生成 ab a ba abc 4 个文件
@@ -140,7 +143,7 @@ sudo 免密码
  > bc
 ```
 
-#### `*` 任意多个字符
+### `*` 任意多个字符
 
 ```bash
  $ touch ab a bc abc                             # 生成 ab a ba abc 4 个文件
@@ -148,17 +151,20 @@ sudo 免密码
  $ ls *                                          # * 可以指代任意多个字符
  > a  ab  abc  bc
 
- $ ls a*                                    
+ $ ls a*                                      
  > a  ab  abc
 ```
 
-#### `**` 任意多级目录
+### `**` 任意多级目录
 
 ```bash
  $ cat /etc/**/word                               # /etc/ 文件夹下所有 word 文件
+
+ $ ls learn/**/*.md                               # 显示 learn 目录下所有 markdown 文件 
+ > a.md b.md c.md
 ```
 
-#### `[]` 匹配范围
+### `[]` 匹配范围
 
 ```bash
  $ touch aa ab ac aab                            # 生成 ab a ba abc 4 个文件
@@ -167,41 +173,59 @@ sudo 免密码
  > aa ab
 ```
 
-### 特殊符号
+## 特殊符号
 
-#### `|` 管道符号
+### 重定向符号
+
+|符号|含义|
+|`>`|输出重定向|
+|`>>`|输出重定向追加写入|
+|`<`|输入重定向|
+|`<<`|读取标准输入直至分界符号|
 
 ```bash
- $
-```
-
-#### `>` `>>` `<` 重定向
-
-```bash
- $ <cmd> > <file>                                # 将命令返回值覆盖写入文件(原文件清空后写入)
- $ date > file.log                               # 将 ls 命令返回值写入 file.log 文件
+ $ <command> > <file>                            # 将命令返回值覆盖写入文件(原文件清空后写入)
+ $ date > file.log                               # 将 date 命令返回值写入 file.log 文件, 命令行不显示结果
  > Sat Feb 25 20:39:56 CST 2023
 
- $ <cmd> >> <file>                               # 将输出追加写入文件(原文件内容保留)
- $ date >> file.log                              # 将 date 命令返回值追加写入 file.log 内容结尾
+ $ <command> >> <file>                           # 将输出追加写入文件(原文件内容保留)
+ $ date >> file.log                              # 将 date 命令返回值追加写入 file.log 内容结尾, 命令行不显示结果
  > Sat Feb 25 20:39:56 CST 2023
  > Sat Feb 25 20:40:51 CST 2023
 
- $ <cmd> < <file>                                # 将文件内容重定向为标准输入
+ $ <command> < <file>                            # 将文件内容重定向为标准输入
  $ cat < file.log                                # 读取 file.log 并打印
  > Sat Feb 25 20:39:56 CST 2023
  > Sat Feb 25 20:40:51 CST 2023
+
+ $ touch $(< fileName.log)                       # 根据文件内的文件列表生成文件
+
+ $ cat << EOF                                    # 实现多行输入, 分界符号 EOF 可自定义
+ > line
+ > line
+ > EOF
 ```
 
-#### `&1` `&2` `/dev/null` 输出
+### `&1` `&2` `/dev/null` 输出
+
+|符号|含义|
+|`&1`|标准输出, 命令行输出, 能直接重定向至文件|
+|`&2`|标准错误, 命令执行错误输出, 需要将错误重定向至标准输出再指向文件|
+|`/dev/null`|空, 指代垃圾桶或回收站|
 
 ```bash
- $ ls  2>&1                                      # 错误输出重定向到标准输出 
+ $ mian                                          # 错误命令,显示错误输出
+ > Command 'mian' not found
 
- $ ls  >/dev/null                                # 不显示结果
+ $ data 2>/dev/null                              # 错误命令, 错误输出重定向至回收站, 不显示错误       
+ $ date 2>/dev/null                              # 正确命令, 标准输出重定向至回收站, 不显示返回值
+
+ $ data 2 > date.log                             # 命令行显示错误, 文件不显示, 错误输出无法直接重定向文件
+ $ data > date.log 2>&1                          # 命令行不显示错误, 文件内显示, 错误输出重定向至文件
+
 ```
 
-### 单词缩写
+## 单词缩写
 
 |缩写|全称|翻译|
 |:-:|:-:|:-:|
