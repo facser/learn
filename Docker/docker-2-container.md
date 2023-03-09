@@ -5,28 +5,21 @@
 ### 容器列表
 
 ```bash
- $ docker ps [OPTIONS]                           # 显示容器列表及相关信息
+ $ docker ps [OPTIONS]                                                         # 显示容器列表及相关信息
 
  $ docker ps
- $ docker ps -a, --all                           # 显示所有容器, 包括未运行的
- $ docker ps -s, --size                          # 显示正在运行的容器, 显示容器大小
- $ docker ps -q, --quite                         # 仅显示容器 ID
+ $ docker ps -a, --all                                                         # 显示所有容器, 包括未运行的
+ $ docker ps -s, --size                                                        # 显示正在运行的容器, 显示容器大小
+ $ docker ps -q, --quite                                                       # 仅显示容器 ID
 
-CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                     NAMES               SIZE
-7eab1cd126af        43761bd5b76d        "docker-entrypoint.s…"   43 hours ago        Up 43 hours         27017/tcp                 person              0B (virtual 700MB)
-ee0c15a3a0ee        mongo               "docker-entrypoint.s…"   44 hours ago        Up 44 hours         0.0.0.0:8589->27017/tcp   demo                0B (virtual 700MB)
+CONTAINER ID   IMAGE         COMMAND                  CREATED        STATUS         PORTS                     NAMES      SIZE
+7eab1cd126af   43761bd5b76d  "docker-entrypoint.s…"   43 hours ago   Up 43 hours    27017/tcp                 person     0B (virtual 700MB)
+ee0c15a3a0ee   mongo         "docker-entrypoint.s…"   44 hours ago   Up 44 hours    0.0.0.0:8589->27017/tcp   demo       0B (virtual 700MB)
 ```
 
-|选项|含义|
-|:-:|:-:|
-|`CONTAINER ID`|容器 ID|
-|`IMAGE`       |生成容器的镜像|
-|`COMMAND`     |启动容器时运行的命令|
-|`CREATED`     |容器创建时间|
-|`STATUS`      |容器状态|
-|`PORTS`       |容器端口和链接类型|
-|`NAMES`       |容器名称|
-|`SIZE`        |容器大小|
+|`CONTAINER ID`|`IMAGE`|`COMMAND`|`CREATED`|`STATUS`|`PORTS`|`NAMES`|`SIZE`|
+|:-|:-|:-|:-|:-|:-|:-|:-|
+|容器 ID|生成容器的镜像|启动容器时运行的命令|容器创建时间|容器状态|机器端口->容器端口|容器名称|容器大小|
 
 ```bash
  docker stop    <CONTAINER ID | NAMES>                                         # 关闭容器
@@ -41,12 +34,10 @@ ee0c15a3a0ee        mongo               "docker-entrypoint.s…"   44 hours ago 
 ```
 
 ```bash
- $ docker attach [OPTIONS] CONTAINER
- $ docker attach ff8b371b77b9
-
- $ docker exec [OPTIONS] CONTAINER COMMAND [ARG...]
- $ docker exec -it ff8b371b77b9 bash
- $ docker exec ff8b371b77b9 uname -a
+ $ docker exec [OPTIONS] CONTAINER COMMAND [ARG...]                            # 进入容器执行命令(容器在运行状态才可进入)
+ $ docker exec -it mongo-slave1 bash                                           # 以交互式进入 mongo-slave1 容器,执行 bash, 并留在容器中(exit 退出容器)
+ $ docker exec mongo-slave1 mongosh --version                                  # 进入 mongo-slave1 容器查看 mongosh 版本并退出
+ > 1.6.1
 ```
 
 ## 创建容器

@@ -32,20 +32,14 @@
  > pipreqs                                                   1.0                       d4633ae3a8af        2 months ago        1.08GB
 ```
 
-|选项|含义|
-|:-:|:-:|
-|`REPOSITORY`|镜像仓库源|
-|`TAG`|镜像 tag|
-|`IMAGE ID`|镜像 ID|
-|`CREATED`|镜像创建时间|
-|`SIZE`|镜像大小|
+|`REPOSITORY`|`TAG`|`IMAGE ID`|`CREATED`|`SIZE`|
+|:-|:-|:-|:-|:-|
+|镜像仓库源|镜像 tag|镜像 ID|镜像创建时间|镜像大小|
 
 ### 拉取镜像
 
 - 官方镜像
 - 私有镜像
-
-1. 官方镜像
 
 拉取镜像前可以使用 docker search 查看官方及第三方镜像列表  
 未指定链接默认从官方镜像拉取
@@ -59,8 +53,6 @@
 
  $ docker pull ubuntu:20.04                                                    
 ```
-
-2. 私有镜像
 
 从私有仓库拉取镜像前需要先登录, 然后指定仓库中的镜像拉取  
 在私有仓库中未找到镜像会到官方镜像仓库拉取
@@ -108,17 +100,16 @@
  > websphere-liberty                WebSphere Liberty multi-architecture images …   290                 [OK]     
 ```
 
-|选项|含义|
-|:-:|:-|
-|`NAME`|镜像名称|
-|`DESCRIPTION`|镜像名称|
-|`STARS`|点赞数|
-|`OFFICIAL`|是否官方|
-|`AUTOMATED`|是否自动构建|
+|`NAME`|`DESCRIPTION`|`STARS`|`OFFICIAL`|`AUTOMATED`|
+|:-|:-|:-|:-|:-|
+|镜像名称|镜像名称|点赞数|是否官方|是否自动构建|
 
 ```bash
  $ docker save [OPTIONS] IMAGE [IMAGE...]
  $ docker save 0850fead9327 > mongo.tar.gz
+ 
+ $ ll
+ > -rw-r--r-- 1 root  root   23K Mar  7 21:10 mongo.tar.gz
 ```
 
 ```bash
@@ -166,7 +157,7 @@ nginx-base                                                v1                    
 
 ### Dockerfile
 
-```docker
+```bash
 FROM ubuntu                                                                    # 以 ubuntu 镜像为基础, 可添加 tag, ubuntu:20.04
 
 ENV path=/usr/local/                                                           # 设置全局变量, 可添加多个，或 ENV 多次设置, 可以使用已设置的变量
@@ -179,7 +170,7 @@ ADD epel-release-latest-7.noarch.rpm $path
 
 WORKDIR $path                                                                  # 设定镜像中工作目录, 并转到改目录, 类似 cd 命令, 可以多次设置
 
-RUN rpm -ivh /usr/local/epel-release-latest-7.noarch.rpm &&\                     # 执行 shell 命令
+RUN rpm -ivh /usr/local/epel-release-latest-7.noarch.rpm &&\                   # 执行 shell 命令
     yum install -y wget lftp gcc gcc-c++ make openssl-devel pcre-devel pcre &&\ 
     yum clean all &&\
     cd $path/nginx-1.8.0 &&\
@@ -191,14 +182,14 @@ RUN rpm -ivh /usr/local/epel-release-latest-7.noarch.rpm &&\                    
 CMD /usr/sbin/nginx                                                            # 生成容器后执行的命令, 会被 docker run 生成容器时初始命令覆盖
 ```
 
-```docker
+```bash
 FROM IMAGE[:TAG]                                                               # 第一行必须是 FROM, 选择基础镜像, 可以设置多个
 
 FROM ubuntu:20.04
 FROM centos
 ```
 
-```docker
+```bash
 ARG <name>[=<default value>]                                                   # 设置构建镜像的外部参数, 修改参数需要使用 --build-arg
 ENV <key> <value>                                                              # 设置 Dockerfile 内全局变量
 
@@ -209,7 +200,7 @@ ENV FILENAME "record.log"                                                      #
 ENV TITLE="title in $FILENAME"                                                 # "title in record.log", 使用 = 可以设置多个变量
 ```
 
-```docker
+```bash
 COPY <src> <dest>
 ADD  <src> <dest>
 
@@ -217,16 +208,16 @@ COPY client.log /root/docker.log                                               #
 ADD  /root/client.log /root/docker.log                                         # 使用绝对路径, 效果一致
 ```
 
-```docker
-WORKDIR <path> 
+```bash
+WORKDIR <path>                                                                 # 设置镜像内的工作目录, 类似 cd 效果
 
-WORKDIR /root                                                                  # 设置镜像内的工作目录, 类似 cd
+WORKDIR /root                                                                  # 进入 /root 并设为工作目录
 WORKDIR /home                                                                  # 将工作目录转到 /home
 WORKDIR facser                                                                 # 将工作目录转到 /home/facser
 WORKDIR Desktop                                                                # 将工作目录转到 /home/facser/Desktop
 ```
 
-```docker
+```bash
 RUN <command>                                                                  # 通过 sh 执行命令
 RUN ["executable", "param1", "param2"]                                         # 指定 shell 执行命令
 
@@ -243,7 +234,7 @@ RUN echo "line first"  >> /root/run.log &&\                                    #
     echo "line third"  >> /root/run.log                                        # 每次创建都需要从头开始执行
 ```
 
-```docker
+```bash
 CMD <command>                                                                  # 以次文件构建的镜像, 创建容器后, 通过 sh 执行命令
 CMD ["executable", "param1", "param2"]                                         # 以次文件构建的镜像, 创建容器后, 指定 shell 执行命令
 

@@ -8,17 +8,27 @@
 1. 
 
 ```bash
+# 卸载原有 docker
+apt remove docker docker-engine docker.io containerd runc
+
 # 安装依赖
-apt update && apt -y install apt-transport-https ca-certificates curl gnupg2 software-properties-common
+apt update && apt install ca-certificates curl gnupg lsb-release
 
 # 安装 GPG 证书
-curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/debian/gpg | sudo apt-key add
+mkdir -m 0755 -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 
 # 添加 docker 软件源
-add-apt-repository "deb [arch=amd64] https://mirrors.bfsu.edu.cn/docker- ce/linux/debian $(lsb_release -cs) stable"
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 # 更新软件源泉, 下载安装 docker
-apt update && apt -y install docker-ce
+chmod a+r /etc/apt/keyrings/docker.gpg
+apt update && apt -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# 查看 docker 版本
+docker --version
 ```
 
 2.Docker 配置
@@ -54,7 +64,6 @@ service docker status                                                          #
 ```
 
 修改配置文件后需要重启 docker 服务生效
-
 
 ```bash
 service docker start                                                           # 启动 docker 服务，守护进程

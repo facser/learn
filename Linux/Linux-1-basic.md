@@ -60,8 +60,8 @@
  $ mv seeds/learn.log study.log                  # 将 seeds 下的 learn.log 移动到当前目录并重命名
  $ rm -r seeds                                   # 删除 seeds 文件夹及文件夹下的所有文件
 
- > 'learn.log'       -> crteate
- > 'seed/'           -> crteate
+ > 'learn.log'       -> create
+ > 'seed/'           -> create
  > 'learn.log'       -> 'seed/learn.log'
  > 'learn.log'       -> delete
  > 'seeds/learn.log' -> 'study.log'
@@ -77,9 +77,8 @@
 
  $ !!                                            # 执行上一条命令
  $ !<command key> + enter                        # 通过命令关键字和 enter 执行上一个包含关键字的命令
- $ control + r + <command key>                   # 快捷键进入历史列表, 通过关键字查找, 方向键和 enter 选择命令  
-
- $ <up> | <down>                                 # 上 下 方向键寻找执行过的命令
+ 
+ $ control + r + <command key>                   # 快捷键进入历史列表, 通过关键字查找, enter 选择命令  
 ```
 
 ## 系统相关
@@ -108,12 +107,12 @@
 
 ```bash
  $ sudo passwd root
- > Enter new UNIX password:                      # 设置 root 用户密码
+ > Enter new UNIX password:                      # 设置 root 用户密码(输入时密码不可见)
  > Retype new UNIX password:                     # 重复输入 root 密码
  > passwd: password updated successfully         # 设置成功
 
- $ su root                                       # 切换 root 用户
- # exit                                          # 退出 root, 普通用户 $ 开头, root 用户 # 开头
+ facser@master:~/Desktop$ su root                # 切换 root 用户 (用户名@hostname:当前路径)
+ root@master:~/Desktop# exit                     # 退出 root, 普通用户 $ 开头, root 用户 # 开头
 
  $ su <user>                                     # 切换用户
 ```
@@ -175,13 +174,12 @@ sudo 免密码
 
 ## 特殊符号
 
-### 重定向符号
+### 输出重定向
 
-|符号|含义|
-|`>`|输出重定向|
-|`>>`|输出重定向追加写入|
-|`<`|输入重定向|
-|`<<`|读取标准输入直至分界符号|
+|输出重定向|输出重定向追加写入|输入重定向|读取标准输入直至分界符号|
+|:-:|:-:|:-:|:-:|
+|`>`|`>>`|`<`|`<<`|
+
 
 ```bash
  $ <command> > <file>                            # 将命令返回值覆盖写入文件(原文件清空后写入)
@@ -206,9 +204,8 @@ sudo 免密码
  > EOF
 ```
 
-### `&1` `&2` `/dev/null` 输出
-
 |符号|含义|
+|:-|:-|
 |`&1`|标准输出, 命令行输出, 能直接重定向至文件|
 |`&2`|标准错误, 命令执行错误输出, 需要将错误重定向至标准输出再指向文件|
 |`/dev/null`|空, 指代垃圾桶或回收站|
@@ -228,7 +225,7 @@ sudo 免密码
 ## 单词缩写
 
 |缩写|全称|翻译|
-|:-:|:-:|:-:|
+|:-:|:-|:-|
 |h    |`help`             |帮助|
 |a    |`all`              |全部|
 |f    |`force`            |强制|

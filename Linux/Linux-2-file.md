@@ -146,9 +146,9 @@
  $ mv -f                                         # --force 强制移动, 存在同名则覆盖
  $ mv -n                                         # --no-clobber 存在同名文件则不移动
  
- $ mv -bv main.sh mian.sh                        # backup 备份移动, 存在同名时, 修改同名文件名 
- > renamed 'main.sh' -> 'mian.sh' (backup: 'mian.sh~')
- > mian.sh  mian.sh~
+ $ mv -bv main.sh master.sh                      # 文件重命名, 同名文件修改文件名令 mv 命令得以成功执行  
+ > renamed 'main.sh' -> 'master.sh' (backup: 'master.sh~')
+ > master.sh  master.sh~
 ```
 
 ### [cp](https://wangchujiang.com/linux-command/c/cp.html) : copy
@@ -178,21 +178,31 @@
 ### [find](https://wangchujiang.com/linux-command/c/find.html)
 
 ```bash
- $ find <dir> <options>                          # 列出在 <dir> 下符合参数的文件或目录(绝对路径)
+ $ find <path> <options>                         # 列出在 <path> 下符合参数的文件或目录(绝对路径)
 
- $ find ~/Desktop -name *.py                     # 在 ~/Desktop 所有后缀为 .py 的文件
- $ find . -path *lib*                            # 在当前目录所有绝对地址中含有 'lib' 的文件或目录
- $ find lib/ -regex ".*\.txt$"                   # lib 目录下符合正则表达式的文件
+ $ find . -name "*.txt"                          # 在 当前目录查找所有后缀为 .txt 的文件，模式匹配需要双括号 ""
+ > ./a.txt
+ > ./b.txt
 
- $ find <dir> <options> -exec <cmd> {} \;        # 对查找到的文件进行操作
- $ find . -name *.sh -exec rm {} \;              # 删除当前目录下后缀为 .sh 文件
- $ find . -name *.py -exec mv {} /tmp \;         # 将当前目录下后缀为 .py 文件移动到 /tmp
+ $ find . -path "*lib*"                          # 在当前目录所有绝对地址中含有 'lib' 的文件或目录
+ > ./temp
+ > ./temp/a.txt
+ > ./temp/b.txt
+
+ $ find temp -regex ".*\.txt$"                   # 当前目录的 temp 文件夹下符合正则表达式的文件(.* 任意字符任意次, \.txt$ 以 .txt 结尾)
+ > temp/a.txt
+ > temp/b.txt
+
+ $ find <dir> <options> -exec <command> {} \;    # 对查找到的文件进行操作
+ $ find . -name "*.sh" -exec rm {} \;            # 删除当前目录下后缀为 .sh 文件
+ $ find . -name "*.py" -exec mv {} /root \;      # 将当前目录下后缀为 .py 文件移动到 /root 
 ```
 
 #### [locate](https://www.linuxcool.com/locate)
 
 ```bash
  $ locate <file|dir>                             # 列出 / 目录下所有含 <file|dir> 的文件或目录
+ $ locate 
 
  $ locate -c                                     # --count 显示查找出的文件数量
 ```
