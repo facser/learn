@@ -45,7 +45,6 @@ Git 是一个开源的文件版本控制器
  $ git config --global --list                    # 查看系统当前用户的 git 配置
  $ git config --local --list                     # 查看当前库的 git 配置
  $ git config --list                             # 列出上述所有配置, 可能出现重复项
- > color.ui=true
  > user.name=facser
  > core.editor=vim
 ```
@@ -65,8 +64,8 @@ Git 是一个开源的文件版本控制器
  $ git config user.email                         # 查看当前使用的 git 用户名
  
  $ git config --list                             # 列出上述所有配置, 可能出现重复项
- > color.ui=true
  > user.name=facser
+ > user.email=abc@email
  > core.editor=vim
 ```
 
@@ -81,26 +80,20 @@ Git 是一个开源的文件版本控制器
 
 在本地任意位置使用 `git init` 即可创建一个本地仓库
 
-- Untracked
-- Changes not staged for commit
-- Changes to be committed
-
-|区域|描述|状态|
-|:--:|:--:|:--:|
-|Untracked|新增文件|工作区, 未被追踪|
-|Changes not staged for commit|有新修改的文件|工作区, 新修改未被追踪|
-|Changes to be committed|无修改的文件|暂存区, 修改已追踪|
-
 工作区 -- `git add` --> 暂存区 -- `git commit` --> 本地仓库
 
 ```bash
  $ git init                                      # 初始化本地仓库
-
  $ git add --all                                 # 追踪本地仓库所有修改
-
  $ git commit -m "version message"               # 生成可回溯的版本
-
  $ git push <repository name> <branch name>      # 将本地仓库分支所有版本推送到远程仓库对应分支
+
+ $ git log                                       # 查看记录的版本
+ > commit d2716b6e88567c3fdfe390580d48ca82b581c04f (HEAD -> master)
+ > Author: facser <root@facser>
+ > Date:   Mon Jan 30 22:09:15 2023 +0800
+ >
+ >  version message
 ```
 
 ### 远程仓库
@@ -109,6 +102,13 @@ Git 是一个开源的文件版本控制器
 
 ```bash
  $ git clone <repository link>                   # 克隆远程仓库项目到本地
+ $ git add --all                                 # 追踪本地仓库所有修改
+ $ git commit -m "version message"               # 生成可回溯的版本
+ $ git push <repository name> <branch name>      # 将本地仓库分支所有版本推送到远程仓库对应分支
+
+ $ git remote -v                                 # 产看远程仓库
+ > origin  git@github.com:facser/Learning.git (fetch)
+ > origin  git@github.com:facser/Learning.git (push)   
 
  $ git remote add origin <Repository url>        # 将远程仓库命名为 origin 并关联本地仓库
 ```

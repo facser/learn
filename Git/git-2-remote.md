@@ -14,6 +14,8 @@
  $ git clone <Repository url>                    # 克隆远端仓库到本地, 自动绑定链接对应的仓库
 
  $ git remote -v                                 # 查看本地仓库关联的所有远端仓库
+ > origin  git@github.com:facser/Learning.git (fetch)
+ > origin  git@github.com:facser/Learning.git (push)
 
  $ git remote add origin <Repository url>        # 将远程仓库命名为 origin 并关联本地仓库
 ```
@@ -47,11 +49,14 @@
 |id_rsa (私钥)|`/root/.ssh/id_rsa`|`C:\Users\<user>\.ssh`|
 |id_rsa.pub (公钥)|`/root/.ssh/id_rsa.pub`|`C:\Users\<user>\.ssh`|
 
-生成两个密钥文件, 将公钥放到代码托管平台的账号设置中
+生成两个密钥文件, 将**公钥**放到代码托管平台的账号设置中
 
 ```bash
  $ ssh-keygen                                    # 自动生成密钥
- $ ssh-keygen -t rsa -C "<user.mail>"            # 生成 rsa 类型带邮箱注释信息的密钥
+ $ ssh-keygen -t rsa -C "key message"            # 生成 rsa 类型带 key 注释信息的密钥
+ 
+ $ cat ~/.ssh/id_rsa.pub                         # 公钥以 ssh-rsa 开头, 注释信息结尾
+ > ssh-rsa xxx....xxx key message
 ```
 
 - 密钥由系统生成, 放入用户设置, 所以是系统和账户绑定
