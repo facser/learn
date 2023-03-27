@@ -122,10 +122,9 @@ iota 是定义常量时使用的自增关键字
 |`int`   |32 位系统 int32， 64 位系统 int64|
 |`uint`  |32 位系统 uint32， 64 位系统 uint64|
 
-
 ### 整形类型转换
 
-数字类型数据可以通过 `<type>()` 方式进行类型之间的转换 
+数字类型数据可以通过 `<type>()` 方式进行类型之间的转换
 
 ```go
  var num int = 8                                 // int   num = 8
@@ -267,7 +266,7 @@ rune(int32) Unicode 编码中的一个字符(包含世界大部分语言字符),
 
 任意类型数据都可以转换为字符串
 
-```go 
+```go
 s := fmt.Sprinf("%v", <variable>)                // 万能转换, any -> string
 
 s := strconv.Itoa(32)                            // int -> string
