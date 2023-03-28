@@ -6,18 +6,45 @@
 - 指针变量
 
 ```Go
-str := "hello"                                   // 变量名: str, 变量值: "hello", 变量地址: 0xc00001a078
-pointer := &str                                  // 变量名: pointer, 变量值: 0xc00001a078 (str 的地址), 变量地址: 0xc00000e018
+ strVar := "initial"                             // 初始化变量赋值, 绑定一个固定地址, 值可以变, 地址不变
+ Printf("initial strVar value:%v, addr: %p\n", strVar, &strVar)
 
-tmp := *pointer                                  // “hello”, 通过 pointer 的变量值(0xc00001a078)取值
+ straddr := &strVar                              // 初始化地址类型变量并赋值, 变量绑定地址, 变量值是一个地址
+ Printf("initial straddr value: %v, addr: %p\n", straddr, &straddr)
+
+ addrVal := *straddr                             // 初始化并赋值, 变量绑定地址, 地址类型才能取值
+ Printf("initial strVar value:%v, addr: %p\n", addrVal, &addrVal)
+
+ strVar = "modify"                               
+
+ Printf("modify strVar value:%v, addr: %p\n", strVar, &strVar)
+ Printf("modify straddr value: %v, addr: %p\n", straddr, &straddr)
+ Printf("modify strVar value:%v, addr: %p\n", addrVal, &addrVal)
+
+ > strVar value:initial, addr: 0xc0000142b0
+ > straddr value: 0xc0000142b0, addr: 0xc000012038
+ > addrVal value:initial, addr: 0xc0000142d0
+
+ > strVar value:modify, addr: 0xc0000142b0       // strVar 重新赋值(地址对应的值变化), 地址不变
+ > straddr value: 0xc0000142b0, addr: 0xc000012038
+ > addrVal value:initial, addr: 0xc0000142d0     // 地址对应的值没有变化
+
+ str := "hello"                                  // 变量名: str, 变量值: "hello", 变量地址: 0xc00001a078
+ pointer := &str                                 // 变量名: pointer, 变量值: 0xc00001a078 (str 的地址), 变量地址: 0xc00000e018
+ tmp := *pointer                                 // tmp 值:“hello”, 通过 pointer 的值(0xc00001a078)取值
+ 
+ str = "world"                                   // str 重新赋值, 变量值: "world", 变量地址不变: 0xc00001a078
+ 
+ str = "world"                                   // str 重新赋值, 变量值: "world", 变量地址不变: 0xc00001a078
+ tmp := *pointer                                 // “world”, 通过 pointer 的值(0xc00001a078)取值
 ```
 
 定义变量后, 该变量的地址不变, 地址内的值可变化
 
 ### 变量地址
 
-- & 获取变量的地址
-- * 指针变量的值(地址)取值
+- 符号: & 获取变量的地址
+- 符号: * 指针变量的值(地址)取值
 
 ```Go
  var str string = "hello"                        // 定义一个字符串变量 str, 值是 "hello" 地址是 0xc00001a078
@@ -28,6 +55,3 @@ tmp := *pointer                                  // “hello”, 通过 pointer 
  
  *addr = "end"                                   // str 的地址不变, addr 指针一直指向 str 的值, 与 str = "end" 效果一致
 ```
-
-
-
