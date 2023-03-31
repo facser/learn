@@ -81,6 +81,43 @@
  $ control + r + <command key>                   # 快捷键进入历史列表, 通过关键字查找, enter 选择命令  
 ```
 
+## 全局变量
+
+全局变量是在整个操作系统中都可用的变量，其值可以在任何地方被访问和修改
+
+```bash
+ $ echo $HOME                                    # 当前用户名
+ > root
+
+ $ echo $PATH                                    # 执行命令时所搜寻的路径列表, 以 : 分隔(环境变量设置路径)
+ > /usr/local/sbin:/usr/local/bin:/usr/bin
+
+ $ echo $SHELL                                   # 当前使用的 shell 
+ > /bin/zsh
+
+ $ echo $PWD                                     # 当前绝对路径
+ > /root/Desktop/
+
+ $ echo $RANDOM                                  # 生成随机数字
+ > 2166
+```
+
+可以自定义环境变量以进行脚本间通信
+使用 export 临时修改环境变量
+修改 shell 启动文件(每次打开命令行均会执行)以永久设置环境变量
+
+```bash
+
+export <variable name>=<value>                   # 使用 export 临时修改环境变量, 执行的命令窗口关闭即失效
+
+export PATH=$PATH:/home/facsert                  # 将 /home/facsert 临时加入环境目录
+
+export LEARN=TRUE                                # 自定义新的环境变量, 脚本间可以通过自定义环境变量通信
+
+export PATH=$PATH:/home/facsert                  # 将命令写入 shell 启动文件(每次启动 shell 均会执行文件上命令)
+source ~/.bashrc                                 # 重新加载 shell 启动文件(~/.bashrc, ~/.zshrc )
+```
+
 ## 系统相关
 
 ```bash
@@ -225,15 +262,19 @@ sudo 免密码
 
 |缩写|全称|翻译|
 |:-:|:-|:-|
-|h    |`help`             |帮助|
 |a    |`all`              |全部|
-|f    |`force`            |强制|
-|i    |`interactive`      |交互的|
 |b    |`backup`           |备份|
-|v    |`version / verbose`|版本/详细的|
-|c    |`count / command`  |计数/命令|
+|c    |`count`            |计数|
+|d    |`directory`        |文件|
+|f    |`force`            |强制|
+|h    |`help`             |帮助|
+|i    |`interactive`      |交互的|
+|l    |`long`             |长格式的|
 |r / R|`recursive`        |递归|
-|s / S|`sort`             |排序|
+|s / S|`sort/size`        |排序/大小|
+|t    |`time`             |时间|
+|u    |`user`             |用户|
+|v    |`version / verbose`|版本/详细的|
 
 ### 符号
 

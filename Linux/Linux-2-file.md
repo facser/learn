@@ -39,19 +39,27 @@
 
 ### [tree](https://www.linuxcool.com/tree)
 
+以树状结构展示指定目录下的所有文件和子目录
+
 ```bash
  $ tree <path>                                   # 显示目录的树状层级图
- $ tree -f                                       # 树状图显示绝对路径
+ 
  > Zip/
    ├── targe.tar.gz
    └── main.sh
 
  > 0 directories, 2 files
+
+ $ tree -a                                       # 显示所有隐藏文件
+ $ tree -d                                       # 仅显示目录不显示文件
+ $ tree -f                                       # 树状图显示绝对路径
 ```
 
 ### [pwd](https://www.linuxcool.com/pwd) :  print working directory
 
 ### [dirs](https://www.linuxcool.com/dirs) : directories
+
+显示当前绝对路径
 
 ```bash
  $ pwd                                           # 显示当前路径
@@ -65,6 +73,8 @@
 ```
 
 ### [ls](https://www.linuxcool.com/ls) : list files
+
+显示当前路径下的文件及目录
 
 ```bash
  $ ls                                            # 显示当前目录下所有文件及目录
@@ -82,6 +92,8 @@
 
 ### [file](https://linux.alianga.com/c/file.html)
 
+显示文件信息
+
 ```bash
  $ file <file>                                   # 显示文件类型
  $ file main.py
@@ -91,6 +103,8 @@
 ## 文件操作
 
 ### [cd](https://www.linuxcool.com/cd) : change directory
+
+切换工作路径
 
 ```bash
  $ cd <path>                                     # 切换到 <paht> 目录
@@ -104,9 +118,11 @@
 
 #### [mkdir](https://www.linuxcool.com/mkdir) : make directories
 
+创建目录
+
 ```bash
  $ mkdir <dir>                                   # 创建目录
- $ mkdir -v 1st 2nd 3rd                          # 创建多个文件夹
+ $ mkdir -v 1st 2nd 3rd                          # 创建多个文件夹, 并显示过程
  > mkdir: created directory '1st'
  > mkdir: created directory '2nd'
  > mkdir: created directory '3rd'
@@ -119,6 +135,8 @@
 
 #### [touch](https://www.linuxcool.com/touch)
 
+创建文件
+
 ```bash
  $ touch <file> <file>                           # 文件不存在, 创建文件, 文件存在不创建, 可同时创建多个
 
@@ -127,6 +145,8 @@
 ```
 
 #### [rm](https://www.linuxcool.com/rm) :  remove
+
+删除文件
 
 ```bash
  $ rm <file>                                     # 删除文件, 或删除文件夹
@@ -137,6 +157,8 @@
 ```
 
 #### [mv](https://linux.alianga.com/c/mv.html) : move
+
+移动文件或文件夹
 
 ```bash
  $ mv <file|dir> <file|dir>                      # 剪切复制并重新命名, 文件目录均可
@@ -152,6 +174,8 @@
 ```
 
 ### [cp](https://wangchujiang.com/linux-command/c/cp.html) : copy
+
+复制文件
 
 ```bash
  $ cp <file|dir> <file|dir>                      # 复制黏贴重命名
@@ -177,6 +201,8 @@
 
 ### [find](https://wangchujiang.com/linux-command/c/find.html)
 
+查询指定文件
+
 ```bash
  $ find <path> <options>                         # 列出在 <path> 下符合参数的文件或目录(绝对路径)
 
@@ -193,41 +219,43 @@
  > temp/a.txt
  > temp/b.txt
 
- $ find <dir> <options> -exec <command> {} \;    # 对查找到的文件进行操作
- $ find . -name "*.sh" -exec rm {} \;            # 删除当前目录下后缀为 .sh 文件
- $ find . -name "*.py" -exec mv {} /root \;      # 将当前目录下后缀为 .py 文件移动到 /root 
+ $ find <dir> <options> -exec <command> {} \;  # 对查找到的文件进行操作
+ $ find . -name "*.sh" -exec rm {} \;          # 删除当前目录下后缀为 .sh 文件
+ $ find . -name "*.py" -exec mv {} /root \;    # 将当前目录下后缀为 .py 文件移动到 /root 
+
+ $ find . -type f -exec sh -c 'echo >{}' \;   # 清空当前目录下所有文件内容
 ```
 
-#### [locate](https://www.linuxcool.com/locate)
+## 文件内容
 
-```bash
- $ locate <file|dir>                             # 列出 / 目录下所有含 <file|dir> 的文件或目录
- $ locate 
+### [cat](https://www.linuxcool.com/cat) : concatenate
 
- $ locate -c                                     # --count 显示查找出的文件数量
-```
-
-### 文件查看
-
-#### [cat](https://www.linuxcool.com/cat) : concatenate
+读取文件内容
 
 ```bash
  $ cat <file>                                    # 读取并打印文件内容
  $ cat -n <file>                                 # 打印文件内容并添加行数
+ > 1  1st
+ > 2  2nd
+ > 3  3rd  
 ```
 
 #### [head](https://www.linuxcool.com/head)
+
+#### [tail](https://www.linuxcool.com/tail)
+
+读取文件部分内容
 
 ```bash
  $ head <file>                                   # 显示文件的前 10 行
  $ head -n 5 <file>                              # --lines 显示文件前 5 行
  $ head -c 20 <file>                             # --bytes 显示文件前 20 个字符 
-```
 
-#### [tail](https://www.linuxcool.com/tail)
-
-```bash
  $ tail <file>                                   # 显示文件的后 10 行
  $ tail -n 5 <file>                              # --lines 显示文件后 5 行
  $ tail -c 20 <file>                             # --bytes 显示文件最后 20 个字符 
+
+ $ head -c 5 log
+ > 1st
+ > 2
 ```

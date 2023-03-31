@@ -1,8 +1,8 @@
 # Linux Text
 
-### 文本搜索
+## 文本搜索
 
-#### [grep](https://linux.alianga.com/c/grep.html) : global search regular expression and print out the line
+### [grep](https://linux.alianga.com/c/grep.html) : global search regular expression and print out the line
 
 ```bash
  $ grep <patten> <file>                          # 从文件中筛选出符合模式的行, 可搜索多个文件
@@ -43,6 +43,7 @@
  
  $ cat a.log | xargs -n 3                        # 重新修改格式, 每行 3 个字符串  
  $ cat a.log | xargs -d ,                        # 以 ',' 分割整行
+ $ cat a.log | xargs -I {} touch {}              # {} 变量替换, 抓取文件每一行, 执行 touch line
 ```
 
 #### [sort](https://linux.alianga.com/c/sort.html)
