@@ -29,14 +29,6 @@
  > straddr value: 0xc0000142b0, addr: 0xc000012038
  > addrVal value:initial, addr: 0xc0000142d0     // 地址对应的值没有变化
 
- str := "hello"                                  // 变量名: str, 变量值: "hello", 变量地址: 0xc00001a078
- pointer := &str                                 // 变量名: pointer, 变量值: 0xc00001a078 (str 的地址), 变量地址: 0xc00000e018
- tmp := *pointer                                 // tmp 值:“hello”, 通过 pointer 的值(0xc00001a078)取值
- 
- str = "world"                                   // str 重新赋值, 变量值: "world", 变量地址不变: 0xc00001a078
- 
- str = "world"                                   // str 重新赋值, 变量值: "world", 变量地址不变: 0xc00001a078
- tmp := *pointer                                 // “world”, 通过 pointer 的值(0xc00001a078)取值
 ```
 
 定义变量后, 该变量的地址不变, 地址内的值可变化
