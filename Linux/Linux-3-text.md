@@ -2,51 +2,91 @@
 
 ## 文本搜索
 
-### [grep](https://linux.alianga.com/c/grep.html) : global search regular expression and print out the line
+读取文本内容搜索或刷选符合条件的内容
+
+### [grep](https://linux.alianga.com/c/grep.html)
+
+> global search regular expression and print out the line
+
+文本搜索和筛选
 
 ```bash
  $ grep <patten> <file>                          # 从文件中筛选出符合模式的行, 可搜索多个文件
-
- $ grep -i                                       # --ignore-case 忽略大小写
- $ grep -E                                       # --extend-regexp 使用正则匹配
-
- $ grep -v                                       # --revert-match 显示不匹配的所有行
- $ grep -n                                       # --line-number 同时显示行数
- 
- $ grep -c                                       # --count 只显示匹配行的数量
- $ grep -l                                       # 查询多个文件, 仅显示包含的文件名
-
- $ grep -w                                       # --word-regexp 单词全匹配, 存在该单词的行, 不包含子字符串
- $ grep -x                                       # --line-regexp 行全匹配, 必须与行完全一致 
-
  $ egrep <regex> <file>                          # 与 grep -E 类似
+
+ $ grep "3r" host.txt                            # grep 会显示所有包含 “3r” 的行
+ > 3rd
+
+ $ cat host.txt | grep "3r"                      # 与上述命令效果一致
+ > 3rd
+
+ $ grep -nE "[0-9]th" host.txt                   # 通过正则表达式匹配, 并显示行
+ > 4:4th
+ > 5:5th
+ 
+ $ cat host.txt | egrep -i "[0-9]TH" | grep -v 5 # 多次管道筛选行
+ > 4th                                           # 通过正则忽略大小写筛选, 去除包含 5 的行 
 ```
 
-#### [cut](https://linux.alianga.com/c/cut.html) 
+|parameter|meaning|
+|:-:|:-:|
+|`c`|`--count` 只显示匹配行的数量|
+|`E`|`--extend-regexp` 使用正则匹配|
+|`i`|`--ignore-case` 忽略大小写|
+|`o`|`--only-matching` 只显示匹配到内容, 同行其它内容不显示|
+|`n`|`--line-number` 同时显示行数|
+|`v`|`--revert-match` 反转查找, 显示不匹配的所有行|
+|`w`|`--word-regexp` 单词全匹配, 存在该单词的行, 不包含子字符串|
+|`x`|`--line-regexp` 行全匹配, 必须与行完全一致 |
+
+#### [wc](https://linux.alianga.com/c/wc.html) 
+
+Word count 文字计数
 
 ```bash
- $ cut <arg> <pattern> <file>                    # 截取指定列
+ $ wc -c                                         # --bytes char 统计字符数量
+ $ wc -w                                         # --words 统计单词数量
+ $ wc -l                                         # --lines 统计行的数量
 
- $ cut -f <num>                                  # 显示第 <num> 列, 以空格为分隔符, 从 1 开始
- $ cut -d <char>                                 # 自定义分隔符
- $ cut -c 3-6                                    # 显示每行第 3 至 6 个字符, 可填单个数字
-
- $ cut -d ':' -f 2,3                             # 根据 ':' 分割显示第 2, 3 列 
+ $ cat host.txt | wc -l                          # wc 是以行尾是否有换行符号判断为一行
+ > 4 host.txt                                    # 实际有 5 行, 第 5 行结尾没有换行符号
 ```
 
 ### 文本编辑
 
-#### [xargs](https://linux.alianga.com/c/xargs.html) : extended arguments
+#### [xargs](https://linux.alianga.com/c/xargs.html) 
+
+extended arguments: 文本格式转换与扩充
 
 ```bash
- $ cat a.log | xargs                             # 多行内容输出单行 
+ $ <command> | xargs <options> <command>         # 处理左边命令的输出, 并作为右边命令的输入执行
+
+ $ echo "end" | xargs echo "start"               # 将 "end" 传递给右边 echo 命令
+ > start end                                     # 与 echo "start" "end" 一致
  
- $ cat a.log | xargs -n 3                        # 重新修改格式, 每行 3 个字符串  
- $ cat a.log | xargs -d ,                        # 以 ',' 分割整行
- $ cat a.log | xargs -I {} touch {}              # {} 变量替换, 抓取文件每一行, 执行 touch line
+ $ cat host.txt | xargs -n 3                     # 读取文本内容, 修改格式, 每行 3 个字符串  
+ > 1st 2nd 3rd                                   # xargs 右边不填命令, 默认使用 echo  
+ > 4th 5th
+ 
+ $ echo "1-2-3-4" | xagrs -d '-' -n 2            # 以 '-' 分割字符串, 分隔符号可以是单个字符,单个数字或单个字母 
+ > 1 2                                           # 每行显示两个字符串
+ > 3 4
+
+ $ echo "1 2 3"| xargs -n 1 | xargs -i echo "line {} end"              
+ > line 1 end                                    # xargs -n 1, 每行一个字符串, 将 1 行分割为 3 行
+ > line 2 end                                    # -i 使用 {} 变量替换, 每一行内容替换掉 {} 执行
+ > line 3 end
+
+ $ cat host.txt | xargs -I num sh -c 'echo num start; echo num end' 
+ > 1st start                                     # -I 设置变量 num(可自定义), 供后续多条命令执行 
+ > 1st end                                       # 执行两次 echo 命令, num 替换为 cat 的输出
+ > 2nd start
+ > 2nd end
 ```
 
 #### [sort](https://linux.alianga.com/c/sort.html)
+
+文本行排序
 
 ```bash
  $ sort <file>                                   # 按每行第首字符的 ACSII 码值顺序排序, 相同则往后一个一个比较
@@ -67,14 +107,6 @@
  $ uniq -d                                       # --repeated 只显示重复行
 
  $ sort <file> | uniq -d                         # 先排序, 再打印相邻重复行, 显示文件所有重复行    
-```
-
-#### [wc](https://linux.alianga.com/c/wc.html) : Word count
-
-```bash
- $ wc -c                                         # --bytes char 统计字符数量
- $ wc -w                                         # --words 统计单词数量
- $ wc -l                                         # --lines 统计行的数量
 ```
 
 #### [tr](https://linux.alianga.com/c/tr.html) : transform
@@ -121,3 +153,5 @@
  $ awk 'NR%2==0{print}' <file>                   # 过滤行, 只打印偶数行
  $ awk '/<regex>/' <file>                        # 只打印正则匹配的的行, 可用 '/<regex>/, /<regex>/' 打印区间
 ```
+
+## 正则表达式

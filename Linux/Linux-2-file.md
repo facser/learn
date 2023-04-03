@@ -55,9 +55,12 @@
  $ tree -f                                       # 树状图显示绝对路径
 ```
 
-### [pwd](https://www.linuxcool.com/pwd) :  print working directory
+### [pwd](https://www.linuxcool.com/pwd)
 
-### [dirs](https://www.linuxcool.com/dirs) : directories
+### [dirs](https://www.linuxcool.com/dirs)
+
+pwd: print working directory
+dir: directories
 
 显示当前绝对路径
 
@@ -72,9 +75,9 @@
  > /root/Desktop
 ```
 
-### [ls](https://www.linuxcool.com/ls) : list files
+### [ls](https://www.linuxcool.com/ls) 
 
-显示当前路径下的文件及目录
+list files 显示当前路径下的文件及目录
 
 ```bash
  $ ls                                            # 显示当前目录下所有文件及目录
@@ -102,9 +105,9 @@
 
 ## 文件操作
 
-### [cd](https://www.linuxcool.com/cd) : change directory
+### [cd](https://www.linuxcool.com/cd) 
 
-切换工作路径
+change directory 切换工作路径
 
 ```bash
  $ cd <path>                                     # 切换到 <paht> 目录
@@ -116,9 +119,9 @@
  > bash: cd: folder: No such file or directory
 ```
 
-#### [mkdir](https://www.linuxcool.com/mkdir) : make directories
+### [mkdir](https://www.linuxcool.com/mkdir) 
 
-创建目录
+make directories 创建目录
 
 ```bash
  $ mkdir <dir>                                   # 创建目录
@@ -133,7 +136,7 @@
  > mkdir: created directory '1st/2nd/3rd'
 ```
 
-#### [touch](https://www.linuxcool.com/touch)
+### [touch](https://www.linuxcool.com/touch)
 
 创建文件
 
@@ -144,9 +147,9 @@
  > touch: cannot touch '1st/main.sh': No such file or directory
 ```
 
-#### [rm](https://www.linuxcool.com/rm) :  remove
+### [rm](https://www.linuxcool.com/rm) 
 
-删除文件
+remove 删除文件
 
 ```bash
  $ rm <file>                                     # 删除文件, 或删除文件夹
@@ -156,7 +159,7 @@
  > rmdir: failed to remove '1st': Directory not empty
 ```
 
-#### [mv](https://linux.alianga.com/c/mv.html) : move
+### [mv](https://linux.alianga.com/c/mv.html) : move
 
 移动文件或文件夹
 
@@ -173,9 +176,9 @@
  > master.sh  master.sh~
 ```
 
-### [cp](https://wangchujiang.com/linux-command/c/cp.html) : copy
+### [cp](https://wangchujiang.com/linux-command/c/cp.html) 
 
-复制文件
+copy 复制文件
 
 ```bash
  $ cp <file|dir> <file|dir>                      # 复制黏贴重命名
@@ -215,22 +218,22 @@
  > ./temp/a.txt
  > ./temp/b.txt
 
- $ find temp -regex ".*\.txt$"                   # 当前目录的 temp 文件夹下符合正则表达式的文件(.* 任意字符任意次, \.txt$ 以 .txt 结尾)
- > temp/a.txt
+ $ find temp -regex ".*\.txt$"                   # 当前目录的 temp 文件夹下符合正则表达式的文件                              
+ > temp/a.txt                                    # .* 任意字符任意次, \.txt$ 以 .txt 结尾
  > temp/b.txt
 
- $ find <dir> <options> -exec <command> {} \;  # 对查找到的文件进行操作
- $ find . -name "*.sh" -exec rm {} \;          # 删除当前目录下后缀为 .sh 文件
- $ find . -name "*.py" -exec mv {} /root \;    # 将当前目录下后缀为 .py 文件移动到 /root 
+ $ find <dir> <options> -exec <command> {} \;    # 对查找到的文件进行操作
+ $ find . -name "*.sh" -exec rm {} \;            # 删除当前目录下后缀为 .sh 文件
+ $ find . -name "*.py" -exec mv {} /root \;      # 将当前目录下后缀为 .py 文件移动到 /root 
 
- $ find . -type f -exec sh -c 'echo >{}' \;   # 清空当前目录下所有文件内容
+ $ find . -type f -exec sh -c 'echo >{}' \;      # 清空当前目录下所有文件内容
 ```
 
 ## 文件内容
 
-### [cat](https://www.linuxcool.com/cat) : concatenate
+### [cat](https://www.linuxcool.com/cat)
 
-读取文件内容
+concatenate 读取文件内容
 
 ```bash
  $ cat <file>                                    # 读取并打印文件内容
