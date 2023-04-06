@@ -39,7 +39,7 @@
 |`w`|`--word-regexp` 单词全匹配, 存在该单词的行, 不包含子字符串|
 |`x`|`--line-regexp` 行全匹配, 必须与行完全一致 |
 
-#### [wc](https://linux.alianga.com/c/wc.html) 
+### [wc](https://linux.alianga.com/c/wc.html)
 
 Word count 文字计数
 
@@ -52,9 +52,9 @@ Word count 文字计数
  > 4 host.txt                                    # 实际有 5 行, 第 5 行结尾没有换行符号
 ```
 
-### 文本编辑
+## 文本编辑
 
-#### [xargs](https://linux.alianga.com/c/xargs.html) 
+### [xargs](https://linux.alianga.com/c/xargs.html)
 
 extended arguments: 文本格式转换与扩充
 
@@ -84,52 +84,65 @@ extended arguments: 文本格式转换与扩充
  > 2nd end
 ```
 
-#### [sort](https://linux.alianga.com/c/sort.html)
+### [sort](https://linux.alianga.com/c/sort.html)
 
 文本行排序
 
 ```bash
  $ sort <file>                                   # 按每行第首字符的 ACSII 码值顺序排序, 相同则往后一个一个比较
 
- $ sort -r <file>                                # --reverse 反向排序
- $ sort -n <file>                                # 根据数值比较, 多位数看数值, 不再单个数字比较
- $ sort -u <file>                                # --unique 不显示重复的行
- $ sort -t : -k 2 -n <file>                      # 以 ':' 为分割符号, 第 2 个字符串按数字排序
-```
-
-#### [uniq](https://linux.alianga.com/c/uniq.html) : unique
-
-```bash
- $ uniq <file>                                   # 合并相邻的重复行
-
- $ uniq -c                                       # --count 每行添加重复次数
- $ uniq -i                                       # --ignore-case 忽略大小写
- $ uniq -d                                       # --repeated 只显示重复行
-
- $ sort <file> | uniq -d                         # 先排序, 再打印相邻重复行, 显示文件所有重复行    
-```
-
-#### [tr](https://linux.alianga.com/c/tr.html) : transform
-
-```bash
- $ tr <arg> <pattern>                            # 文本替换, 删除, 合并相邻重复
-
- $ tr ',' ' '                                    # 将 ',' 替换成空格
- $ tr 'A-Z' 'a-z'                                # 将大写替换成小写
+ $ sort host.txt                                 # 按每行字符 ACSII 逐个排序
+ > 128-1st-1                                     
+ > 255-3rd-2
+ > 32-2nd-0
  
- $ tr -d [0-9]                                   # 删除所有数字
- $ tr -s 'n'                                     # 合并所有重复 'n' 字符
+ $ sort -n host.txt                              # 根据数值比较, 若是字母开头, 按单个字符的 ACSII 数值比较
+ > 32-2nd-0
+ > 128-1st-1
+ > 255-3rd-2
+
+$ sort -t "-" -k 4 -n host.txt                   # 以 '-' 为分割符号, 取第 4 列按数值排序
+ > c-32-2nd-0
+ > b-128-1st-1
+ > a-255-3rd-2
+
+ $ sort -r <file>                                # --reverse 反向排序
+ $ sort -u <file>                                # --unique 不显示重复的行
+```
+
+### [tr](https://linux.alianga.com/c/tr.html)
+
+transform 文本替换 压缩 删除
+
+```bash
+ $ tr <option> <parameter>                       # 文本替换, 删除, 合并相邻重复
+
+ $ cat host.txt | tr 'a-z' 'A-Z' | tr "-" "="    # 小写全替换为大写, - 替换为 = 
+ > 1ST=1
+ > 2ND=0
+ > 3RD=2
+
+ $ echo "aaccbbcc" | tr -s 'ac'                  # -s 压缩多个连续 a 或多个连续 c 为 1 个
+ > acbbc                                         # 仅限于单个字符重复, 且相邻重复才会生效
+ 
+ $ cat host.txt | xargs | tr -d '0-9'            # 删除文件内所有数字 
+ > st- nd- rd-                                   # -d 后的内容逐一删除, 即删除 0 1 2 3 4 5 6 7 8 9
 ```
 
 注: tr 替换或删除时把字符集看做**多个字符**进行操作
 如 tr -d 'abc' 表示删除文本中所有 a b c 字符
 
-#### [sed](https://linux.alianga.com/c/sed.html) : stream editor
+### [sed](https://linux.alianga.com/c/sed.html)
+
+stream editor 流式编辑
 
 ```bash
- $ sed <opt> <command> <file>
+ $ sed <option> <function> <file>
 
- $ sed -i <command> <file>                       # 逐行编辑文本内容 
+ # option 模式
+ # -i 不仅显示结果, 还会将修改写入文件
+ 
+
 
  $ sed 's/<before>/<after>/' <file>              # s 替换指定字符(仅替换 1 次)
  $ sed 's/<before>/<after>/g' <file>             # g 替换指定字符(全替换)
@@ -138,7 +151,35 @@ extended arguments: 文本格式转换与扩充
  $ sed '<num>d' file                             # 删除文件某一行, 可用 ',' 扩展范围 ('1,$d' 删除所有行)
 ```
 
-#### [awk](https://linux.alianga.com/c/awk.html)
+- replace 替换
+
+```bash
+ $ sed <option> 's/<before>/<after>/<n>g' <file> # 逐行替换, s 替换模式; <n>g 替换 n 次, n 不填则全替换  
+
+ $ echo "hi hi ha" | sed 's/hi/ha/g'             # 将 hi 替换为 ha, n 未填, 全替换
+ > ha ha ha
+
+ $ echo "hi hi ha" | sed 's:hi:ha:'              # 将 hi 替换为 ha, 没有 g, 只替换一次
+ > ha hi ha                                      # 定界符除了 / 也可以用 : , 或 | 
+
+ $ sed -i 's/-[0-3]/=end/1g' host.txt && cat host.txt  
+ > 1st=end                                       # -i, 不显示结果, 将修改写入文件
+ > 2nd=end                                       # 支持正则表达式, 将 -1 -2 -3 都替换为 =end
+ > 3rd=end                                       # 结尾没有 g, 只替换一次
+
+ $ sed -n 's/nd\|rd/th/gp' host.txt              # -n 和 p 合用打印匹配的行
+ > 2th-0                                         # 将 nd 或 rd 替换为 th
+ > 3th-2
+```
+
+- delete 删除
+
+```bash
+ $ sed <> d file
+```
+
+
+### [awk](https://linux.alianga.com/c/awk.html)
 
 ```bash
  $ awk 'BEGIN{cmds} <opt> {cmds} END{cmds}'      # {} 内填代码块, 中间是循环体,对每行执行
