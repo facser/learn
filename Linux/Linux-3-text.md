@@ -24,7 +24,7 @@
  > 4:4th
  > 5:5th
  
- $ cat host.txt | egrep -i "[0-9]TH" | grep -v 5 # 多次管道筛选行
+ $ cat host.txt | egrep -i "[0-9]TH" | grep -v 5 # 多次管道筛选行, egrep 与 grep -E 一致
  > 4th                                           # 通过正则忽略大小写筛选, 去除包含 5 的行 
 ```
 
@@ -92,19 +92,19 @@ extended arguments: 文本格式转换与扩充
  $ sort <file>                                   # 按每行第首字符的 ACSII 码值顺序排序, 相同则往后一个一个比较
 
  $ sort host.txt                                 # 按每行字符 ACSII 逐个排序
- > 128-1st-1                                     
+ > 128-1st-1                                     # 每行开头分别是 1 2 3, 按顺序排序
  > 255-3rd-2
  > 32-2nd-0
  
  $ sort -n host.txt                              # 根据数值比较, 若是字母开头, 按单个字符的 ACSII 数值比较
- > 32-2nd-0
- > 128-1st-1
+ > 32-2nd-0                                      # 每行开头数值是 32 128 255, 根据大小排序
+ > 128-1st-1                                     # 若开头是字符, 按单个字符 ACSII 数值排序
  > 255-3rd-2
 
 $ sort -t "-" -k 4 -n host.txt                   # 以 '-' 为分割符号, 取第 4 列按数值排序
- > c-32-2nd-0
- > b-128-1st-1
- > a-255-3rd-2
+ > c-32-2nd-0                                    # -t "-" 以 - 符号分隔行
+ > b-128-1st-1                                   # -k 取第 4 列
+ > a-255-3rd-2                                   # -n 根据数值排序
 
  $ sort -r <file>                                # --reverse 反向排序
  $ sort -u <file>                                # --unique 不显示重复的行
@@ -137,18 +137,54 @@ transform 文本替换 压缩 删除
 stream editor 流式编辑
 
 ```bash
- $ sed <option> <function> <file>
-
- # option 模式
- # -i 不仅显示结果, 还会将修改写入文件
+ $ sed <option> <range> <model> <file>
  
+ > option: 参数
+ >   -i: sed 的修改结果写入文件
+ >   -n: 输出结果, 与 p 合用只打印修改的行
+ >   -e: 串联多个 sed 指令
 
+ > range: 行号或者正则筛选范围 
+ >   行号: '3' 第三行; '2,5' 2到5行; '1~2' 奇数行; '2~2' 偶数行; 
+ >   正则: '/[0-9]/' 含有数字的行;  '/1st/,/3rd/' 1st 行和 3rd 之间所有行
 
- $ sed 's/<before>/<after>/' <file>              # s 替换指定字符(仅替换 1 次)
- $ sed 's/<before>/<after>/g' <file>             # g 替换指定字符(全替换)
+ > model: 操作模式
+ >   p: 打印模式
+ >   d: 删除模式
+ >   s: 替换模式
+ >   <n>g: 与 s 替换模式合用, 标明替换次数 
+ >   a\: 行尾追加
+ >   i\: 行首插入
+```
 
- $ sed '/<regex>/d' file                         # 删除文件中符合正则的行
- $ sed '<num>d' file                             # 删除文件某一行, 可用 ',' 扩展范围 ('1,$d' 删除所有行)
+- select 筛选
+
+```bash
+ $ sed <option> <line index> file                # 根据行序号筛选行
+ $ sed <option> <regex> file                     # 根据关键字筛选行
+
+ $ sed -n '2,$p' host.txt                        # 截取第二行到最后一行 $ 代表最后一行
+ > 2nd-0                                         # 使用 -n 参数和 p 打印符合需求的行
+ > 3rd-2
+
+ $ sed -n '/[a-z]d/p' host.txt                   # 筛选包含 字母+d 的 行
+ > 2nd-0
+ > 3rd-2
+```
+
+- delete 删除
+
+```bash
+ $ sed <option> <line index> d file                # 根据行序号筛选行
+ $ sed <option> <regex> d file                     # 根据关键字筛选行 
+
+ $ sed '$d' host.txt                               # 删除最后一行 
+ > 1st-1                                           # 显示删除后剩余的行, 文件保持不变
+ > 2nd-0
+
+ $ sed -i '/0$/d' host.txt                         # 删除以 0 为结尾的行
+ > 1st-1                                           # -i 显示删除后剩余的行, 并将修改写入文件
+ > 3rd-2
 ```
 
 - replace 替换
@@ -170,29 +206,101 @@ stream editor 流式编辑
  $ sed -n 's/nd\|rd/th/gp' host.txt              # -n 和 p 合用打印匹配的行
  > 2th-0                                         # 将 nd 或 rd 替换为 th
  > 3th-2
+
+ $ sed 's/.d/(& or th)/g' host.txt               # 使用 & 做变量替换
+ > 1st-1
+ > 2(nd or th)-0
+ > 3(rd or th)-2
 ```
 
-- delete 删除
+- add insert 追加 插入
 
 ```bash
- $ sed <> d file
-```
+ $ sed <option> <regex> <a\ i\> <string> <file>  #
 
+ $ sed '/1st/a\first line' host.txt              # 在包含 1st 的行结尾添加 first line 
+ > 1st-1                                         # 行结尾是换行符, 追加内容在换行符后, 即下一行
+ > first line                                    
+ > 2nd-0
+ > 3rd-2
+
+ $ sed '/1st/1\first line' host.txt              # 在包含 1st 的行开头添加 first line 
+ > first line                                  
+ > 1st-1                                                             
+ > 2nd-0
+ > 3rd-2
+```
 
 ### [awk](https://linux.alianga.com/c/awk.html)
 
 ```bash
- $ awk 'BEGIN{cmds} <opt> {cmds} END{cmds}'      # {} 内填代码块, 中间是循环体,对每行执行
- 
- $ awk '{print}' <file>                          # 逐行打印文件, BEGIN 和 END部分选填
- $ awk 'END{print NR}' <file>                    # NR 表示当前行号, 执行 END 时读完文件, NR 表示最后一行行号
- $ awk 'BEGIN{i=0} {i++} END{print i}' <file>    # BEGIN 时设置 i, 每一行 i 自加, 结束时打印
+ $ awk 'BEGIN{ commands } pattern{ commands } END{ commands }' <file>
 
- $ awk '{print $5, $NF}' <file>                  # 以空格为分隔,打印第 5 及 最后一列
- $ awk -F ':' '{print $5, $NF}' <file>           # 以 ':' 为分隔,打印第 5 及 最后一列
+ > BEGIN{ commands }: 操作文本前执行, 选填, 一般用于初始化变量
+ > pattern{ commands }: 行操作, 循环体, 对每行执行
+ > END{ commands }: 每次执行完行操作后执行, 选填, 一般用于打印行操作结果
 
- $ awk 'NR%2==0{print}' <file>                   # 过滤行, 只打印偶数行
- $ awk '/<regex>/' <file>                        # 只打印正则匹配的的行, 可用 '/<regex>/, /<regex>/' 打印区间
+ $ awk 'BEGIN{i=0} {i++} END{print i}' host.txt  # 打印文本行
+ > 3                                             # 初始化 i, 每遍历一行, i + 1, 最后打印 i 
+
+ $ awk '{print $1, $NF, "index:"NR}' host.txt    # 以空格为分隔,打印第 1 列, 最后一列及行序号
+ > 1st first index:1                             # $0 表示整行, $<n> 表示第n列, 未指定分隔符号默认空格为分隔
+ > 2nd second index:2                            # $NF 表示最后一列 $(NF-<N>) 倒数第 n 列
+ > 3rd third index:3                             # NR 表示行序号, 不需要 $ 
+
+ $ num=2; awk -F '=' -v col=$num  '{print  "line: "NR " column " col": "  $col}' host.txt     
+ > line: 1 column 2: 1                           # -F "=" 以 = 为分隔符号, 与 'BEGIN{ FS = "=" }' 效果一致
+ > line: 2 column 2: 0                           # -v col=$num 从外部添加变量赋值给 col
+ > line: 3 column 2: 2                           # "" 内容打印, 变量自动替换, $<n> 取第 n 列
+
+ /dev/sda1  234G  191G   31G  87%   /
+ |-------|  |--|  |--|   |--| |-| |--------| 
+    $1       $2    $3     $4   $5  $6 ($NF)   NR: line index
+ |-----------------------------------------|
+                    $0
+```
+
+- select 筛选
+
+```bash
+ $ awk <pattern> { command }
+
+ $ awk 'NR%2==1, $3 ~ /ir/ {print $0}' host.txt  # 通过表达式筛选符合条件的行
+ > 1st 1 first                                   # NR%2 == 1, 行序号为 2 的倍数余 1 , 即奇数行
+ > 3rd 2 third                                   # $3 ~ /ir/ 即第 3 列包含 ir 字符串
+
+ $ awk '$1 !~ /nd/, /^[1-3]/ {print}' host.txt   # 使用正则筛选行
+ > 1st 1 first                                   # $1 !~ /nd/ 第 1 列不包含 nd 字符串
+ > 3rd 2 third                                   # ^[1-3] 以数字 1 2 3 为行开头 
+
+ $ awk '/sec/, /3rd/ {print}' host.txt           # 通过子字符串截取两子字符之间所有的行
+ > 2nd 0 second                                  # sec 在第 2 行
+ > 3rd 2 third                                   # 3rd 在第 3 行
 ```
 
 ## 正则表达式
+
+|char|meaning|
+|:-:|:-|
+|`^`|匹配输入字符串的开始位置, ^start 以字符串 start 开头|
+|`$`|匹配输入字符串的结束位置, $end 以字符串 end 开头|
+|`.`|匹配除"\n"之外的任何单个字符, . |
+|`[]`|匹配所包含的任意**一个**字符, [fac] 匹配 f a c 中任意单个字符, [a-z] 任意单个小写字母 [0-9] 任意单个数字 |
+|`[^]`|负值字符范围。匹配任何不在指定范围内的任意字符, [^fac] 匹配不包含 f a c 中任意单个字符 |
+|`\|`|或匹配, 符号两边均可 [0-9]\|[a-z] 匹配任意单个数字或小写字母|
+|`？`|匹配前面的子表达式零次或一次, [0-9]? 匹配 0 个或 1 个数字|
+|`+`|匹配前面的子表达式一次或多次, [A-Z]+ 匹配 1 个或多个大写字母|
+|`*`|匹配前面的子表达式零次或多次, .*.txt 匹配任意单个字符出现0次或多次, 即表示任意以 .txt 结尾|
+|`{m}`|n是一个非负整数。匹配确定的n次。{3} 固定匹配 3 次|
+|`{m,n}`|m和n均为非负整数，其中n<=m。{1，3} 最少 1 次最多 3 次, {2,} 最少两次, {,4} 最多 4 次 |
+|`()`|匹配pattern并获取这一匹配, 将括号内匹配看成一个整体 （[0-9]=)*  "数字=" 的格式出现任意次|
+
+### 正则表达式示例
+
+- 匹配 IPV4
+
+```bash
+ $ echo "127.0.0.1 \n255.255.1 \n0.0.0.0 " | egrep -o "([0-9]{1,3}\.){3}[0-9]{1,3}" 
+ > 127.0.0.1                                     # -o 仅显示匹配内容, [0-9]{1,3} 任意数字出现 1 到 3 次 
+ > 0.0.0.0                                       # ([0-9]{1,3}\.){3}  匹配格式 3 次, . 经过转义仅表示 . 字符
+```

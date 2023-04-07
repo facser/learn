@@ -75,7 +75,7 @@ dir: directories
  > /root/Desktop
 ```
 
-### [ls](https://www.linuxcool.com/ls) 
+### [ls](https://www.linuxcool.com/ls)
 
 list files 显示当前路径下的文件及目录
 
@@ -105,7 +105,7 @@ list files 显示当前路径下的文件及目录
 
 ## 文件操作
 
-### [cd](https://www.linuxcool.com/cd) 
+### [cd](https://www.linuxcool.com/cd)
 
 change directory 切换工作路径
 
@@ -119,7 +119,7 @@ change directory 切换工作路径
  > bash: cd: folder: No such file or directory
 ```
 
-### [mkdir](https://www.linuxcool.com/mkdir) 
+### [mkdir](https://www.linuxcool.com/mkdir)
 
 make directories 创建目录
 
@@ -147,7 +147,7 @@ make directories 创建目录
  > touch: cannot touch '1st/main.sh': No such file or directory
 ```
 
-### [rm](https://www.linuxcool.com/rm) 
+### [rm](https://www.linuxcool.com/rm)
 
 remove 删除文件
 
@@ -159,9 +159,9 @@ remove 删除文件
  > rmdir: failed to remove '1st': Directory not empty
 ```
 
-### [mv](https://linux.alianga.com/c/mv.html) : move
+### [mv](https://linux.alianga.com/c/mv.html)
 
-移动文件或文件夹
+move: 移动文件或文件夹
 
 ```bash
  $ mv <file|dir> <file|dir>                      # 剪切复制并重新命名, 文件目录均可
@@ -176,7 +176,7 @@ remove 删除文件
  > master.sh  master.sh~
 ```
 
-### [cp](https://wangchujiang.com/linux-command/c/cp.html) 
+### [cp](https://wangchujiang.com/linux-command/c/cp.html)
 
 copy 复制文件
 
