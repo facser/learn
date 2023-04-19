@@ -22,6 +22,7 @@ BASH 基础语法
  $ command <opt> <args>                          # shell 命令一般格式
 
  $ cat -n log.txt                                # 命令 cat, 选项 -n, 参数 log.txt
+ > 
 ```
 
 shell 命令基本按照上述格式, 命令与选项, 参数之间以空格分割

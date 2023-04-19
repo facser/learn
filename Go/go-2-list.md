@@ -8,14 +8,14 @@
 数组是**确定数量**元素的集合, 数组元素类型可以不一致
 
 ```go
- strList := [3]string{"hey", "you", "world"}     // 定义长度为 3 , 元素为字符串的数组
- strList := [...]string{"hey", "you", "world"}   // 定义元素为字符串的数组, 根据值推断长度和容量
+strList := [3]string{"hey", "you", "world"}      // 定义长度为 3 , 元素为字符串的数组
+strList := [...]string{"hey", "you", "world"}    // 定义元素为字符串的数组, 根据值推断长度和容量
 
- intList := [3]int{1, 2}                         // [1 2 0] 定义容量长度均为 3, 类型为 int 的数组
- intList := [...]int{1, 2}                       // [1, 2]  容量和长度均为 2 的 int 数组
+intList := [3]int{1, 2}                          // [1 2 0] 定义容量长度均为 3, 类型为 int 的数组
+intList := [...]int{1, 2}                        // [1, 2]  容量和长度均为 2 的 int 数组
 
- intArray := [3]int{1, 4}                        // [1 4 0] 初始化数组, 未定义的值取 0
- intArray[1], intArray[2] = 2, 3                 // [1 2 3] 修改数组的值
+intArray := [3]int{1, 4}                         // [1 4 0] 初始化数组, 未定义的值取 0
+intArray[1], intArray[2] = 2, 3                  // [1 2 3] 修改数组的值
 
 // 数组有容量(cap())和长度(len())属性
 // 数组中未定义元素会使用类型默认值, 数组容量和长度始终一致
@@ -30,7 +30,7 @@
  
  anyList[0] = anyList[0].(string) + " llo"     // any 转实际类型操作需要显示声明
  anyList[1] = anyList[1].(int) + 1
-    
+  
  for index, value := range anyList {
     fmt.Printf("index: %v, value: %v  type: %T\n", index, value, value)
  }
@@ -81,7 +81,7 @@
 ```go
  intSlice := []int{0,0,0,0}                      // 整数切片初始化
  intArray := intSlice                            // 切片赋值, 传递的是地址, 两切片指向同一个数组
-                 
+               
  intArray[0] = 1                                 // intArray 序号 0 重新赋值, intSlice 跟着变化
  intArray = append(intArray, 2)                  // intArray 添加元素, 切片指向新的数组
  intArray[1] = 1                                 // intArray 序号 1 重新赋值, 与 intSlice 指向数组不一致
@@ -93,9 +93,15 @@
 ### 切片操作
 
 ```go
- intSlice := []int{0,0,0,0}
- intSlice = append(intSlice, 1, 2)              // append 添加数据
- intSlice = append(intSlice[:0], intSlice[4]...)// append 删除数据
- fmt.Printf("intSlice: %v\n", intSlice)
- > intSlice: [1 2]
+ slice := []int{0,0,0,0}
+ slice = append(slice, []int{1, 1}...)           // append 添加数据 [0 0 0 0 1 1] 
+ slice = append(slice[:1], slice[3:]...)         // append 删除数据 [0 0 1 1] 
+ slice = append(slice[:1], append([]int{2}, slice[1:]...)...)
+
+ fmt.Printf("slice: %v\n", slice)
+ > slice: slice: [0 2 0 1 1]                     // append 插入数据
+
+ slice := []int{4,1,6,2}
+ fmt.Println(sort.Ints(slice))                   // 切片排序
+ > [1 2 4 6]
 ```

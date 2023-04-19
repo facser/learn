@@ -12,7 +12,7 @@
 ## 常用目录
 
 |位置|全称|说明|
-|:-:|:-:|:-:|
+|:-:|:-|:-|
 |`/etc` |Configuration Files   |系统和软件的配置文件|
 |`/usr` |Unix Software Resource|应用程序默认安装位置|
 |`/dev` |Device Files          |系统外围设备|
@@ -24,7 +24,7 @@
 ### 特殊文件
 
 |位置|说明|
-|:-|:-:|
+|:-|:-|
 |`/etc/environment`                    |任意用户打开命令行加载, 系统环境变量|
 |`/etc/profile`                        |任意用户打开命令行加载|
 |`/etc/bash.bashrc`                    |任意用户打开命令行加载|

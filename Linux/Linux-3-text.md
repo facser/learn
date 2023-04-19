@@ -29,7 +29,7 @@
 ```
 
 |parameter|meaning|
-|:-:|:-:|
+|:-:|:-|
 |`c`|`--count` 只显示匹配行的数量|
 |`E`|`--extend-regexp` 使用正则匹配|
 |`i`|`--ignore-case` 忽略大小写|
