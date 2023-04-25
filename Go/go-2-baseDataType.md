@@ -6,6 +6,7 @@ Golang 基本类型有
 - [浮点型](#浮点型)
 - [布尔类型](#布尔类型)
 - [字符串](#字符串类型)
+- [类型转换](#类型转换)
 
 ## 整形
 
@@ -261,25 +262,24 @@ strings.Count(s, sub) int                        // 返回 sub 在 s 中出现�
 ```go
 s := fmt.Sprinf("%v", <variable>)                // 万能转换, any -> string
 
-s := strconv.Itoa(32)                            // int -> string
-s := strconv.FormatBool(true)                    // bool -> string
-s := strconv.FormatFloat(3.1415, 'E', -1, 64)    // float64 -> string
-s := strconv.FormatInt(-42, 16)                  // int64 -> string
-s := strconv.FormatUint(42, 16)                  // uint63 -> string
+s := strconv.Itoa(32)                            // 32    int -> string
+s := strconv.FormatBool(true)                    // true  bool -> string
+s := strconv.FormatInt(-8, 2)                    // -1000 int64 -> string(2 进制) 
+s := strconv.FormatUint(255, 16)                 // ff    uint64 -> string(16 进制)
 ```
 
-字符串转其它类型可能会失败, 转数字时还需考虑进制和类型
+字符串转其它类型可能会失败, 转数字时还需考虑进制和转换后的类型
 
 ```go
-i, err := strconv.Atoi("-42")                    // string -> int
-b, err := strconv.ParseBool("true")              // string -> bool
-f, err := strconv.ParseFloat("3.1415", 64)       // string -> float64
-i, err := strconv.ParseInt("-42", 10, 64)        // string -> int64
-u, err := strconv.ParseUint("42", 10, 32)        // string -> uint32
+i, err := strconv.Atoi("-42")                    // 42   string -> int
+b, err := strconv.ParseBool("true")              // true string -> bool
+f, err := strconv.ParseFloat("3.14", 64)         // 3.14 string -> float64
+i, err := strconv.ParseInt("-42", 10, 64)        // -42  string -> int64
+u, err := strconv.ParseUint("42", 10, 32)        // 42   string -> uint32
 
 // ParseFloat (str, bitSize)  bitSize:{32:float32, 64:float64}
-
 // ParseInt  ParseUint (str, base, bitSize)
+
 // str string: 待转换的字符串
 // base int: str 的进制( base=16, s 为 16 进制的字符串)
 // bitSize int: {0:int, 8:int8, 16:int16, 32:int32, 64:int64}

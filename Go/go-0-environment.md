@@ -1,5 +1,9 @@
 # Golang
 
+- [Environment](#environment)
+- [Module](#module)
+- [Import](#import)
+
 ## Environment
 
 [Golang 官网](https://go.dev/) 下载 Golang 最新的包
@@ -28,7 +32,7 @@ Golang 设置环境变量(二选一)
  > lrwxrwxrwx 1 root root 20 Dec 16 14:04 /usr/bin/go -> /usr/local/go/bin/go
 ```
 
-## module
+## Module
 
 ### go mod
 
@@ -71,7 +75,39 @@ func main() {
  > hello world!
 ```
 
-### import local module
+## Import
+
+使用 `import` 关键字引入官方库
+
+```go
+
+import "fmt"
+import "strings"
+
+import (
+    "fmt"
+    "strings"
+)
+
+fmt.Println("fmt package")
+strings.Replace("fmt package", "fmt", "strings", 1)
+```
+
+未被使用模块会报未引入错误: `imported and not used: "strings"` 
+可以使用 `_` 符号避免未使用模块报错
+使用 `.` 符号, 使用模块方法时可以不用带模块名称
+使用 `<name>`，给模块添加别名
+
+```go
+import (
+    . "fmt"                                      // 省略模块名称
+    str "strings"                                // 定义模块别名
+    _ "os"                                       // 只声明而不导入模块
+)
+
+Println("fmt package")
+str.Replace("fmt package", "fmt", "strings", 1)
+```
 
 使用 go mod 创建的项目, 会优先引入项目目录下的模块
 本地目录不存在则会去 GOROOT 目录下寻找模块
