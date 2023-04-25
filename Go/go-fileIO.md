@@ -1,9 +1,9 @@
 # Golang
 
+## read file
+
 golang 通过 os 对文件读写
 `io/ioutil` 读写文件调用的是 os 的方法
-
-## read file
 
 ```go
 
@@ -13,7 +13,7 @@ import {
     "bufio"
 }
 
-func read(fileName string) string {                                  // 快读读取文件全部内容
+func read(fileName string) string {                                  // 快速读取文件全部内容
     content, err := os.ReadFile(fileName)
     if  err != nil {
         panic(Sprintf("read %s failed: %s", fileName, err))
@@ -24,7 +24,7 @@ func read(fileName string) string {                                  // 快读�
 func readLine(fileName string) []string {                            // 逐行读取文件, 返回字符串切片, 切片元素结尾无换行符号
     file, err := os.OpenFile(fileName, os.O_RDONLY|os.O_CREATE, 0666)
     if err != nil {
-        Println("read file error: ", err)
+        panic("read file error: ", err)
     }
     defer file.Close()
 
@@ -62,6 +62,9 @@ func readByte(fileName string, length int) string {                  // 每次�
 ```
 
 ## write file
+
+文件写入分两种: 覆盖写入, 追加写入
+文件写入函数本质是对 os.OpenFile 的封装
 
 ```go
 func write(fileName, s string) {                                     // 文件覆盖写入, 文件不存在则自动新建

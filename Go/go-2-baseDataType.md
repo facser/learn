@@ -1,7 +1,11 @@
 # Golang
 
+Golang 基本类型有
+
 - [整形](#整形)
-- [字符串](#字符串)
+- [浮点型](#浮点型)
+- [布尔类型](#布尔类型)
+- [字符串](#字符串类型)
 
 ## 整形
 
@@ -20,7 +24,25 @@
 
 ### 整形类型转换
 
-数字类型数据可以通过 `<type>()` 方式进行类型之间的转换
+不同整形之间不可以进行运算, 需要转换为同一类型运算
+数字可以与任何整形运算, 结果为变量类型
+
+```go
+var num8 int8 = 8
+var num16 int16 = 16
+
+Printf("type: %T\n", 3)
+Printf("num8 add: %d \n",num8 + 3)
+Println("num16 add: %d \n",num16 + 3)
+> type: int
+> num8 add:11 type:int8 
+> num8 add:19 type:int16
+
+Println("num16 add num8: %d \n",num16 + num16)
+> ./main.go:42:34: invalid operation: num16 + num8 (mismatched types int16 and int8)
+```
+
+数字类型数据之间可以通过 `<type>()` 方式进行类型之间的转换
 
 ```go
 var num int = 8                                  // int   num = 8
@@ -34,6 +56,9 @@ numFloat64 := float64(num)                       // float64 numFloat64 = 8
 ```
 
 ### 进制赋值
+
+二进制 八进制 十六进制可以通过前缀赋值
+二进制 八进制 十六进制可以通过不同占位符打印
 
 ```go
 binary := 0b11                                   // int binary      = 3   2 进制赋值 
@@ -52,7 +77,7 @@ fmt.Printf("%x \n", sixteen)                     // ff
 fmt.Printf("%X \n", sixteen)                     // FF
 ```
 
-### 类型最大和最小值
+### 类型最大值和最小值
 
 数字类型最大值和最小值, 值在 math 包定义
 
@@ -90,10 +115,11 @@ Printf("e: %f \n", e)                            // e: 2.170000
 Printf("pi: %f \n", pi)                          // pi: 3.141593 
 ```
 
-## 布尔值
+## 布尔类型
 
 布尔值: true false
 布尔值不能进行数字运算
+布尔类型的值默认值是 false
 
 ```go
 yes, no := true, false
@@ -108,10 +134,6 @@ love != happy                                    // true   love not equal happy
 happy && love                                    // false  love and happy is not true
 happy || love                                    // true   love or happy is true 
 ```
-
-布尔类型的值默认值是 false
-布尔值无法参数数值运算, 只能进行逻辑运算
-布尔值只能转换为字符串, 无法转换为其它类型
 
 ## 字符串类型
 

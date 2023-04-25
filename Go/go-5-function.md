@@ -30,7 +30,7 @@ func self(x, y int) (int, int) {                 // 同类型参数合并, 多�
 
 ### 参数与返回值
 
-golang 允许不数量的参数
+golang 允许不定数量的参数
 golang 允许多个返回值
 
 ```go
@@ -56,7 +56,7 @@ func add(x, y int) (int, int) {                  // 多个返回值时, 返回�
 }
 ```
 
-### 匿名函数
+## 匿名函数
 
 golang 允许将函数赋值给变量
 golang 允许函数不定义名称直接运行
@@ -78,7 +78,7 @@ Println(avg)
 > 4
 ```
 
-### defer
+## defer
 
 defer 关键字会将之后语句或函数放到函数结尾运行
 多个 defer 语句按照先进后出的顺序执行

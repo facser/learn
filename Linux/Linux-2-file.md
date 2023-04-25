@@ -193,8 +193,8 @@ copy 复制文件
  $ cp -v mian.sh main.sh
  > 'mian.sh' -> 'main.sh'
 
- $ ln <file> <file>                              # 创建文件的硬链接
- $ ln -s <file> <file>                           # --symbolic 创建文件的符号链接
+ $ ln <source> <target>                          # 创建文件的硬链接 (使用绝对路径)
+ $ ln -s <source> <target>                       # --symbolic 创建文件的符号链接 (使用绝对路径)
 ```
 
 - 硬链接: 一个数据绑定两个名字, 两名字都删除才无法访问数据
