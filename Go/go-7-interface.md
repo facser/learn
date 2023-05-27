@@ -1,7 +1,48 @@
 # Golang interface
 
-接口是一个自定义的抽象类型
-接口用于定义函数的参数类型, 任意参数满足接口条件即可作为函数参数使用
+## 引申
+
+举办一个活动, 参加的人必须是能唱歌和玩游戏, 所以不管男女老幼, 只要能唱歌和玩游戏就应该都能参加
+对于这个活动, 强调的是能唱歌能玩游戏这两种行为, 不关心其余特质和行为
+
+用 Go 实现的效果
+
+```go
+type People struct { name string }               // 定义 People 结构体
+func (p people) sing() { ... }                   // 定义结构体方法 sing
+func (p people) play() { ... }                   // 定义结构体方法 play
+
+func activate(singer s, player p) {              // 定义函数, 参数为 singer 和 player 类型
+    s.sing()                                     
+    p.play()                                     
+}
+```
+
+然而实际上 People 类型不能作为 activate 的参数
+People 即使具有 singer 类型和 player 类型的行为, 但由于类型限制, 无法使用
+
+为了解决以上问题产生了接口类型这一概念
+
+```go
+type singer interface { sing() }                 // 定义 singer 接口类型, 只要实现 sing() 即可作为 singer 类型使用 
+type player interface { play() }                 // 定义 player 接口类型, 只要实现 play() 即可作为 player 类型使用
+
+type People struct { name string }               // 定义 People 结构体
+func (p people) sing() { ... }                   // 定义结构体方法 sing
+func (p people) play() { ... }                   // 定义结构体方法 play
+
+func activate(singer s, player p) {              // 定义函数, 参数为 singer 和 player 类型
+    s.sing()
+    p.play()
+}                     
+
+human := People{ name: "facser" }                // 实例化 People, People 实现了 sing() play()
+activate(human, human)                           // 第一个 human 作为 singer 类型，第二个 human 作为 player 类型
+```
+
+接口类型是一个自定义的抽象类型
+接口用于定义拥有同样行为的类型
+任意其它类型只要包含接口定义的方法， 都可以作为接口类型使用
 
 ```go
 type <interface name> interface {
