@@ -6,30 +6,28 @@
  * @LastEditors: facser
  * @Description: 
 -->
-# BASH
-
-对于脚本语言还是比较喜欢 `python` 但是时不时要用到 `shell`, 每次看一点没多久又忘了, 所以想系统性学习一下, 避免浪费时间.
+# BASH Basic
 
 [BASH 教程](https://wangdoc.com/bash/)
 
-## Bash Basic
-
 BASH 基础语法
 
-### 命令
-
 ```bash
- $ command <opt> <args>                          # shell 命令一般格式
+ $ command <option> <args>                       # shell 命令一般格式
 
  $ cat -n log.txt                                # 命令 cat, 选项 -n, 参数 log.txt
- > 
+ > 1 1st 
+ > 2 2nd
+ > 3 3rd
+
+ $ command | <command> | <command>
+ $ cat log.txt | grep "3rd"
+ > 3rd
 ```
 
-shell 命令基本按照上述格式, 命令与选项, 参数之间以空格分割
+## 打印输出
 
-### 打印输出
-
-#### [echo](https://linux.alianga.com/c/echo.html)
+### [echo](https://linux.alianga.com/c/echo.html)
 
 ```bash
  $ echo <opt> <string>                           # 打印 string 内容, 不激活转义符号
@@ -45,7 +43,7 @@ shell 命令基本按照上述格式, 命令与选项, 参数之间以空格分�
 
 注: 更多转义符号浏览 [转义符号](#常用转义符号)
 
-#### [printf](https://linux.alianga.com/c/printf.html)
+### [printf](https://linux.alianga.com/c/printf.html)
 
 ```bash
  $ printf <format string>                        # 格式化输出字符串
@@ -57,43 +55,43 @@ shell 命令基本按照上述格式, 命令与选项, 参数之间以空格分�
  > left  _rightf
 ```
 
-### 变量引用
+## 变量引用
 
 BASH 只有字符串一种数据类型, 想要操作字符串或者引用变量需要使用特殊符号
 
 ```bash
- $ varibal="hellow world"                        # 变量赋值, '=' 号前后不允许空格
- $ temp=hellow_world                             # 字符串无引号赋值时不允许空格
+ $ variable="hello world"                        # 变量赋值, '=' 号前后不允许空格
+ $ temp=hello_world                              # 字符串无引号赋值时不允许空格
 
- $ echo varibal                                  # 把打印内容当做字符串直接打印 
- > varibal
+ $ echo variable                                 # 把打印内容当做字符串直接打印 
+ > variable
 
- $ echo $varibal                                 # 打印变量的值 
- > hellow world                
+ $ echo $variable                                # 打印变量的值 
+ > hello world                
 
- $ echo facser write ${temp}_baba                # 字符连用时, 用 {} 区分变量
- > facser write hellow_world_baba
+ $ echo say_${temp}_to_code                      # 字符连用时, 用 {} 区分变量
+ > say_hello_world_to_code
 ```
 
 建议字符串操作时, 添加引号使变量操作更加明确(易于区分编辑器中字符串与变量)
 
-### 引号
+## 引号
 
-#### 单引号与双引号
+### 单引号与双引号
 
 BASH 区分单引号和双引号, 单引号内全部为当做字符(转义符有效), 双引号会激活变量引用
 
 ```bash
- $ name="facser"
+ $ name="petter"
 
- $ echo 'hellow\t$name'                          # 单引号禁止变量名扩展, 原样打印
- > hellow  $name
+ $ echo 'hello\t$name'                           # 单引号禁止变量名扩展, 原样打印
+ > hello  $name
 
- $ echo "hellow\t$name"                          # 双引号允许变量名扩展
- > hellow  facser
+ $ echo "hello\t$name"                           # 双引号允许变量名扩展
+ > hello  petter
 ```
 
-#### 反引号
+### 反引号
 
 反引号用于执行命令, 一般用于将命令结果赋值给变量
 
@@ -107,9 +105,9 @@ BASH 区分单引号和双引号, 单引号内全部为当做字符(转义符有
 
 由于反引号易于与单引号混淆, 建议使用 `$()` 方式, 便于区分
 
-### 变量
+## 变量
 
-#### 环境变量
+### 环境变量
 
 BASH 环境中的变量, 系统自定义的全局变量, 变量名全为大写, 用于保存环境信息
 
@@ -128,7 +126,7 @@ BASH 环境中的变量, 系统自定义的全局变量, 变量名全为大写, 
 
 注: 更多环境变量浏览 [环境变量](#常用环境变量)
 
-#### 自定义变量
+### 自定义变量
 
 ```bash
  $ <var>=<val>                                   # 变量定义, 等号两边不允许空格
@@ -147,8 +145,8 @@ BASH 环境中的变量, 系统自定义的全局变量, 变量名全为大写, 
  $ ${variable:=value}                            # 变量为空或不存在设置变量为 value, 返回 values
  $ ${variable:?message}                          # 变量为空或不存在打印 message, 并退出
 
- $ echo "hellow ${name:-facser}"
- > hellow facser
+ $ echo "hello ${name:-petter}"
+ > hello petter
 ```
 
 ```bash
@@ -170,16 +168,26 @@ BASH 环境中的变量, 系统自定义的全局变量, 变量名全为大写, 
  > sum: 15 add: 16
 ```
 
-### 输出重定向
+## 输出重定向
 
 ```bash
  $ command 2>&1                                  # 1 表示标准输出 2 表示标准错误输出
+ > zsh: command not found: data
+
  $ command 2>/dev/null                           # 将错误写入 null, 即不显示错误
+ >
 
  $ command > file                                # 清空文件内容, 命令标准输出写入文件
+ $ date > log.txt; cat log.txt
+ > Mon Jul  3 23:05:14 CST 2023
+
  $ command >> file                               # 保留文件内容, 命令标准输出追加入文件
+ $ date >> log.txt; cat log.txt
+ > Mon Jul  3 23:05:14 CST 2023
+ > Mon Jul  3 23:05:38 CST 2023
 
  $ command > /dev/null                           # 命令标准输出写入 null, 即不显示正常结果
+ >
 ```
 
 ## 常用转义符号
