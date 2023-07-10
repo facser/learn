@@ -17,22 +17,22 @@
  > /usr/local/go
 ```
 
-Golang 设置环境变量(二选一)
+Golang 设置环境变量, 设置国内源
 
-- 将 `/usr/local/go/bin` 添加进环境目录, 是目录下的可执行文件能被系统找到
-- 创建 `/usr/local/go/bin` 文件下的可执行文件的软连接放到环境目录
-
+将 `/usr/local/go/bin` 添加进环境目录, 是目录下的可执行文件能被系统找到
 本质是让系统在环境目录中找到 golang 的可执行文件
 
 ```bash
- $ export GOROOT=/usr/local/go                      # 将两条命令写入 ~/.bashrc
- $ export PATH=$PATH:$GOROOT/bin                    # 意为每次启动命令行都将 /usr/local/go/bin 加入环境目录
+ $ vi ~/.bashrc
+ > export GOROOT=/usr/local/go                      # 将两条命令写入 ~/.bashrc
+ > export PATH=$PATH:$GOROOT/bin                    # 意为每次启动命令行都将 /usr/local/go/bin 加入环境目录
 
- $ ln -s /usr/local/go/bin/go  /usr/bin/go          # 将可执行文件 go 软连接放到环境变量
- > lrwxrwxrwx 1 root root 20 Dec 16 14:04 /usr/bin/go -> /usr/local/go/bin/go
+ $ go env -w GOPROXY=https://goproxy.cn,direct
 ```
 
 ## Module
+
+go module 是 Go 的版本管理工具
 
 ### go mod
 

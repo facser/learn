@@ -62,6 +62,21 @@ func main() {
 
 ![main](./asset/Swagger-api.png)
 
+```go
+// @Tags        user
+// @Summary     show user info
+// @Description get user detail
+// @Produce     json
+// @Param       name path string true "用户名称"
+// @Success     200 {object} string "show {name} info"
+// @Failure     400 {object} string "show {name} error"
+// @Router      /user/info/{name}  [get]
+func userInfo(c *gin.Context) {
+    name := c.Param("name")
+    c.String(200, "show "+name+" info")
+}
+```
+
 `// @Produce 服务端返回给客户端的数据类型`
 
 ```go
