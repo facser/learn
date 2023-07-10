@@ -159,11 +159,35 @@ printf("float %.20f \n", 0.1+0.2);               // 打印浮点数小数点后 
 
 ## 类型转换
 
+数字类型之间可以互相转换, 转换的前后类型包含关系可能会导致精度损失或类型溢出
+
 ### 隐式转换
+
+```c
+float e = 2.718;
+int num = e;                                     // 浮点型转整形
+printf("num: %d\n", num);                        
+> num: 2                                         // 小数部分丢失
+
+int num = 32768;
+short s_num = num;                               // int 转 short int, signed short int (-32768, 32767)
+printf("num: %d\n", s_num);
+> num: -32768                                    // 数值溢出, 可能导致意想不到的问题
+```
+
+### 显式转换
+
+显式转换: (type)variable
+
+```c
+int num = 3;
+printf("num: %f\n", (float)num);                 // num 强制转为 float 类型 
+> num: 3.000000
+```
 
 ## 布尔值
 
-C 未设置布尔类型, 后续版本添加 stdbool.h 引入了 _Bool 类型
+C99 标准开始添加 stdbool.h 引入了 _Bool 类型
 布尔类型本质还是 0 和 1
 
 ```c
