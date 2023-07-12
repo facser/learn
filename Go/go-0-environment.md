@@ -17,8 +17,7 @@
  > /usr/local/go
 ```
 
-Golang 设置环境变量(二选一)
-
+Golang 设置环境变量, 设置国内源
 将 `/usr/local/go/bin` 添加进环境目录, 是目录下的可执行文件能被系统找到
 本质是让系统在环境目录中找到 golang 的可执行文件
 
@@ -32,6 +31,8 @@ Golang 设置环境变量(二选一)
 ```
 
 ## Module
+
+go module 是 Go 的版本管理工具
 
 ### go mod
 
@@ -92,7 +93,7 @@ fmt.Println("fmt package")
 strings.Replace("fmt package", "fmt", "strings", 1)
 ```
 
-未被使用模块会报未引入错误: `imported and not used: "strings"` 
+未被使用模块会报未引入错误: `imported and not used: "strings"`
 可以使用 `_` 符号避免未使用模块报错
 使用 `.` 符号, 使用模块方法时可以不用带模块名称
 使用 `<name>`，给模块添加别名
