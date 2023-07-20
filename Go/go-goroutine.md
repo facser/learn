@@ -1,4 +1,4 @@
-# Golang Coroutine
+# Golang goroutine
 
 ## 协程
 
