@@ -112,11 +112,23 @@ func webRoot(context *gin.Context) {
 `MIME` 类型即请求体和响应体的类型
 
 ```go
-// @Accept  application/json          响应 json 类型数据          
-// @Accept  application/xml           响应 XML 格式数据
-// @Produce text/plain                响应纯文本数据
-// @Produce text/html                 响应 HTML 数据
-// @Produce application/octet-stream  响应二进制流数据, 返回客户端需要下载的文件
+// @Accept  application/json                   请求体是 json 类型数据          
+// @Accept  application/xml                    请求体是 XML 格式数据
+// @Accept  application/x-www-form-urlencoded  请求体是表单类型
+// @Produce text/plain                         响应纯文本数据
+// @Produce text/html                          响应 HTML 数据
+// @Produce application/octet-stream           响应二进制流数据, 返回客户端需要下载的文件
+```
+
+### 响应
+
+`@Response  {return Code}  {param type}  {date type} commit`
+
+```go
+// @Success 200     {array}  model.Account          
+// @Header  200     {string} Token "qwerty"
+// @Failure 400,404 {object} httputil.HTTPError
+// @Failure default {object} httputil.DefaultError
 ```
 
 ### 参数
@@ -180,13 +192,4 @@ func detail(c *gin.Context) {
 }
 ```
 
-### 响应
 
-`@Response  {return Code}  {param type}  {date type} commit`
-
-```go
-// @Success 200     {array}  model.Account          
-// @Header  200     {string} Token "qwerty"
-// @Failure 400,404 {object} httputil.HTTPError
-// @Failure default {object} httputil.DefaultError
-```
