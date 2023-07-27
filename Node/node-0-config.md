@@ -1,8 +1,14 @@
-# Node
+# Node config
 
 ## Download and Update
 
 [nodejs 官网](https://nodejs.org/en)
+
+```bash
+ $ apt install node                              # apt 下载 node
+ $ node -v                                       # 查看 node 版本
+ > v18.17.0
+```
 
 nodejs 通过 n 模块更新或切换版本
 

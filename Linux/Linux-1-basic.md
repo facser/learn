@@ -94,20 +94,28 @@
  > 2166
 ```
 
-可以自定义环境变量以进行脚本间通信
-使用 export 临时修改环境变量
-修改 shell 启动文件(每次打开命令行均会执行)以永久设置环境变量
+修改 shell 启动文件(每次打开命令行均会执行)以永久设置环境变量, 使用 export 添加环境变量
 
 ```bash
-
 export <variable name>=<value>                   # 使用 export 临时修改环境变量, 执行的命令窗口关闭即失效
-
 export PATH=$PATH:/home/facsert                  # 将 /home/facsert 临时加入环境目录
-
 export LEARN=TRUE                                # 自定义新的环境变量, 脚本间可以通过自定义环境变量通信
-
 export PATH=$PATH:/home/facsert                  # 将命令写入 shell 启动文件(每次启动 shell 均会执行文件上命令)
 source ~/.bashrc                                 # 重新加载 shell 启动文件(~/.bashrc, ~/.zshrc )
+```
+
+bash 执行脚本: 新建子 shell 执行脚本, 脚本中的 export 的变量只在子 shell 生效, 脚本结束变量失效
+source 执行脚本: 脚本中的 export 变量加载入当前终端, 脚本结束仍然生效, 当前终端关闭后失效
+
+```bash
+ $ echo 'export linux="bash"' > bash.sh          # 使用 bash 添加 linux  
+ $ echo 'export linux="source"' > source.sh
+
+ $ bash bash.sh && echo "linux: $linux"          # 使用 bash 添加 linux 变量
+ > linux:                                        # 脚本结束, 变量失效
+ 
+ $ source source.sh && echo "linux: $linux" 
+ > linux: source shell
 ```
 
 ## 系统相关
@@ -132,7 +140,9 @@ source ~/.bashrc                                 # 重新加载 shell 启动文�
  > [1]  + 9481 terminated  bash -x a.sh  
 ```
 
-## 启用 Root 用户
+## 用户
+
+### 启用 root 用户
 
 ```bash
  $ sudo passwd root
@@ -146,6 +156,20 @@ source ~/.bashrc                                 # 重新加载 shell 启动文�
  $ su <user>                                     # 切换用户
 ```
 
+### 创建用户
+
+```bash
+ $ useradd -m <username>                         # 创建用户, 并在 /home 生成用户目录
+ $ useradd -l <oldName> <newName>                # 更换用户名称
+
+ $ passwd <username>                             # 用户添加密码
+ > New password:                                 # 输入密码, 密码不显示
+ > Retype new password:                          # 重复输入密码, 密码不显示
+
+ $ userdel -r <username>                         # 删除用户
+ > no crontab for facsert
+```
+
 sudo 免密码
 
 ```bash
@@ -153,6 +177,7 @@ sudo 免密码
 
  > %sudo ALL=(ALL:ALL) ALL                       # 找到这一栏, 建议注释掉复制一行修改
  > %sudo ALL=(ALL:ALL) NOPASSWD:ALL              # 修改后, 强制保存退出
+ > <username> ALL=(ALL) NOPASSWD:ALL
 ```
 
 注: 该文件必须强制写入, 不能修改文件权限, 否则报错
