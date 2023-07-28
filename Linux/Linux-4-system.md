@@ -1,10 +1,8 @@
 <!--
- * @FilePath: \文档\Learning\Linux\Linux-4-system.md
- * @Author: facser
- * @Date: 2022-07-18 15:02:16
- * @LastEditTime: 2022-08-08 22:29:37
- * @LastEditors: facser
- * @Description: 
+ * @Author       : facsert
+ * @Date         : 2022-07-18 15:02:16
+ * @LastEditTime : 2023-07-28 12:00:50
+ * @Description  : edit description
 -->
 
 # Linux system

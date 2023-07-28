@@ -1,7 +1,7 @@
 <!--
  * @Author       : facsert
  * @Date         : 2022-08-09 21:20:45
- * @LastEditTime : 2023-07-28 11:43:31
+ * @LastEditTime : 2023-07-28 11:57:23
  * @Description  : edit description
 -->
 
@@ -14,13 +14,13 @@ BASH 基础语法
 ```bash
  $ command <option> <args>                       # shell 命令一般格式
 
- $ cat -n log.txt                                # 命令 cat, 选项 -n, 参数 log.txt
+ $ cat -n log.txt                                # 读取 log.txt 文件, 命令 cat, 选项 -n, 参数 log.txt
  > 1 1st 
  > 2 2nd
  > 3 3rd
 
- $ command | <command> | <command>
- $ cat log.txt | grep "3rd"
+ $ command | <command> | <command>               # 命令管道
+ $ cat log.txt | grep "3rd"                      # 管道前的值作为管道后命令的参数
  > 3rd
 ```
 
