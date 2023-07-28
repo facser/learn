@@ -121,3 +121,43 @@ Centos
 computer -------> DNS server -------> computer -------> baidu server
 
 ```
+
+## Windows WSL ssh 连接
+
+WSL 下查看 ssh 服务端口
+
+```bash
+ $ ss -ntlp | grep ssh                           # Debian Ubuntu 默认端口查看工具
+ > LISTEN   0   128   0.0.0.0:2222   0.0.0.0:*  users:(("sshd",pid=4628fd=4))
+ > LISTEN   0   128      [::]:2222      [::]:*  users:(("sshd",pid=4628,fd=3))
+
+ $ netstat -ntlp | grep ssh                      # Redhat Centos netstat 查看端口
+ > tcp    0   0 0.0.0.0:2222   0.0.0.0:*   LISTEN   4628/sshd: /usr/sbi 
+ > tcp6   0   0 :::2222        :::*        LISTEN   4628/sshd: /usr/sbi 
+
+ $ systemclt start sshd                          # 启动 ssh 服务
+ $ service ssh start
+```
+
+Windows > 设置 > 应用 > 可选功能 > 添加可选功能  
+选择 OpenSSH 服务端和 OpenSSH 服务端安装  
+安装后在可选功能界面下方检查是否安装成功  
+
+Windows 打开终端管理员, 设置 WSL IP 和 ssh 端口映射到 Windows 端口
+
+```powershell
+netsh interface portproxy add v4tov4 listenport=2222 listenaddress=0.0.0.0 connectport=2222 connectaddress=172.28.185.15
+
+# listenport windows 端口
+# listenaddress windows IP
+# connectport WSL 端口
+# connectaddress WSL IP
+
+# 查看端口映射列表
+netsh interface portproxy show all
+侦听 ipv4:                 连接到 ipv4:
+
+地址            端口        地址            端口
+--------------- ----------  --------------- ----------
+0.0.0.0         2222        172.28.185.15   2222
+```
