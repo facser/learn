@@ -1,11 +1,10 @@
 <!--
- * @FilePath: \文档\Learning\python\python-flat-dict.md
- * @Author: facser
- * @Date: 2022-07-25 20:08:15
- * @LastEditTime: 2022-07-31 15:01:10
- * @LastEditors: facser
- * @Description: 
+ * @Author       : facsert
+ * @Date         : 2022-07-25 20:08:15
+ * @LastEditTime : 2023-07-28 11:48:32
+ * @Description  : edit description
 -->
+
 
 # python flat dictionary
 

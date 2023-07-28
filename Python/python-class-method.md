@@ -1,10 +1,8 @@
 <!--
- * @FilePath: \文档\Learning\python\python-class.md
- * @Author: facser
- * @Date: 2022-07-24 12:08:37
- * @LastEditTime: 2022-07-24 19:00:39
- * @LastEditors: facser
- * @Description: 
+ * @Author       : facsert
+ * @Date         : 2022-07-24 12:08:37
+ * @LastEditTime : 2023-07-28 11:48:32
+ * @Description  : edit description
 -->
 
 # python class method

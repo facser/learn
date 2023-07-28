@@ -1,3 +1,10 @@
+<!--
+ * @Author       : facsert
+ * @Date         : 2023-07-12 09:29:19
+ * @LastEditTime : 2023-07-28 11:38:21
+ * @Description  : edit description
+-->
+
 # Go Swagger
 
 ## 安装
@@ -54,7 +61,7 @@ func main() {
 }
 ```
 
-![main](./asset/Swag-main.png)
+![main](../assets/Swag-main.png)
 
 |字段|说明|示例|
 |:-|:-|:-|
@@ -89,7 +96,7 @@ func webRoot(context *gin.Context) {
 }
 ```
 
-![main](./asset/Swag-api.png)
+![main](../assets/Swag-api.png)
 
 |字段|说明|示例|
 |:-|:-|:-|
@@ -191,5 +198,3 @@ func detail(c *gin.Context) {
     c.String(http.StatusOK, "name:%s attribute:%s", name, attr)
 }
 ```
-
-

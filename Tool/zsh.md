@@ -1,3 +1,10 @@
+<!--
+ * @Author       : facsert
+ * @Date         : 2023-05-23 15:28:43
+ * @LastEditTime : 2023-07-28 11:50:52
+ * @Description  : edit description
+-->
+
 # ZSH 
 
 最近使用 mac 的时候发现, mac 默认的 shell 是 zsh, 顺手查了一下 bash 和 zsh 区别

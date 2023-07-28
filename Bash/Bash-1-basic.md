@@ -1,11 +1,10 @@
 <!--
- * @FilePath: \文档\Learning\BASH\BASH-1-basic.md
- * @Author: facser
- * @Date: 2022-08-09 21:20:45
- * @LastEditTime: 2022-08-14 13:40:09
- * @LastEditors: facser
- * @Description: 
+ * @Author       : facsert
+ * @Date         : 2022-08-09 21:20:45
+ * @LastEditTime : 2023-07-28 11:43:31
+ * @Description  : edit description
 -->
+
 # BASH Basic
 
 [BASH 教程](https://wangdoc.com/bash/)
