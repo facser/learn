@@ -1,7 +1,7 @@
 <!--
  * @Author       : facsert
  * @Date         : 2023-05-23 15:28:43
- * @LastEditTime : 2023-07-28 15:50:20
+ * @LastEditTime : 2023-07-28 17:01:11
  * @Description  : edit description
 -->
 
@@ -114,7 +114,7 @@
  $ docker history [OPTIONS] IMAGE
  $ docker history 0850fead9327
 
- > IMAGE         CREATED      CREATED BY                          SIZE                COMMENT
+ > IMAGE         CREATED      CREATED BY                          SIZE  COMMENT
  > 0850fead9327  12 days ago  /bin/sh -c #(nop)  CMD ["mongod"]   0B         
 ```
 

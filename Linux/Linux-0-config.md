@@ -1,7 +1,7 @@
 <!--
  * @Author       : facsert
  * @Date         : 2023-07-07 17:42:21
- * @LastEditTime : 2023-07-28 11:59:52
+ * @LastEditTime : 2023-07-29 15:52:29
  * @Description  : edit description
 -->
 
@@ -16,7 +16,7 @@ Debian 网络配置
 ```bash
  $ vi /etc/network/interfaces
 
- auto enp125s0f0                                 #
+ auto enp125s0f0                                 # 网卡名
  iface enp125s0f0 inet static                    # 设置静态 IP
  address 10.58.14.96/24                          # 设置 IP 地址和掩码
  gateway 10.10.10.1                              # 设置网关

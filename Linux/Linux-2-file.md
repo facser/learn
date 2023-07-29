@@ -1,13 +1,13 @@
 <!--
  * @Author       : facsert
  * @Date         : 2022-07-18 15:02:16
- * @LastEditTime : 2023-07-28 12:00:00
+ * @LastEditTime : 2023-07-29 16:24:46
  * @Description  : edit description
 -->
 
 # Linux File
 
-## 常用目录
+## 特殊目录文件
 
 |位置|全称|说明|
 |:-:|:-|:-|
@@ -19,8 +19,6 @@
 |`/home`|Home Directories      |普通用户的主目录|
 |`/proc`|Process Information   |虚拟文件系统, 以映射系统与进程在内存中的信息|
 
-### 特殊文件
-
 |位置|说明|
 |:-|:-|
 |`/etc/environment`                    |任意用户打开命令行加载, 系统环境变量|
@@ -31,7 +29,6 @@
 |`/etc/apt/source.list`                |(Ubuntu) apt 下载源文件|
 |`/var/cache/apt/archives/`            |(Ubuntu) apt 下载包安放位置|
 |`/ect/rc.d/rc.local`                  |系统启动时执行的文件(centos, redhat)|
-|`/lib/systemd/system/rc-local.service`|系统启动时执行的文件(Ubuntu)|
 
 ## 文件查看
 
