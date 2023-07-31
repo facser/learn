@@ -1,7 +1,7 @@
 <!--
  * @Author       : facsert
  * @Date         : 2023-05-23 15:28:43
- * @LastEditTime : 2023-07-28 11:44:13
+ * @LastEditTime : 2023-07-31 08:59:18
  * @Description  : edit description
 -->
 
@@ -113,7 +113,7 @@ Git 是一个开源的文件版本控制器
  $ git commit -m "version message"               # 生成可回溯的版本
  $ git push <repository name> <branch name>      # 将本地仓库分支所有版本推送到远程仓库对应分支
 
- $ git remote -v                                 # 产看远程仓库
+ $ git remote -v                                 # 查看远程仓库
  > origin  git@github.com:facser/Learning.git (fetch)
  > origin  git@github.com:facser/Learning.git (push)   
 
