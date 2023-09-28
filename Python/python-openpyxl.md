@@ -1,7 +1,7 @@
 <!--
  * @Author       : facsert
  * @Date         : 2023-05-23 15:28:43
- * @LastEditTime : 2023-07-28 11:50:01
+ * @LastEditTime: 2023-09-27 21:27:36
  * @Description  : edit description
 -->
 
@@ -13,6 +13,8 @@ python excel 模块
 
 ```bash
  $ pip install openpyxl
+ $ pip list | grep openpyxl
+ > openpyxl                      3.0.10
 ```
 
 ## 创建读取
@@ -46,7 +48,6 @@ python excel 模块
  from openpyxl import load_workbook
 
  wb = load_workbook('test.xlsx')                 # 打开一个已存在的 excel 文件
-
  sheet_names = wb.sheetnames                     # 获取所有表名组成的列表
  > ['first', 'second', 'third']
 
@@ -64,12 +65,14 @@ python excel 模块
  sheet['A1'].value                               # 读取 A1 方格的值
  > 'hellow world' 
 
+ sheet.cell(row=1, col=1).value = 'value'        # 行 1, 列 1 赋值 value
  grid = sheet.cell(row=1, column=1, value='ok')  # 第一列第一行赋值 ok, 返回一个 cell 对象
  sheel.cell(1, 1).value                          # 读取第一行第一列方格的值
  > 'ok'
 
- row_one =  sheet['A1': 'F1']                    # 获取多数方格, 返回 cell 对象的元组
-
+ row_one = sheet['A1': 'F1']                     # 获取多数方格, 返回 cell 对象的元组
+ sheet.max_column                                # 含有数据结束列
+ sheet.append([1, 2, 3, 4])                      # 添加一行数据
 ```
 
 ### 多行遍历
@@ -185,4 +188,140 @@ python excel 模块
     shrink_to_fit=False,                         # 是否缩小字体填充
     indent=0,                                    # 缩进值
 )
+```
+
+### 示例
+
+```py
+class Excel:
+    
+    def __init__(self, file, mode):
+        self.file = file
+        self.mode = mode
+        self.mode_init()
+        
+    def __enter__(self):
+        return self
+    
+    def __exit__(self, e_type, e_value, e_tb):
+        self.wb.close()
+        if any((e_type, e_value, e_tb)):
+            raise RuntimeError(f"error: {e_value}\n")
+    
+    def mode_init(self):
+        """ 模式初始化
+            'w' 新建 excel 表格 
+            'r' 读取 excel 表格
+        """
+        if self.mode.lower() == 'w':
+            self.wb = Workbook()
+            self.sheet = self.wb.active
+            return
+            
+        if self.mode.lower() == 'r':
+            self.wb = load_workbook(self.file, data_only=True)
+            self.sheet = self.wb[self.wb.sheetnames[0]]
+            self.head = self.read_head()
+            return 
+        
+        print(f'error mode {self.mode}, select r or w')
+        exit()
+
+    def cell_value(self, row, col):
+        """ 通过坐标读取值 """
+        return self.sheet.cell(row=row, column=col).value
+    
+    def set_cell(self, row, col, value):
+        """ 通过坐标写入值 """
+        self.sheet.cell(row, col).value = value
+        
+    def read_head(self):
+        """ 读取表格表头 """
+        max_col = self.sheet.max_column + 1
+        return [self.cell_value(1, col) for col in range(1, max_col)]
+    
+    def select_column(self, select, key=None):
+        """ 选择属性对应的列 
+            select 筛选需要输出的列
+
+        """
+        if len(select) == 0:
+            select = self.head
+            
+        if key != None and key not in select:
+            print(f"{key} not in {select}")
+            exit()
+        
+        if set(self.head) < set(select):
+            print(f'{select} not in {self.head}')
+            exit()
+        
+        return [self.head.index(k) for k in select if k in self.head]
+    
+    def excel_to_list(self, select=[]):
+        """ 读取表格生成列表 
+            select 筛选需要读取的列
+        """
+        indexs = self.select_column(select)
+        excel_list = []
+        
+        for row in range(2, self.sheet.max_row + 1):        
+            excel_list.append({
+                self.head[col]: self.cell_value(row, col+1) 
+                for col in indexs
+            })
+        return excel_list
+        
+    def excel_to_dict(self, key, select=[]):
+        """ 读取表格生成字典, 一行一个字典
+            key 指定改行转成字典的 key
+            select 筛选需要输出的键值对
+        """
+        indexs = self.select_column(select, key)
+        excel_dict = {}
+        
+        for row in range(2, self.sheet.max_row + 1):
+            key_value = self.cell_value(row, self.head.index(key) + 1)
+            excel_dict.update({key_value: {
+                self.head[col]: self.cell_value(row, col+1)
+                for col in indexs
+            }})
+            
+        return dict(sorted(excel_dict.items()))
+    
+    def list_to_excel(self, lst, select=[]):
+        """ 列表生成表格 
+            lst list[dict]: 字典列表
+            select 筛选需要输出的列
+        """
+        try:
+            self.head = list(lst[0].keys())
+        except Exception as e:
+            print(f"data type error, must list[dict]")
+            exit()
+            
+        indexs = self.select_column(select)
+        self.sheet.append([self.head[i] for i in indexs])
+        for line in lst:
+            self.sheet.append([line[self.head[i]] for i in indexs])
+
+        self.wb.save(self.file)
+        
+    def dict_to_excel(self, dic, select=[]):
+        """字典生成表格
+           dic dict[dict]: 双层字典
+           select 需要写入表格的键值对
+        """
+        try:
+            self.head = list(list(dic.values())[0].keys())
+        except Exception as e:
+            print(f"data type error, must dict[str, dict]")
+            exit()
+            
+        indexs = self.select_column(select)
+        self.sheet.append([self.head[i] for i in indexs])
+        for line in dic.values():
+            self.sheet.append([line[self.head[i]] for i in indexs])
+            
+        self.wb.save(self.file)
 ```

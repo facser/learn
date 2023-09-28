@@ -1,10 +1,9 @@
 <!--
  * @Author       : facsert
  * @Date         : 2022-07-25 20:08:15
- * @LastEditTime : 2023-07-28 17:08:07
+ * @LastEditTime: 2023-09-27 21:05:42
  * @Description  : edit description
 -->
-
 
 # python flat dictionary
 
@@ -135,48 +134,120 @@ class Flat(dict):
 添加自定义分隔符
 
 ```python
-class Flat(dict):
-    
-    def __init__(self, depth):
-        dict.__init__(self, depth)
-        self.flat = OrderedDict()
-        self.char_split = '.'
+class FlatDict(dict): 
+    """扁平化字典"""   
 
-    def flat_dict(self, dic):
-        for key, value in dic.items():
-            yield (key, value)
-            if isinstance(value, dict):
-                for k, v in self.flat_dict(value):
-                    k = '{key}{char}{k}'.format(
-                        char=self.char_split,
-                        key=key, k=k)
-                    yield (k, v)
+    def __init__(self, *args, **kwargs):
+        '''
+        Description: 初始化属性, flat(扁平化字典) separator(分隔符)
+        Return: None
+        Attention: 对象存一个原生字典和扁平化字典
+        '''        
+        super().__init__(*args, **kwargs)
+        super().update(*args, **kwargs)
+        self.flat = {}
+        self.separator = "."
+        self.flat_dict(self)
 
     def update_dict(self, key, value):
-
-        key_list = key.split(self.char_split)
-        first, last = key_list[0], key_list[-1]
-        
+        '''
+        Description: 解析 key, 将多层 key 逐层解析写入原生字典
+        Param key str: 字典 key, 多层 key 包含分隔符 
+        Param value Any: 字典 value
+        Return: None
+        Attention: 
+        '''        
         dic = self
-        for k in key_list[:-1]:
+        keys = key.split(self.separator)
+        for k in keys[:-1]:
             dic.setdefault(k, {})
             if not isinstance(dic[k], dict):
                 dic.update({k: {}})
             dic = dic[k]
 
-        dic.update({last: value})
-        self.flat.update(self.flat_dict({first: self[first]}))
-   
+        dic[keys[-1]] = value
+        self.flat_dict(self)
+
+    def flat_dict(self, dic, parent_key=''):
+        '''
+        Description: 原生字典多层 key 通过分隔符连接写入 flat 字典
+        Param dic dict: 原生字典
+        Param parent_key dict: 父字典的 key 
+        Return: None
+        Attention: 任一层的字典 key value 都要保存
+        '''        
+        for key, value in dic.items():
+            new_key = f"{parent_key}{self.separator}{key}" if parent_key else key
+            self.flat[new_key] = value
+            if isinstance(value, dict):
+                self.flat_dict(value, new_key)
+
     def __setitem__(self, key, value):
-        self.update_dict(key, value)
- 
+        '''
+        Description: 字典 [] 方式设置值
+        Param key str: 原生字典
+        Param value Any: 父字典的 key 
+        Return: None
+        Attention: 
+        '''        
+        if self.separator in key:
+            self.update_dict(key, value)
+        else:
+            super().__setitem__(key, value)
+
     def __getitem__(self, key):
+        '''
+        Description: 字典 [] 获取值
+        Param key str: 字典 key, 允许使用多层 key 
+        Return Any: 字典 key 对应的 value 
+        Attention: 
+        '''        
         try:
-            return dict.__getitem__(self, key)
+            return super().__getitem__(key)
         except KeyError:
             return self.flat[key]
 
+    def __delitem__(self, key):
+        '''
+        Description: 字典删除 key-value
+        Param key str: 字典 key, 不允许使用多层 key 
+        Return: None
+        Attention: 只允许使用原生字典的 key
+        '''    
+        super().__delitem__(key)
+        self.flat = {}
+        self.flat_dict(self)
+
+    def __len__(self):
+        '''
+        Description: 获取原生字典长度
+        Return int: 字典长度 
+        Attention: 
+        '''        
+        return super().__len__()
+
+    def update(self, *args, **kwargs):
+        '''
+        Description: 更新字典
+        Return: None 
+        Attention: 用法与原生字典一致
+        '''        
+        super().update(*args, **kwargs)
+        self.flat = {}
+        self.flat_dict(self)
+
+    def get(self, key, default=None):
+        '''
+        Description: 扁平字典 get 方法
+        '''
+        return self.flat.get(key, default)
+
     def __str__(self):
+        '''
+        Description: json 格式原生字典
+        Return srt: 字典字符串
+        Attention: 
+        '''
         return dumps(self, indent=4)
 ```
 

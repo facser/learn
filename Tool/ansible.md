@@ -1,7 +1,7 @@
 <!--
  * @Author       : facsert
  * @Date         : 2023-07-07 17:44:44
- * @LastEditTime : 2023-07-28 11:50:32
+ * @LastEditTime: 2023-09-11 20:27:46
  * @Description  : edit description
 -->
 
@@ -23,7 +23,6 @@
 
 
 ### 配置节点
-
 
 编辑 `/etc/ansible/hosts` 添加群组或节点
 

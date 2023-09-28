@@ -1,7 +1,7 @@
 <!--
  * @Author       : facsert
  * @Date         : 2023-07-07 17:42:21
- * @LastEditTime : 2023-07-29 15:52:29
+ * @LastEditTime: 2023-09-07 22:20:53
  * @Description  : edit description
 -->
 
@@ -137,6 +137,10 @@ WSL 下查看 ssh 服务端口
 
  $ systemclt start sshd                          # 启动 ssh 服务
  $ service ssh start
+ $ /etc/init.d ssh start
+
+ $ systemctl ssh enable                          # 设置 ssh 自启动
+ $ update-rc.d ssh enable
 ```
 
 Windows > 设置 > 应用 > 可选功能 > 添加可选功能  

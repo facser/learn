@@ -1,7 +1,7 @@
 <!--
  * @Author       : facsert
  * @Date         : 2022-07-24 12:08:37
- * @LastEditTime : 2023-07-28 17:07:20
+ * @LastEditTime: 2023-09-27 21:04:25
  * @Description  : edit description
 -->
 # eval exec
@@ -97,4 +97,3 @@ exec 将字符串转换为代码块, 返回值为 None
  print(a)                                        
  > 5
 ```
-

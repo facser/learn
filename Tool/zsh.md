@@ -5,7 +5,7 @@
  * @Description  : edit description
 -->
 
-# ZSH 
+# ZSH
 
 最近使用 mac 的时候发现, mac 默认的 shell 是 zsh, 顺手查了一下 bash 和 zsh 区别
 然后就发现了新天地
