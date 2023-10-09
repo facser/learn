@@ -1,7 +1,7 @@
 <!--
  * @Author       : facsert
  * @Date         : 2023-05-23 15:28:43
- * @LastEditTime : 2023-07-28 12:00:32
+ * @LastEditTime: 2023-10-08 21:32:25
  * @Description  : edit description
 -->
 
@@ -78,6 +78,11 @@ extended arguments: 文本格式转换与扩充
  $ echo "1-2-3-4" | xagrs -d '-' -n 2            # 以 '-' 分割字符串, 分隔符号可以是单个字符,单个数字或单个字母 
  > 1 2                                           # 每行显示两个字符串
  > 3 4
+
+ $ echo "1 2 3"| xargs -n1 echo line             # xargs -n1, 每行一个字符串, 将 1 行分割为 3 行
+ > line 1
+ > line 2
+ > line 3
 
  $ echo "1 2 3"| xargs -n 1 | xargs -i echo "line {} end"              
  > line 1 end                                    # xargs -n 1, 每行一个字符串, 将 1 行分割为 3 行

@@ -1,7 +1,7 @@
 <!--
  * @Author       : facsert
  * @Date         : 2022-07-18 15:02:16
- * @LastEditTime : 2023-07-29 16:24:46
+ * @LastEditTime: 2023-10-08 21:22:48
  * @Description  : edit description
 -->
 
@@ -26,6 +26,7 @@
 |`/etc/bash.bashrc`                    |任意用户打开命令行加载|
 |`~/.profile`                          |当前用户打开命令行时执行的文件|
 |`~/.bashrc`                           |当前用户打开 bash 命令行时执行的文件|
+|`/etc/ssh/sshd_config`                |ssh 服务配置文件|
 |`/etc/apt/source.list`                |(Ubuntu) apt 下载源文件|
 |`/var/cache/apt/archives/`            |(Ubuntu) apt 下载包安放位置|
 |`/ect/rc.d/rc.local`                  |系统启动时执行的文件(centos, redhat)|

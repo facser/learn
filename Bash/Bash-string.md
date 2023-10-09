@@ -1,7 +1,7 @@
 <!--
  * @Author       : facsert
  * @Date         : 2023-06-12 10:03:49
- * @LastEditTime : 2023-07-28 11:43:52
+ * @LastEditTime: 2023-10-08 21:47:44
  * @Description  : edit description
 -->
 
@@ -42,13 +42,14 @@ $ echo "s:${s}  length: ${#s}"                   # 获取长度
 ```bash
 $ s="01234"
 $ echo "${s:0:3}"                                # 从序号 0 开始, 获取 3 个长度
-> 012                                            #
+> 012                                            
 ```
 
 ## 删除和替换
 
-字符串通过 `#(开头开始匹配) %(结尾开始匹配)` 完成删除或替换操作  
+字符串通过 `#(开头开始匹配) %(结尾开始匹配)` 完成删除操作  
 删除: `${variable#pattern} ${variable##pattern} ${variable%pattern} ${variable%%pattern}`
+字符串通过 `/(替换一次) //(全替换)` 完成替换操作  
 替换: `${variable/pattern/string} ${variable//pattern/string}`
 
 ```bash

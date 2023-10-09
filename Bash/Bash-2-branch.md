@@ -1,7 +1,7 @@
 <!--
  * @Author       : facsert
  * @Date         : 2023-07-07 17:44:44
- * @LastEditTime : 2023-07-28 11:43:39
+ * @LastEditTime: 2023-10-08 21:42:22
  * @Description  : edit description
 -->
 
@@ -66,8 +66,8 @@ else
     echo "not user root"
 fi
 
- $ [[ $USER == "root" ]] && echo "user is root"  # &&(且) 表达式为 true 才会执行后半段
- $ [[ $USER == "root" ]] || echo "not user root" # ||(或) 表达式为 false 才会执行后半段
+[[ $USER == "root" ]] && echo "user is root"     # &&(且) 表达式为 true 才会执行后半段
+[[ $USER == "root" ]] || echo "not user root"    # ||(或) 表达式为 false 才会执行后半段
 
  $ true && echo $?                               # true 返回值为 0, 前半部分 true, 继续执行后半段    
  > 0
@@ -155,15 +155,13 @@ fi
 
 ### 逻辑运算
 
-#### 逻辑与
-
 ```bash
  $ command && command                            # 前一条命令成功才会执行后一条
 
  $ true && echo "true"                           # true 返回值 0, 继续执行
  > true
 
-! false && echo "not false"                   # 前一条命令返回值 0, 继续执行
+ $ ! false && echo "not false"                   # 前一条命令返回值 0, 继续执行
  > not false
 
  $ command || command                            # 前一条失败后才会继续执行后一条
@@ -172,4 +170,27 @@ fi
  > false
 ```
 
-## switch 
+## case 分支
+
+```bash
+case expression in
+    pattern1 )
+        commands;;
+    pattern2 )
+        commands;;
+    esac
+
+index=2
+case $index in
+    1)
+        echo "index is 1";;
+    2)
+        echo "index is 1";;
+    3)
+        echo "index is 1";;
+    *)
+        echo "index not in 1,2,3";;
+    esac
+```
+
+

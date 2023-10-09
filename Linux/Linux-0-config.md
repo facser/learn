@@ -1,7 +1,7 @@
 <!--
  * @Author       : facsert
  * @Date         : 2023-07-07 17:42:21
- * @LastEditTime: 2023-09-07 22:20:53
+ * @LastEditTime: 2023-10-08 21:21:17
  * @Description  : edit description
 -->
 
@@ -75,7 +75,7 @@ Centos
 
 ## host 配置
 
-命令行开头 `root@debian:~/#` 
+命令行开头 `root@debian:~/#`
 
 - root: 用户名称
 - debian: Linux host 名称
