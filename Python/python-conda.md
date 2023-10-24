@@ -1,8 +1,8 @@
 <!--
  * @Author: facsert
  * @Date: 2023-09-27 21:03:53
- * @LastEditTime: 2023-09-28 21:13:24
- * @LastEditors: facsert
+ * @LastEditTime : 2023-10-24 16:14:01
+ * @LastEditors  : Please set LastEditors
  * @Description: 
 -->
 # conda
@@ -12,6 +12,7 @@ Anaconda 是一个 python 版本管理器, 能快速创建虚拟环境, 管理 p
 ## 安装
 
 [Anaconda 官网](https://www.anaconda.com/) 下载对应平台安装包
+[国内镜像](https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/)
 
 ## 常用命令
 
@@ -88,4 +89,33 @@ Anaconda 是一个 python 版本管理器, 能快速创建虚拟环境, 管理 p
  $ conda uninstall yaml -n py39
 
  $ conda update --all -n <name>                            # 指定环境更新所有包
+```
+
+## 更换源
+
+查看当前 conda 源
+
+```bash
+ $ conda config --show channels
+ > channels:
+ > - defaults
+```
+
+用户路径下 `.condarc` 文件修改源, 无文件则创建
+
+- linux: $USER/.condarc
+- windows: C:\Users\%USER%\.condarc
+
+```bash
+ $ cat .condarc
+ > channels:
+ > - http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/cond>a-forge/
+ > - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+ > - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+
+ $ conda config --show channels
+ > channels:
+ >  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/cond-forge/
+ >  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+ >  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
 ```
