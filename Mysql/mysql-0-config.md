@@ -1,7 +1,7 @@
 <!--
  * @Author: facsert
  * @Date: 2023-09-12 20:17:32
- * @LastEditTime: 2023-09-12 21:15:06
+ * @LastEditTime: 2023-11-01 20:05:30
  * @LastEditors: facsert
  * @Description: 
 -->
@@ -18,7 +18,7 @@
  > mysql latest 99afc808f15b 4 weeks ago 577MB
 
  $ docker run -d -v /root/Desktop/Mysql:/root -p 3306:3306 --name sql -e MYSQL_ROOT_PASSWORD=111111 mysql
- $ docke exec -it sql bash
+ $ docker exec -it sql bash
 
 ```
 

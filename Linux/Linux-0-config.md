@@ -1,7 +1,7 @@
 <!--
  * @Author       : facsert
  * @Date         : 2023-07-07 17:42:21
- * @LastEditTime: 2023-10-08 21:21:17
+ * @LastEditTime: 2023-11-01 21:22:09
  * @Description  : edit description
 -->
 
@@ -164,4 +164,7 @@ netsh interface portproxy show all
 地址            端口        地址            端口
 --------------- ----------  --------------- ----------
 0.0.0.0         2222        172.28.185.15   2222
+
+# 删除端口映射
+netsh interface portproxy delete v4tov4 listenport=2222 listenaddress=0.0.0.0
 ```
