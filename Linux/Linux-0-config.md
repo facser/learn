@@ -1,7 +1,7 @@
 <!--
  * @Author       : facsert
  * @Date         : 2023-07-07 17:42:21
- * @LastEditTime: 2023-10-08 21:21:17
+ * @LastEditTime : 2023-11-01 10:00:57
  * @Description  : edit description
 -->
 
@@ -150,6 +150,7 @@ Windows > 设置 > 应用 > 可选功能 > 添加可选功能
 Windows 打开终端管理员, 设置 WSL IP 和 ssh 端口映射到 Windows 端口
 
 ```powershell
+# 添加 Windows 端口映射
 netsh interface portproxy add v4tov4 listenport=2222 listenaddress=0.0.0.0 connectport=2222 connectaddress=172.28.185.15
 
 # listenport windows 端口
@@ -164,4 +165,7 @@ netsh interface portproxy show all
 地址            端口        地址            端口
 --------------- ----------  --------------- ----------
 0.0.0.0         2222        172.28.185.15   2222
+
+# 删除端口映射
+netsh interface portproxy delete v4tov4 listenport=2222 listenaddress=0.0.0.0
 ```

@@ -1,7 +1,7 @@
 <!--
  * @Author       : facsert
  * @Date         : 2023-10-28 14:52:02
- * @LastEditTime : 2023-10-28 15:29:34
+ * @LastEditTime : 2023-10-28 17:23:13
  * @Description  : edit description
 -->
 
@@ -59,9 +59,9 @@ swagger-ui  `http://0.0.0.0:8000/docs/`
 ```bash
 project
 ├─ static
-│  └──swagger-ui
-│     ├── ...
-│     └── README.md
+│  └── swagger-ui
+│      ├── ...
+│      └── README.md
 └── main.py
 ```
 
