@@ -1,8 +1,8 @@
 <!--
  * @Author: facsert
  * @Date: 2023-09-27 21:03:53
- * @LastEditTime : 2023-10-27 17:01:38
- * @LastEditors  : Please set LastEditors
+ * @LastEditTime: 2023-11-01 21:28:56
+ * @LastEditors: facsert
  * @Description: 
 -->
 # conda
@@ -109,7 +109,7 @@ Anaconda 是一个 python 版本管理器, 能快速创建虚拟环境, 管理 p
 ```bash
  $ cat .condarc
  > channels:
- > - http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/cond>a-forge/
+ > - http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
  > - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
  > - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
 
@@ -118,4 +118,24 @@ Anaconda 是一个 python 版本管理器, 能快速创建虚拟环境, 管理 p
  >  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/cond-forge/
  >  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
  >  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+```
+
+国内源
+
+```log
+channels:
+  - defaults
+show_channel_urls: true
+default_channels:
+  - https://mirrors.bfsu.edu.cn/anaconda/pkgs/main
+  - https://mirrors.bfsu.edu.cn/anaconda/pkgs/r
+  - https://mirrors.bfsu.edu.cn/anaconda/pkgs/msys2
+custom_channels:
+  conda-forge: https://mirrors.bfsu.edu.cn/anaconda/cloud
+  msys2: https://mirrors.bfsu.edu.cn/anaconda/cloud
+  bioconda: https://mirrors.bfsu.edu.cn/anaconda/cloud
+  menpo: https://mirrors.bfsu.edu.cn/anaconda/cloud
+  pytorch: https://mirrors.bfsu.edu.cn/anaconda/cloud
+  pytorch-lts: https://mirrors.bfsu.edu.cn/anaconda/cloud
+  simpleitk: https://mirrors.bfsu.edu.cn/anaconda/cloud
 ```

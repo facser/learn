@@ -1,13 +1,16 @@
 <!--
  * @Author       : facsert
  * @Date         : 2023-10-28 14:52:02
- * @LastEditTime : 2023-11-06 08:34:45
- * @Description  : edit description
+ * @LastEditTime : 2023-11-06 08:57:10
+ * @LastEditors  : Please set LastEditors
+ * @Description: 
 -->
 
 # fastapi
 
 ## 介绍
+
+FastAPI 是一个现代、快速、开源的 Web 框架，用于构建高性能的 RESTful API。
 
 ## 安装
 
