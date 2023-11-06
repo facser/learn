@@ -1,7 +1,7 @@
 <!--
  * @Author       : facsert
  * @Date         : 2023-11-01 09:15:02
- * @LastEditTime : 2023-11-03 14:24:20
+ * @LastEditTime : 2023-11-06 09:40:32
  * @Description  : edit description
 -->
 
@@ -24,7 +24,7 @@
  > 9f5e1fa8dab6  registry:latest  "/entrypoint.sh /etc…"   8 weeks ago   Up 3 weeks   0.0.0.0:5000->5000/tcp, :::5000->5000/tcp 
 ```
 
-注: `/var/lib/registry` 是容器中存放镜像的路径
+注: `/var/lib/registry` 是容器内存放镜像的路径
 
 ## 本地配置
 
@@ -42,6 +42,9 @@
         "10.58.14.96:5000"                        # 添加本地仓库地址
    ]
  > ...... 
+
+ $ systemctl daemon-reload                                                     # 重新加载 docker 配置文件
+ $ systemctl restart docker                                                    # 重新启动 docker
 ```
 
 ## 推送镜像

@@ -1,7 +1,7 @@
 <!--
  * @Author       : facsert
  * @Date         : 2023-10-28 14:52:02
- * @LastEditTime : 2023-11-06 08:57:10
+ * @LastEditTime : 2023-11-06 09:02:22
  * @LastEditors  : Please set LastEditors
  * @Description: 
 -->
@@ -95,12 +95,12 @@ app.add_middleware(
       allow_origins=["*"],  
       allow_credentials=True,
       allow_methods=["*"],  
-      allow_headers=["*"],  
-  )
+      allow_headers=["*"], 
+)
 
 @app.get("/docs", include_in_schema=False)
-async def custom_swagger_ui_html():
-    return get_swagger_ui_html(
+async def custom_swagger_ui():
+    return get_swagger_ui(
         openapi_url=app.openapi_url,
         title=app.title + " - Swagger UI",
         oauth2_redirect_url=app.swagger_ui_oauth2_redirect_url,
