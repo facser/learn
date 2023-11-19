@@ -1,7 +1,7 @@
 <!--
  * @Author       : facsert
  * @Date         : 2023-10-30 09:59:08
- * @LastEditTime : 2023-10-30 10:08:18
+ * @LastEditTime: 2023-11-06 21:10:34
  * @Description  : edit description
 -->
 
@@ -12,6 +12,14 @@
 安装 `minikube` 和 `kubectl`
 
 [minikube 安装官网](https://minikube.sigs.k8s.io/docs/start/)
+
+```bash
+ $ curl -s https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | sudo apt-key add -
+ $ echo "deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main" >>/etc/apt/sources.list.d/kubernetes.list
+
+ $ apt update && apt install -y kubelet kubectl kubeadm
+ >
+```
 
 ```bash
  $ uname -m                                      # 查看 CPU 架构

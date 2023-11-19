@@ -1,7 +1,7 @@
 <!--
  * @Author       : facsert
  * @Date         : 2023-05-23 15:28:43
- * @LastEditTime : 2023-07-28 16:12:49
+ * @LastEditTime: 2023-11-13 22:38:51
  * @Description  : edit description
 -->
 
@@ -13,20 +13,33 @@ Docker 安装
 下载官方一键安装脚本安装
 
 ```bash
- $ curl -fsSL https://get.docker.com -o get-docker.sh                          # 下载官方一键安装脚本
- $ sudo sh get-docker.sh                                                       # 执行安装脚本
+ # 卸载原有 docker
+ apt-get autoremove docker docker-ce docker-engine  docker.io  containerd runc
+ for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
+ 
+ # 删除 docker 配置和根目录
+ rm -rf /etc/systemd/system/docker.service.d
+ umount /var/lib/docker
+ rm -rf /var/lib/docker
+ 
+ # 添加 docker 下载源
+ sudo apt-get update
+ sudo apt-get install ca-certificates curl gnupg
+ sudo install -m 0755 -d /etc/apt/keyrings
+ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+ sudo chmod a+r /etc/apt/keyrings/docker.gpg
 
- $ docker --version                                                            # 检查 docker 安装版本
- > Docker version 24.0.5, build ced0996
+ # Add the repository to Apt sources:
+ echo "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+   "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+ sudo apt-get update
 
- $ sudo apt-get purge docker-ce \                                              # 卸载 docker
-      docker-ce-cli \
-      containerd.io \
-      docker-buildx-plugin \
-      docker-compose-plugin \
-      docker-ce-rootless-extras
- $ sudo rm -rf /var/lib/docker                                                # 删除 docker 相关文件
- $ sudo rm -rf /var/lib/containerd                                             
+ # 安装 docker
+ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+ docker --version
+ > Docker version 24.0.7, build afdd53b                                      
 ```
 
 ## 配置
@@ -54,13 +67,11 @@ Docker 安装
 
 ```json
 {
-    "registry-mirrors" : [
-    "https://registry.docker-cn.com",
-    "http://hub-mirror.c.163.com",
-    "https://docker.mirrors.ustc.edu.cn",
-    "https://cr.console.aliyun.com",
-    "https://mirror.ccs.tencentyun.com"
-  ]
+    "registry-mirrors": [
+        "http://hub-mirror.c.163.com",
+        "https://docker.mirrors.ustc.edu.cn",
+        "https://registry.docker-cn.com"
+    ]
 }
 ```
 

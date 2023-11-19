@@ -1,6 +1,6 @@
 <!--
  * @Author       : facsert
- * @LastEditTime : 2023-11-06 08:56:41
+ * @LastEditTime: 2023-11-08 22:32:12
  * @LastEditTime : 2023-11-01 21:22:09
  * @Description  : edit description
 -->
@@ -168,4 +168,19 @@ netsh interface portproxy show all
 
 # 删除端口映射
 netsh interface portproxy delete v4tov4 listenport=2222 listenaddress=0.0.0.0
+```
+
+## WSL 启用 systemctl
+
+修改 `/etc/wsl.conf` 文件, 重启 wsl
+
+```bash
+ $ vi /etc/wsl.conf
+ [boot]
+ systemd=true
+```
+
+```powershell
+ wsl --shutdown
+ wsl
 ```
