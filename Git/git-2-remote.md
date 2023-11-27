@@ -68,3 +68,22 @@
 
 - 密钥由系统生成, 放入用户设置, 所以是系统和账户绑定
 - 系统下的本地仓库推送代码到该账户使用 ssh 链接时即可免密
+
+## Github 令牌
+
+2021 年 8 月 13 号, GitHub 不再使用密码验证, 改用令牌验证  
+Github 账户 -> Settings -> Developer Settings -> Personal access tokens  
+注意: 创建令牌时需勾选令牌可用权限, 如可读, 可写的权限
+
+```bash
+ # 使用 ssh 连接携带令牌可以直接下载
+ $ git clone https://{token}@github/{username}/{repo}.git
+ 
+ # 已有仓库添加令牌
+ $ git remote set-url origin https://{token}@github.com/{username}/{repo}.git 
+
+ # 查看关联远端仓库(附带令牌)
+ $ git remote -v
+ > origin https://{token}@github.com/{username}/{repo}.git (fetch)
+ > origin https://{token}@github.com/{username}/{repo}.git (push)
+```
