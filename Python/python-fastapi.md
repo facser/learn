@@ -1,8 +1,8 @@
 <!--
  * @Author       : facsert
  * @Date         : 2023-10-28 14:52:02
- * @LastEditTime : 2023-11-06 09:02:22
- * @LastEditors  : Please set LastEditors
+ * @LastEditTime: 2023-11-22 20:36:48
+ * @LastEditors: facsert
  * @Description: 
 -->
 
@@ -84,7 +84,7 @@ from fastapi.openapi.docs import (
 
 
 app = FastAPI()
-app.mount(                                       # 挂载静态文件, 路由 /static 和本地 swagger-ui 文件夹 对应
+app.mount(                                       # 挂载静态文件, 路由 /static 和本地 swagger-ui 路径映射
     '/static',                                   # /static -> ./static/swagger-ui/dist
     StaticFiles(directory=join(getcwd(), 'static', 'swagger-ui', 'dist')),
     name="static"
