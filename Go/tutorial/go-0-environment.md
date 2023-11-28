@@ -1,7 +1,7 @@
 <!--
  * @Author       : facsert
  * @Date         : 2023-07-12 09:29:19
- * @LastEditTime : 2023-07-31 17:07:56
+ * @LastEditTime: 2023-11-27 23:30:00
  * @Description  : edit description
 -->
 
@@ -32,6 +32,37 @@
  $ SOURCE ~/.bashrc                              # 令修改后的 bashrc 生效
 
  $ go env -w GOPROXY=https://goproxy.cn,direct   # 更换 go 默认下载源
+```
+
+## 升级
+
+使用 gvm 管理 go 版本
+
+```bash
+ $ apt install bison
+ $ bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+ 
+ # 重启命令行, 查看可用的 go 版本
+ $ gvm listall
+ $ gvm install go1.21.4 -B
+ > Installing go1.21.4 from binary source
+
+ $ gvm list
+ > gvm gos (installed)
+
+ >    go1.21.4
+ >    system
+ 
+ # 切换 go 版本并设置全局默认版本
+ $ gvm use go1.21.4 --default
+ $ gvm list
+ > gvm gos (installed)
+
+ > => go1.21.4
+ >    system
+
+ $ go version
+ > go version go1.21.4 linux/amd64
 ```
 
 ## 开始
