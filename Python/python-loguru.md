@@ -65,8 +65,40 @@ logger.debug("this is a debug log")
 [ERROR   ][2023-11-23 09:12:40]: this is a error log
 ```
 
+logger.add 参数
+
+```py
+logger.add(
+    sink,                                        # file 对象, logging handle 模块或者字符串; sys.stderr, 'log.txt'
+    *,
+    level=_defaults.LOGURU_LEVEL,                # 日志输出等级
+    format=_defaults.LOGURU_FORMAT,              # 日志格式
+    filter=_defaults.LOGURU_FILTER,              # 判断内容是否输出到 sink
+    colorize=_defaults.LOGURU_COLORIZE,          # 内容包含颜色标记是否在终端着色
+    serialize=_defaults.LOGURU_SERIALIZE,        # 是否将内容转换为 json
+    backtrace=_defaults.LOGURU_BACKTRACE,
+    diagnose=_defaults.LOGURU_DIAGNOSE,          # 异常跟踪，打印时是否显示变量值
+    enqueue=_defaults.LOGURU_ENQUEUE,            
+    context=_defaults.LOGURU_CONTEXT,
+    catch=_defaults.LOGURU_CATCH,                
+
+    # 若 sink 为文件时, 可使用以下参数
+    rotation:                                    # 设定创建新文件记的条件, 固定时间新建('00:00', '1 week'), 文件到达指定大小新建('500 MB')
+    retention:                                   # 日志保留条件, 保留 10 天:'10 days', 保留10个文件: 10
+    compression:                                 # 日志文件在关闭时应转换为的压缩或存档格式, 'zip', 'tar.gz'
+    delay:                                       # 是在配置 sink 后立即创建文件，还是延迟到第一条记录的消息时再创建, 默认为 False。
+    mode:                                        # 内置 open() 函数的打开模式，默认为 a (以追加模式打开文件)
+    buffering:                                   # 内置 open() 函数的缓冲策略，默认为1（行缓冲文件）。
+    encoding:                                    # 内置 open() 函数的文件编码，如果 None，则默认为 locale.getpreferredencoding()。
+    **kwargs
+)
+```
+
 ## 自定义输出
 
 ```py
+
+logger.add('report.log', level='INFO', rotation="1 days", retention="1 months")
+
 
 ···
