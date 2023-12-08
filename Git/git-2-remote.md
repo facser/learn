@@ -43,6 +43,14 @@
  > temp/                                         # 忽略整个项目内所有 temp 文件夹
  > /lib/*.pyc                                    # 忽略当前 lib 目录 下一级的 pyc 文件, lib 下多层目录不受影响  
  > lib/**/.pyc                                   # 忽略项目内所有 lib 文件夹内的 pyc 文件
+
+ $ git check-ignore -v <file>                    # 验证 igtignore 忽略文件或者路径
+
+ $ git check-ignore -v log/report.log
+ > .gitignore:4:log/*       log/report.log
+
+ $ git check-ignore -v   utils/__pycache__/
+ > .gitignore:2:__pycache__        utils/__pycache__/
 ```
 
 ## SSH key 密钥
