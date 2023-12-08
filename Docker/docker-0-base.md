@@ -1,7 +1,7 @@
 <!--
  * @Author       : facsert
  * @Date         : 2023-05-23 15:28:43
- * @LastEditTime: 2023-11-13 22:38:51
+ * @LastEditTime: 2023-12-06 20:35:54
  * @Description  : edit description
 -->
 
@@ -17,7 +17,7 @@ Docker 安装
  apt-get autoremove docker docker-ce docker-engine  docker.io  containerd runc
  for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
  
- # 删除 docker 配置和根目录
+ # 删除 docker 配置和根目录, 杀死 docker 进程后 umount 
  rm -rf /etc/systemd/system/docker.service.d
  umount /var/lib/docker
  rm -rf /var/lib/docker
@@ -35,11 +35,17 @@ Docker 安装
    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
  sudo apt-get update
 
- # 安装 docker
+ # 工具安装 docker
  sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
  docker --version
- > Docker version 24.0.7, build afdd53b                                      
+ > Docker version 24.0.7, build afdd53b     
+
+ # 脚本安装
+ curl -fsSL https://get.docker.com -o get-docker.sh
+ sudo sh get-docker.sh --mirror Aliyun
+ docker --version
+ > Docker version 24.0.7, build afdd53b                            
 ```
 
 ## 配置
