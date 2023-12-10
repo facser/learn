@@ -1,6 +1,6 @@
 <!--
  * @Author       : facsert
- * @LastEditTime: 2023-11-08 22:32:12
+ * @LastEditTime: 2023-12-10 22:05:34
  * @LastEditTime : 2023-11-01 21:22:09
  * @Description  : edit description
 -->
@@ -183,4 +183,77 @@ netsh interface portproxy delete v4tov4 listenport=2222 listenaddress=0.0.0.0
 ```powershell
  wsl --shutdown
  wsl
+```
+
+## 自定义服务
+
+自定义系统或者用户服务, 通过 service 或 systemctl 命令管理  
+
+### 注册服务
+
+|systrmctl 脚本|系统服务|用户服务|
+|:-:|:-:|:-:|
+|`/usr/lib/systemd/`|`/usr/lib/systemd/system/`|`/usr/lib/systemd/system/`|
+
+在 `/usr/lib/systemd/system/` 路径下创建 service 文件  
+`vi /usr/lib/systemd/system/script.service` 创建 script 服务(**文件名即服务名**)
+
+```ini
+[Unit]
+Description=Personal service
+
+[Service] 
+Type=forking
+ExecStart=/root/script.sh -start
+ExecStop=/root/script.sh -stop
+ 
+[Install]
+WantedBy=multi-user.target
+```
+
+### 字段解析
+
+```bash
+[Unit]
+Description: 服务描述
+After: 在什么服务之后启动 ex:network.target, sshd-keygen.service
+Before: 在什么服务之前启动 ex:local-fs.target, sshd.service
+
+[Service]
+Type: 服务类型
+  simple: 默认值, 前台执行, ExecStart启动的进程为主进程
+  forking: 后台执行, ExecStart父进程将会退出, 子进程将成为主进程
+  oneshot: 只执行一次, Systemd 会等它执行完, 才启动其他服务
+  idle: 等到其他任务都执行完, 才会启动该服务
+ExecStart: 启动服务时执行的命令
+ExecStop: 停止服务时执行的命令
+ExecReload: 重启服务时执行的命令
+ExecStartPre: 启动服务之前执行的命令
+ExecStartPost: 启动服务之后执行的命令
+ExecStopPost: 停止服务之后执行的命令
+Restart: 重启方式
+  no: 默认值, 退出后不重启
+  always: 总是重启
+  on-success: 只有正常退出时才重启
+  on-failure: 状态码非0才重启
+  on-abnormal: 被信号终止和超时时才重启
+  on-watchdog: 超时退出时才重启
+RestartSec: 重启间隔
+TimeoutSec: systemd 停止服务超时时间
+
+[Install]
+WantedBy: 服务所在 target, 多用户模式下需要, multi-user.target
+Alias: 服务别名
+```
+
+### 服务管理
+
+```bash
+systemctl daemon-reload                          # 重载服务系统       
+systemctl enable script.service                  # 设置开机启动
+systemctl disable script.service                 # 禁用开机启动
+systemctl start script.service                   # 启动服务
+systemctl status script.service                  # 查看服务状态
+systemctl stop script.service                    # 停止服务
+systemctl reload script.service                  # 重新加载服务
 ```

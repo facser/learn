@@ -1,4 +1,10 @@
-
+<!--
+ * @Author: facsert
+ * @Date: 2023-12-08 21:26:43
+ * @LastEditTime: 2023-12-10 22:08:28
+ * @LastEditors: facsert
+ * @Description: 
+-->
 
 # Monitor
 
@@ -10,14 +16,12 @@ grafana    数据可视化
 
 ### Prometheus
 
-
 [Prometheus Download](https://prometheus.io/download/)
 
 ```bash
  $ tar -zxvf prometheus-2.45.1.linux-amd64.tar.gz
- $ cd prometheus-2.45.1.linux-amd64
- $ mkdir -p data
- $ touch prometheus.yml
+ $ cd prometheus-2.45.1.linux-amd64 && mkdir -p data
+ $ vi prometheus.yml
 ```
 
 官方默认配置文件
@@ -64,8 +68,7 @@ scrape_configs:
  > ts=2023-12-07T09:13:17.910Z caller=main.go:1004 level=info msg="Server is ready to receive web requests."
 ```
 
-浏览器打开 ·http://localhost:9000·
-
+浏览器打开 `http://localhost:9000`
 
 ### node_exporter
 
@@ -81,7 +84,7 @@ scrape_configs:
  > ts=1970-02-06T18:49:59.679Z caller=tls_config.go:277 level=info msg="TLS is disabled." http2=false address=0.0.0.0:9100
 ```
 
-浏览器打开 ·http://localhost:9100·
+浏览器打开 `http://localhost:9100`
 
 设置自启动
 
@@ -90,7 +93,6 @@ scrape_configs:
 ```
 
 ### grafana
-
 
 [Grafana Download](https://grafana.com/grafana/download?pg=graf&plcmt=deploy-box-1)
 
@@ -105,9 +107,8 @@ scrape_configs:
 ```
 
 默认端口是 3000
-初始用户 admin 
+初始用户 admin  
 初始密码 admin
-
 
 ## log 监控
 
@@ -200,4 +201,3 @@ scrape_configs:
 ```bash
  $ ./promtail-linux-amd64 -config.file=$PWD/promtail-config.yaml 
 ```
-
