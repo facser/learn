@@ -1,7 +1,7 @@
 <!--
  * @Author: facsert
  * @Date: 2023-12-08 21:36:15
- * @LastEditTime: 2023-12-10 20:52:16
+ * @LastEditTime: 2023-12-11 22:10:48
  * @LastEditors: facsert
  * @Description: 
 -->
@@ -65,6 +65,32 @@ class User(Base):
     
     def __repr__(self):                          # 打印出表详细信息
         return f"<User(id={self.id}, name={self.name}, age={self.age})>"
+```
+
+基本数据类型
+
+```py
+Integer     : int 整数类型
+Float       : float 浮点类
+Boolean     : bool 布尔类型, true, false
+String      : string 字符和字符串的基类
+Time        : datetime.time() 类型对象
+
+SmallInteger: 较小的一种 int 整数
+BigInteger  : 一种更大的 int 整数。
+Double      : 一种更大的 float 浮点数
+
+Date        : datetime.datetime() 类型对象
+DateTime    : datetime.datetime() 类型对象
+Interval    : datetime.timedelta() 类型对象
+
+Text        : 大小可变的字符串类型。
+Unicode     : 长度可变的Unicode字符串类型
+UnicodeText : 无限长的Unicode字符串类型
+
+Enum        : 枚举类型
+ARRAY       : 数组类型 Column("data", ARRAY(Integer)) => {"data": [1,2,3]}
+JSON        : 字典类型 Column('data', JSON) => {"data": {"a": 1, "b": 2}}
 ```
 
 ## 插入数据
