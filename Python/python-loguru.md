@@ -1,7 +1,7 @@
 <!--
  * @Author       : facsert
  * @Date         : 2023-11-23 08:58:24
- * @LastEditTime : 2023-11-23 10:09:22
+ * @LastEditTime: 2023-12-13 22:33:52
  * @Description  : edit description
 -->
 
@@ -97,8 +97,17 @@ logger.add(
 ## 自定义输出
 
 ```py
-
 logger.add('report.log', level='INFO', rotation="1 days", retention="1 months")
+logger.level("GET", no=21, color="<white>")
+logger.level("PUT", no=22, color="<white>")
+logger.level("POST", no=23, color="<white>")
+logger.add('requests.log', level='GET', filter=lambda r: 20 < r['level'].no < 24, rotation="1 days", retention="1 months")
 
+logger.log("GET", "reques get")
+logger.log("PUT", "reques PUT")
+logger.log("POST", "reques POST")
 
-···
+[GET     ][2023-12-13 21:42:21]: request get
+[PUT     ][2023-12-13 21:47:51]: request put
+[POST    ][2023-12-13 21:48:03]: request post
+```
