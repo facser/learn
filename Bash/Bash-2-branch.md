@@ -1,7 +1,7 @@
 <!--
  * @Author       : facsert
  * @Date         : 2023-07-07 17:44:44
- * @LastEditTime: 2023-10-08 21:42:22
+ * @LastEditTime: 2023-12-13 22:51:29
  * @Description  : edit description
 -->
 
@@ -68,6 +68,7 @@ fi
 
 [[ $USER == "root" ]] && echo "user is root"     # &&(且) 表达式为 true 才会执行后半段
 [[ $USER == "root" ]] || echo "not user root"    # ||(或) 表达式为 false 才会执行后半段
+[[ $? -eq 0 ]] && echo "succ" || echo "fail"     # 同时使用 && 和 || 
 
  $ true && echo $?                               # true 返回值为 0, 前半部分 true, 继续执行后半段    
  > 0
