@@ -59,6 +59,20 @@ Centos
  $ systemctl restart network                     # 重启网络
 ```
 
+## vim
+
+Debian vim 初始设置难以使用, 修改 vim 配置文件
+
+```bash
+ $ vi /etc/vim/vimrc.tiny
+
+ set nocompatible                                # 去掉 vi 兼容模式
+ set backspace=2                                 # 设置退格键为删除键
+ set mouse=a                                     # 设置鼠标为支持
+ set ruler                                       # 打开状态栏标尺
+ set number                                      # 显示行号
+```
+
 ## 配置 ssh
 
 ```bash

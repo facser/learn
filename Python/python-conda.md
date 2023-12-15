@@ -107,7 +107,7 @@ Anaconda 是一个 python 版本管理器, 能快速创建虚拟环境, 管理 p
 - windows: C:\Users\%USER%\.condarc
 
 ```bash
- $ cat .condarc
+ $ cat ~/.condarc
  > channels:
  > - http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
  > - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
@@ -126,6 +126,7 @@ Anaconda 是一个 python 版本管理器, 能快速创建虚拟环境, 管理 p
 channels:
   - defaults
 show_channel_urls: true
+ssl_verify: false
 default_channels:
   - https://mirrors.bfsu.edu.cn/anaconda/pkgs/main
   - https://mirrors.bfsu.edu.cn/anaconda/pkgs/r
