@@ -1,11 +1,21 @@
+---
+author: facsert
+pubDatetime: 2023-03-23 15:28:43
+title: NodeJS config
+postSlug: Node base config
+featured: false
+draft: false
+tags:
+  - NodeJS
+description: "NodeJS 基本配置"
+---
+
 <!--
  * @Author       : facsert
  * @Date         : 2023-05-23 15:28:43
- * @LastEditTime : 2023-07-28 11:46:53
+ * @LastEditTime : 2023-12-15 23:02:39
  * @Description  : edit description
 -->
-
-# Node config
 
 ## Download and Update
 
@@ -79,10 +89,10 @@ npm 本地安装, 在当前目录 node_modules 文件夹下, 仅目录下项目�
   ├── n@9.0.1
   ├── npm@9.6.2
   └── yarn@1.22.19
- 
- $ npm install <package>                          # 本地安装模块 
+
+ $ npm install <package>                          # 本地安装模块
  $ npm install <package> -g                       # 全局安装模块
- 
+
  $ npm uninstall <package>                        # 卸载本地安装的模块
  $ npm uninstall <package> -g                     # 卸载全局安装的模块
 ```
@@ -109,10 +119,10 @@ yarn 的使用与 npm 类似
 ```bash
  $ yarn init                                     # yarn 初始化项目, 生成 package.json
  $ yarn install                                  # 目录下有 package.json 自动下载文件内的包
- 
+
  $ yarn global add <package>                     # 全局安装工具包
  $ yarn add <package>                            # 本地安装包
- 
+
  $ yarn global remove <package>                  # 卸载全局包
  $ yarn remove <package>                         # 卸载项目下的包
 

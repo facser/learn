@@ -1,11 +1,21 @@
+---
+author: facsert
+pubDatetime: 2023-10-30 09:59:08
+title: Kbernetes Configuration
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - kbernetes
+description: "Kbernetes 配置"
+---
+
 <!--
  * @Author       : facsert
  * @Date         : 2023-10-30 09:59:08
- * @LastEditTime: 2023-11-06 21:10:34
+ * @LastEditTime : 2023-11-06 21:10:34
  * @Description  : edit description
 -->
-
-# Kbernetes Install
 
 ## Install
 
@@ -33,5 +43,5 @@
  $ sudo install minikube-linux-arm64 /usr/local/bin/minikube
 
 
- $ minikube start                                # root 用户添加参数 --force 
+ $ minikube start                                # root 用户添加参数 --force
 ```

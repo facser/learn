@@ -1,11 +1,21 @@
+---
+author: facsert
+pubDatetime: 2023-04-07  15:28:43
+title: Linux Package
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Linux
+description: "Linux 包管理"
+---
+
 <!--
  * @Author       : facsert
- * @Date         : 2023-05-23 15:28:43
+ * @Date         : 2023-04-07  15:28:43
  * @LastEditTime : 2023-07-28 12:00:50
  * @Description  : edit description
 -->
-
-# Linux package
 
 ## 包管理工具
 
@@ -17,7 +27,7 @@ ellowdogUpdater,Modified: centos redhat 包管理器
  $ yum <opt> <pack>                              # RedHat Centos 包管理工具
 
  $ yum install <pack>                            # 下载安装包
- $ yum update <pack>                             # 更新已安装的包    
+ $ yum update <pack>                             # 更新已安装的包
  $ yum remove <pack>                             # 卸载已安装的包
  $ yum search <pack>                             # 检查软件包的信息
 
@@ -26,9 +36,9 @@ ellowdogUpdater,Modified: centos redhat 包管理器
 
  $ yum list | grep zsh
  > Repodata is over 2 weeks old. Install yum-cron? Or run: yum makecache fast
- > zsh.x86_64                                 5.0.2-34.el7_8.2            base     
- > zsh-html.x86_64                            5.0.2-34.el7_8.2            base   
- 
+ > zsh.x86_64                                 5.0.2-34.el7_8.2            base
+ > zsh-html.x86_64                            5.0.2-34.el7_8.2            base
+
 ```
 
 注: yum 配置文件 `/etc/yum.repos.d/`
@@ -59,14 +69,14 @@ Advanced Package Tool get: ubuntu debian 的包管理器
 
  $ apt-get install <pack>                        # 下载并安装软件包
  $ apt-get remove <pack>                         # 卸载已安装的软件包
- 
+
  $ apt-get upgrade                               # 更新所有已安装的软件包
  $ apt-get update                                # 更新软件包列表
 
  $ apt install <pack>                            # apt 集成 apt-get 功能
- $ apt download <pack>                           # 仅下载包, 不安装   
+ $ apt download <pack>                           # 仅下载包, 不安装
  $ apt search <pack>                             # 查找 包
- $ apt remove <pack>                             # 卸载已安装的包  
+ $ apt remove <pack>                             # 卸载已安装的包
 
  $ apt list --installed | grep zsh               # 列出已安装的包
  > zsh-common/oldstable,oldstable,now 5.7.1-1+deb10u1 all [installed,automatic]
@@ -105,7 +115,7 @@ Debian package: 离线包安装
 ### [tar](https://linux.alianga.com/c/tar.html)
 
 ```bash
- $ tar <opt> <pack>                         
+ $ tar <opt> <pack>
 
  $ tar -zxvf <package name> -C <path>             # 解压 tar.gz 压缩包到 <path> 路径
  > tar -zxvf package.tar.gz -C /root/             # 将 package.tar.gz 解压到 /root/ 目录下
@@ -121,14 +131,14 @@ Debian package: 离线包安装
  > -rw-r--r-- root/root         0 2023-04-03 03:24 test/1st
 ```
 
-|parameter|meaning|
-|:-:|:-|
-|`-c, --create`|创建一个新归档|
-|`-f, --file=ARCHIVE`|使用归档文件或 ARCHIVE 设备|
-|`-t, --list`|列出归档内容|
-|`-v, --verbose`|详细地列出处理的文件|
-|`-x, --extract, --get`|从归档中解出文件|
-|`-z, --gzip, --gunzip, --ungzip`|通过 gzip 过滤归档|
+|            parameter             | meaning                     |
+| :------------------------------: | :-------------------------- |
+|          `-c, --create`          | 创建一个新归档              |
+|       `-f, --file=ARCHIVE`       | 使用归档文件或 ARCHIVE 设备 |
+|           `-t, --list`           | 列出归档内容                |
+|         `-v, --verbose`          | 详细地列出处理的文件        |
+|      `-x, --extract, --get`      | 从归档中解出文件            |
+| `-z, --gzip, --gunzip, --ungzip` | 通过 gzip 过滤归档          |
 
 ### [zip](https://linux.alianga.com/c/zip.html)
 

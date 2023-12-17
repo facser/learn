@@ -1,11 +1,21 @@
+---
+author: facsert
+pubDatetime: 2023-03-28 15:28:43
+title: Go Function
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Go
+description: "Go 函数"
+---
+
 <!--
  * @Author       : facsert
- * @Date         : 2023-05-23 15:28:43
+ * @Date         : 2023-03-28 15:28:43
  * @LastEditTime : 2023-07-28 11:39:45
  * @Description  : edit description
 -->
-
-# Golang function
 
 ## function 定义
 
@@ -58,7 +68,7 @@ func calc(x, y int) (sum, sub int) {             // 指定多个返回值
     return
 }
 
-func add(x, y int) (int, int) {                  // 多个返回值时, 返回值类型需要带括号 
+func add(x, y int) (int, int) {                  // 多个返回值时, 返回值类型需要带括号
     return x+1, y+1
 }
 ```
@@ -96,11 +106,11 @@ func delay() {
     defer func() {                               // 将函数延迟到最后执行
         Println("third print")
     }()
-    Println("first print")                       
+    Println("first print")
     Println("second print")
 }
 
-> first print                                    // first second 正常按顺序打印 
+> first print                                    // first second 正常按顺序打印
 > second print
 > third print                                    // third 延迟到最后打印
 

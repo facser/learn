@@ -1,11 +1,21 @@
+---
+author: facsert
+pubDatetime: 2022-07-24 12:08:37
+title: Python Class
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Python
+description: "Python 类方法"
+---
+
 <!--
  * @Author       : facsert
  * @Date         : 2022-07-24 12:08:37
  * @LastEditTime : 2023-07-28 17:05:27
  * @Description  : edit description
 -->
-
-# python class method
 
 ## 引申
 
@@ -22,11 +32,11 @@
 
 ## 区别
 
-|方法类型|参数|装饰器|
-|:-:|:-:|:-:|
-|实例方法|`self`|无             |
-|类方法  |`cls` |`@classmethod` |
-|静态方法|无    |`@staticmehtod`|
+| 方法类型 |  参数  |     装饰器      |
+| :------: | :----: | :-------------: |
+| 实例方法 | `self` |       无        |
+|  类方法  | `cls`  | `@classmethod`  |
+| 静态方法 |   无   | `@staticmehtod` |
 
 ## 代码示例
 
@@ -66,9 +76,9 @@ if __name__ == '__main':
 
 ```python
 class People:
-    
+
     name = 'kertory'                             # 定义类属性 name
-    
+
     def obj_func(self):
         print(f'obj func: {self.name}')          # 打印对象属性 name
 
@@ -78,7 +88,7 @@ class People:
 
     @staticmethod
     def static_func():                           # 静态方法
-        print('static function')   
+        print('static function')
 
 if __name__ == '__main':
     facser = People()                            # 类实例化成对象 facser
@@ -103,9 +113,9 @@ if __name__ == '__main':
 ```python
 
 class People:
-    
+
     name = 'kertory'                             # 定义类属性 name
-    
+
     def obj_func(self):
         print(f'obj func: {self.name}')          # 打印对象属性 name
 
@@ -115,7 +125,7 @@ class People:
 
     @staticmethod
     def static_func():                           # 静态方法
-        print('static function')   
+        print('static function')
 
 if __name__ == '__main':
     People.class_func()                          # 类调用类方法
@@ -149,17 +159,17 @@ if __name__ == '__main':
 - 类方法可调用类属性, 类方法和静态方法, 可以被类与对象使用
 - 实例化方法可调用类内所有属性方法, 但只可以被实例化对象使用
 
-|类型|可用范围|
-|:-:|:-|
-|类  |类方法, 类属性; 静态方法|
-|对象|实例方法, 实例属性; 类方法, 类属性; 静态方法|
+| 类型 | 可用范围                                     |
+| :--: | :------------------------------------------- |
+|  类  | 类方法, 类属性; 静态方法                     |
+| 对象 | 实例方法, 实例属性; 类方法, 类属性; 静态方法 |
 
 ### logging 实践
 
 ```python
 
 class logger:
-    
+
     obj_log = None
 
     def info(cls, msg):                          # 定义类方法, 类可以直接使用
@@ -170,10 +180,10 @@ class logger:
             cls.obj_log.info(msg)
         return msg
 
-    def terminal_handle(cls):                    # 设置窗口打印格式 
+    def terminal_handle(cls):                    # 设置窗口打印格式
         pass
- 
-    def file_handle(cls):                        # 设置文本写入打印格式 
+
+    def file_handle(cls):                        # 设置文本写入打印格式
         pass
 
     def create_logger(cls):                      # 自定义 logger 对象, 赋值给类属性 obj_log

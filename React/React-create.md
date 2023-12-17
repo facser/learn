@@ -1,3 +1,15 @@
+---
+author: facsert
+pubDatetime: 2023-11-20 09:20:27
+title: React Configuration
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - React
+description: "React 基本配置"
+---
+
 <!--
  * @Author       : facsert
  * @Date         : 2023-11-20 09:20:27
@@ -5,13 +17,11 @@
  * @Description  : edit description
 -->
 
-# 构建项目
-
 使用 vite 构建 React 项目
 
 ```bash
 npm i vite -g                                    # 下载 vite
- 
+
 npm create vite demo                             # 创建项目
 ✔ Select a framework: › React
 ✔ Select a variant: › JavaScript
@@ -32,9 +42,9 @@ npm run dev                                      # 启动项目
 ```js
 export default defineConfig({
   server: {
-    host: '10.58.14.96',                         // 修改服务 host
-    port: 5173                                   // 修改服务端口
+    host: "10.58.14.96", // 修改服务 host
+    port: 5173, // 修改服务端口
   },
   // ......
-})
+});
 ```

@@ -1,11 +1,21 @@
+---
+author: facsert
+pubDatetime: 2022-10-21 15:28:43
+title: 代码结构
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - code
+description: "简化代码控制流"
+---
+
 <!--
  * @Author       : facsert
- * @Date         : 2023-05-23 15:28:43
+ * @Date         : 2022-10-21 15:28:43
  * @LastEditTime : 2023-07-28 11:46:04
  * @Description  : edit description
 -->
-
-# 简化代码控制流
 
 - 分支
 - 边界
@@ -81,7 +91,7 @@ if 5 > num:
 
 ## 边界
 
-简化边界问题, 
+简化边界问题,
 忽略或合并不关注的内容
 
 ```python
@@ -117,7 +127,7 @@ except Exception as e:
 ```python
 
 note = 'Continue the test when error occurred? (default: Y  N/Y)'
-input_raw = input(note) 
+input_raw = input(note)
 input_no_space = input_raw.strip()
 input_up = input_no_space.upper()
 input_ok = input_up in ('Y', 'N', '')
@@ -174,5 +184,3 @@ password = 'admin'
 tool_dir = 'tools'
 count = 0
 ```
-
-

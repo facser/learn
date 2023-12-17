@@ -1,3 +1,15 @@
+---
+author: facsert
+pubDatetime: 2023-05-23 15:28:43
+title: 02.Go Base Data Type
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Go
+description: "Go 基本数据类型"
+---
+
 <!--
  * @Author       : facsert
  * @Date         : 2023-05-23 15:28:43
@@ -5,30 +17,28 @@
  * @Description  : edit description
 -->
 
-# Golang
-
 Golang 基本类型有
 
-- [整形](#整形)
-- [浮点型](#浮点型)
-- [布尔类型](#布尔类型)
-- [字符串](#字符串类型)
-- [类型转换](#类型转换)
+[整形](#整形)
+[浮点型](#浮点型)
+[布尔类型](#布尔类型)
+[字符串](#字符串类型)
+[类型转换](#类型转换)
 
 ## 整形
 
-| 类型               | 范围                                     |
-| :------------------| :---------------------------------------|
-| `int8`             | -128 - 127                                |
-| `uint8` / `byte`   | 0 - 255                                   |
-| `int16`            | -32768 - 32767                            |
-| `uint16`           | 0 - 65535                                 |
-| `int32` / `rune`   | -2147483648 ~ 2147483647                  |
-| `uint32`           | 0 ~ 4294967295                            |
-| `int64`            | -9223372036854775808 ~ 9223372036854775807|
-| `uint64`           | 0 ~ 18446744073709551615                  |
-| `int`              | 32 位系统 int32， 64 位系统 int64          |
-| `uint`             | 32 位系统 uint32， 64 位系统 uint64        |
+| 类型             | 范围                                       |
+| :--------------- | :----------------------------------------- |
+| `int8`           | -128 - 127                                 |
+| `uint8` / `byte` | 0 - 255                                    |
+| `int16`          | -32768 - 32767                             |
+| `uint16`         | 0 - 65535                                  |
+| `int32` / `rune` | -2147483648 ~ 2147483647                   |
+| `uint32`         | 0 ~ 4294967295                             |
+| `int64`          | -9223372036854775808 ~ 9223372036854775807 |
+| `uint64`         | 0 ~ 18446744073709551615                   |
+| `int`            | 32 位系统 int32， 64 位系统 int64          |
+| `uint`           | 32 位系统 uint32， 64 位系统 uint64        |
 
 ### 整形类型转换
 
@@ -69,9 +79,9 @@ numFloat64 := float64(num)                       // float64 numFloat64 = 8
 二进制 八进制 十六进制可以通过不同占位符打印
 
 ```go
-binary := 0b11                                   // int binary      = 3   2 进制赋值 
-octal := 0o11                                    // int octal       = 9   8 进制赋值 
-hexadecimal := 0x11                              // int hexadecimal = 17  16 进制赋值 
+binary := 0b11                                   // int binary      = 3   2 进制赋值
+octal := 0o11                                    // int octal       = 9   8 进制赋值
+hexadecimal := 0x11                              // int hexadecimal = 17  16 进制赋值
 
 var ten int = 10
 fmt.Printf("%d \n", ten)                         // 10
@@ -119,28 +129,28 @@ MaxUint64 = 1<<64 - 1
 var float32 = 2.17
 var pi float64 = 3.1415926535
 
-Printf("e: %f \n", e)                            // e: 2.170000 
-Printf("pi: %f \n", pi)                          // pi: 3.141593 
+Printf("e: %f \n", e)                            // e: 2.170000
+Printf("pi: %f \n", pi)                          // pi: 3.141593
 ```
 
 ## 布尔类型
 
 布尔值: true false  
 布尔值不能进行数字运算  
-布尔类型的值默认值是 false  
+布尔类型的值默认值是 false
 
 ```go
 yes, no := true, false
-yes == no                                        // false 
+yes == no                                        // false
 yes || no                                        // true 逻辑或
 yes && no                                        // false 逻辑且
 
 love, happy := true, false                       // 布尔运算的哲学
 !love                                            // false  not love is false
-love == happy                                    // false  love equal to happy is false 
+love == happy                                    // false  love equal to happy is false
 love != happy                                    // true   love not equal to happy is true
 happy && love                                    // false  love and happy is not true
-happy || love                                    // true   love or happy is true 
+happy || love                                    // true   love or happy is true
 ```
 
 ## 字符串类型
@@ -148,7 +158,7 @@ happy || love                                    // true   love or happy is true
 ### 字符
 
 byte(uint8) ACSII 表中的一个字符, 底层是一个 0-255 数字(数字与 ACSII 表字符绑定)  
-rune(int32) Unicode 编码中的一个字符(包含世界大部分语言字符), Unicode 表包含 ACSII 表  
+rune(int32) Unicode 编码中的一个字符(包含世界大部分语言字符), Unicode 表包含 ACSII 表
 
 ```go
 var a byte = 'D'                                  // 'D' 在 ACSII 中第 68 位
@@ -169,7 +179,7 @@ Printf("unicode length: %d\n", len("中文"))
 ### 字符串
 
 Golang 字符串本质是单个字符的集合, 单个字符的本质是数字, 通过不同规范和字符对应(ACSII 和 Unicode)  
-单个 acsii 和 unicode 字符长度不同, 使用 range 遍历  
+单个 acsii 和 unicode 字符长度不同, 使用 range 遍历
 
 ```go
 var acsii, unicode string = "str", "中文"
@@ -178,10 +188,10 @@ for index, char := range acsii {
 }
 
 > Type: int32, value: 115, value: s              // range 取出的单个字符是 rune 类型
-> Type: int32, value: 116, value: t          
-> Type: int32, value: 114, value: r          
+> Type: int32, value: 116, value: t
+> Type: int32, value: 114, value: r
 > Type: int32, value: 20013, value: 中           // 使用 range 遍历 unicode 字符串
-> Type: int32, value: 25991, value: 文       
+> Type: int32, value: 25991, value: 文
 
 for i:=0; i<len(unicode); i++ {
    char := unicode[i]
@@ -192,8 +202,8 @@ for i:=0; i<len(unicode); i++ {
 > Type: uint8, value: 184, value: ¸
 > Type: uint8, value: 173, value: ­
 > Type: uint8, value: 230, value: æ
-> Type: uint8, value: 150, value: 
-> Type: uint8, value: 135, value: 
+> Type: uint8, value: 150, value:
+> Type: uint8, value: 135, value:
 ```
 
 字符串可以与单个字符组成的切片相互转化
@@ -225,11 +235,11 @@ var num64 int64 = -1
 Printf("Type %T, value: %c\n", num16, byte(num16))
 Printf("Type %T, value: %c\n", num32, rune(num32))
 
-> Type int, value: D                          
+> Type int, value: D
 > Type int8, value: B
 > Type int16, value: B
-> Type int32, value: 文                          
-> Type int64, value: �                           
+> Type int32, value: 文
+> Type int64, value: �
 ```
 
 ### 字符串操作
@@ -271,7 +281,7 @@ s := fmt.Sprinf("%v", <variable>)                // 万能转换, any -> string
 
 s := strconv.Itoa(32)                            // 32    int -> string
 s := strconv.FormatBool(true)                    // true  bool -> string
-s := strconv.FormatInt(-8, 2)                    // -1000 int64 -> string(2 进制) 
+s := strconv.FormatInt(-8, 2)                    // -1000 int64 -> string(2 进制)
 s := strconv.FormatUint(255, 16)                 // ff    uint64 -> string(16 进制)
 ```
 

@@ -1,11 +1,22 @@
+---
+author: facsert
+pubDatetime: 2023-07-10 09:29:19
+title: Go Gin
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Go
+  - Gin
+description: "Go Web 框架 Gin"
+---
+
 <!--
  * @Author       : facsert
- * @Date         : 2023-07-12 09:29:19
+ * @Date         : 2023-07-10 09:29:19
  * @LastEditTime : 2023-07-28 11:38:12
  * @Description  : edit description
 -->
-
-# Gin
 
 [Gin官网](https://gin-gonic.com/zh-cn/)
 
@@ -18,7 +29,7 @@ Gin 是一个用 Go (Golang) 编写的 HTTP Web 框架
 ```bash
  $ go env -w GOPROXY=https://goproxy.cn,direct             # 设置 go 下载源为国内源
  $ go get -u github.com/gin-gonic/gin                      # -u 强制使用网络下载安装 Gin 依赖包
- 
+
  $ go list -m all | grep gin
  > github.com/gin-gonic/gin v1.9.1
 ```
@@ -43,7 +54,7 @@ Gin 是一个用 Go (Golang) 编写的 HTTP Web 框架
 package main
 
 import (
-    "github.com/gin-gonic/gin"                             // 引入 gin 
+    "github.com/gin-gonic/gin"                             // 引入 gin
     "net/http"
 )
 
@@ -131,13 +142,13 @@ func main() {
     engine.GET("/group/", routeQuery)
     ...
 }
-                                                   
+
 func routeQuerys(c *gin.Context) {                         // http://localhost:8080/index?id=4
     id := c.QueryArry("id")                                // 获取 queray 参数值列表
     c.String(200, "id: %v", id)                            // id: [4]
 }
 
-func routeQuery(c *gin.Context) {                          // http://localhost:8080/group?name=jack 
+func routeQuery(c *gin.Context) {                          // http://localhost:8080/group?name=jack
     n, err := c.DefaultQuery("name", "nobody")             // 未获取到则使用默认值 nobody
     m := c.Query("name")                                   // query 获取参数值
     c.String(200, "n: %s  m: %s", n, m)                    // n: jack  m: jack
@@ -166,8 +177,8 @@ func main() {
     engine.POST("/table/", table)                          // 注册路由和对应函数
     ...
 }
-                                                   
-func table(c *gin.Context) {                               // curl -X 'POST' http://localhost:8080/table 
+
+func table(c *gin.Context) {                               // curl -X 'POST' http://localhost:8080/table
     name := c.PostForm("name")                             // -H 'Content-Type: application/x-www-form-urlencoded'
     age := c.PostForm("age")                               // -d 'name=lily&age=16'
     c.String(200, "name:%s age:%s", name, age)             // name:lily age:16
@@ -184,8 +195,8 @@ func main() {
     engine.POST("/raw/", rawData)                          // 注册路由和对应函数
     ...
 }
-                                                   
-func rawData(c *gin.Context) {                             // curl -X 'POST' http://localhost:8080/raw 
+
+func rawData(c *gin.Context) {                             // curl -X 'POST' http://localhost:8080/raw
     data, _ := c.GetRawData()                              // -H 'Content-Type: application/json'
     var m map[string]any                                   // -d '{name:lily, age:16}'
     _ = json.Unmarshal(data, &m)

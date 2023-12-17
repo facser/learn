@@ -1,3 +1,15 @@
+---
+author: facsert
+pubDatetime: 2023-03-25 15:28:43
+title: Go Branch
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Go
+description: "Go 条件分支"
+---
+
 <!--
  * @Author       : facsert
  * @Date         : 2023-05-23 15:28:43
@@ -5,7 +17,9 @@
  * @Description  : edit description
 -->
 
-# Golang
+[if 分支](#if-else-分支)
+[for 循环](#for-循环)
+[switch](#switch-case)
 
 ## if else 分支
 
@@ -17,7 +31,7 @@
  } else {
     branch
  }
- 
+
  done := false
  if done {
     Println("done, goodbye")
@@ -101,7 +115,7 @@
     Println(i)
  }
 
- > 0 
+ > 0
 ```
 
 ### goto
@@ -133,7 +147,7 @@
 ```go
  switch expression {
  case branch:
-     code    
+     code
  case branch:
      code
  case branch:
@@ -144,7 +158,7 @@
 
  switch nun := 3; num {                          // 值选择分支
  case 1,3,5,7,9:                                 // 单个分支可容纳多个值
-     Println("奇数")                               
+     Println("奇数")
  case 2,4,6,8:                                   // 每个分支自带 break, 执行完分支即退出 switch
      Println("偶数")
  default:
@@ -155,15 +169,15 @@
 
  grade := 80
  switch  {                                       // 表达式选择分支, 变量需要在 switch 外初始化
- case grade >= 0 && grade < 60:                  
+ case grade >= 0 && grade < 60:
      Println("不及格, 好好努力")
  case grade >= 60 && grade < 80:
-     Println("不错的成绩, 继续加油!") 
+     Println("不错的成绩, 继续加油!")
  case grade >= 80 && grade <= 100:
-     Println("很棒哦!") 
+     Println("很棒哦!")
  default:
      Println("分数错误")
  }
- 
+
  > 很棒哦!
 ```

@@ -1,11 +1,21 @@
+---
+author: facsert
+pubDatetime: 2023-04-07 15:02:16
+title: Linux System
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Linux
+description: "Linux 系统"
+---
+
 <!--
  * @Author       : facsert
- * @Date         : 2022-07-18 15:02:16
+ * @Date         : 2023-04-07 15:02:16
  * @LastEditTime : 2023-07-28 12:00:50
  * @Description  : edit description
 -->
-
-# Linux system
 
 ## 系统
 
@@ -38,7 +48,7 @@ disk free
  $ df                                            # 显示系统磁盘占用信息, 默认以 KB 为单位
  $ df -h                                         # 容量数据以 MB 为单位
 
- $ df -h                                         # 容量信息智能添加单位 
+ $ df -h                                         # 容量信息智能添加单位
  > Filesystem      Size  Used Avail Use% Mounted on
  > udev            3.9G     0  3.9G   0% /dev
  > tmpfs           796M   41M  755M   6% /run
@@ -122,9 +132,9 @@ systemctl control
  $ netstat -l                                    # --listening 显示处于监听状态的端口
 
  $ netstat -anlp | grep 22
- > tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      577/sshd            
- > tcp        0      0 10.0.2.15:22            10.0.2.2:61110          ESTABLISHED 19205/sshd: root@no 
- > tcp6       0      0 :::22                   :::*                    LISTEN      577/sshd      
+ > tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      577/sshd
+ > tcp        0      0 10.0.2.15:22            10.0.2.2:61110          ESTABLISHED 19205/sshd: root@no
+ > tcp6       0      0 :::22                   :::*                    LISTEN      577/sshd
 ```
 
 ### [ifconfig](https://linux.alianga.com/c/ifconfig.html)
@@ -157,5 +167,5 @@ network interfaces configuring
  $ sleep 300 &                                   # 后台执行 sleep 指令
  > [1] 23287                                     # 系统返回后台的进程 pid
  $ kill -9 23287                                 # 根据 pip 杀死指定进程
- > [1]  + 23287 killed     sleep 300 
+ > [1]  + 23287 killed     sleep 300
 ```
