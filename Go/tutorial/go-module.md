@@ -1,11 +1,21 @@
+---
+author: facsert
+pubDatetime: 2023-07-31 17:02:03
+title: Go Module
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Go
+description: "Go 模块"
+---
+
 <!--
  * @Author       : facsert
  * @Date         : 2023-07-31 17:02:03
  * @LastEditTime : 2023-07-31 17:02:40
  * @Description  : edit description
 -->
-
-# Module
 
 使用 `import` 关键字引入官方库, 自定义包或第三方库
 
@@ -27,10 +37,10 @@ func main() {
 }
 ```
 
-- 未被使用模块会报未引入错误: `imported and not used: "strings"`  
-- 可以使用 `_` 符号避免未使用模块报错  
-- 使用 `.` 符号, 使用模块方法时可以不用带模块名称  
-- 使用 `<name>`，给模块添加别名  
+- 未被使用模块会报未引入错误: `imported and not used: "strings"`
+- 可以使用 `_` 符号避免未使用模块报错
+- 使用 `.` 符号, 使用模块方法时可以不用带模块名称
+- 使用 `<name>`，给模块添加别名
 - 可被外都调用包方法开头字母都是大写
 
 ```go
@@ -49,8 +59,8 @@ func main() {
 ### 第三方库
 
 ```bash
- $ go get -u <module>                          
- 
+ $ go get -u <module>
+
  $ ls -l
  > -rw-r--r-- 1 root root  2031 Jul 26 23:32 go.mod
  > -rw-r--r-- 1 root root 16603 Jul 26 23:32 go.sum
@@ -77,7 +87,7 @@ import {
 demo                                             # 创建 demo 文件夹, 存放项目
 ├── go.mod                                       # module learn  使用 go mod 在 demo 文件下创建 learn 项目
 ├── main.go                                      # package main  learn 项目的入口
-└── lib                                          
+└── lib
     ├── config                                   # 创建 config 文件夹存放 config 模块, 文件夹最好与模块同名, 以便于查询
     |   ├── remote.go                            # remote.go 属于 config 模块, 是 config 模块进一步划分
     |   └── local.go                             # local.go 属于 config 模块, 是 config 模块进一步划分
@@ -85,9 +95,9 @@ demo                                             # 创建 demo 文件夹, 存放
         └── logger.go                            # logger.go 属于 log 模块
 ```
 
-- 单个文件夹只允许存放一个包, 包内可以继续划分为多个文件  
-- 引入包时, 只需要引入包的目录即可, 无需指定文件  
-- 包名可以与模块名称不一致, 但是在引入后难以通过引入语句路径查找模块位置  
+- 单个文件夹只允许存放一个包, 包内可以继续划分为多个文件
+- 引入包时, 只需要引入包的目录即可, 无需指定文件
+- 包名可以与模块名称不一致, 但是在引入后难以通过引入语句路径查找模块位置
 
 `local.go` 添加代码
 

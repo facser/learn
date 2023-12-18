@@ -1,22 +1,30 @@
+---
+author: facsert
+pubDatetime: 2022-10-21 21:20:45
+title: 组织代码
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - code
+description: "组织代码功能"
+---
+
 <!--
  * @Author       : facsert
- * @Date         : 2023-05-23 15:28:43
+ * @Date         : 2022-10-21 21:20:45
  * @LastEditTime : 2023-07-28 11:46:11
  * @Description  : edit description
 -->
-
-# 组织代码功能
 
 - 模块化
 - 分离工具代码
 - 少写代码
 
-
 ## 模块化
 
 分离相关性不大的代码, 一个模块做一件事  
-模块化使得代码易于测试和扩展  
-
+模块化使得代码易于测试和扩展
 
 ## 少写代码
 
@@ -37,14 +45,13 @@ unique_list = list(set(raw_list))                # 使用集合的特性消除�
 sort_list = sorted(raw_list)                     # 使用库函数排序
 ```
 
-
 ## 分离工具代码
 
 抽离与系统无关的代码
 
 ```python
 def compare_list_average(list_a, list_b):
-    
+
     a_sum, a_length = 0, len(list_a)
     for i in list_a:
         a_sum += i
@@ -69,7 +76,6 @@ def compare_list_average(list_a, list_b):
     b_average = average(list_b)
     return a_average > a_average
 ```
-
 
 # 拓展
 
@@ -102,6 +108,7 @@ SOLID 是面向对象编程应当遵守的准则和最佳的实践方向
 ### OCP 开闭原则
 
 原始定义:
+
 > Open Closed Principle
 
 ### LSP 里式替换原则
@@ -115,4 +122,3 @@ SOLID 是面向对象编程应当遵守的准则和最佳的实践方向
 ### DIP 依赖倒置原则
 
 > Dependency Inversion Principle
-

@@ -1,11 +1,21 @@
+---
+author: facsert
+pubDatetime: 2023-05-23 15:28:43
+title: Go Goroutine
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Go
+description: "Go 协程"
+---
+
 <!--
  * @Author       : facsert
  * @Date         : 2023-05-23 15:28:43
- * @LastEditTime: 2023-10-11 22:01:43
+ * @LastEditTime : 2023-10-11 22:01:43
  * @Description  : edit description
 -->
-
-# Golang goroutine
 
 ## 协程
 
@@ -26,8 +36,8 @@ func main() {
     Println(time.Now())                          // 执行前打印时间
 
     wg.Add(2)                                    // 标记需要执行两个协程
-    go cook()                                    // 新建协程, 类似于将 cook 放后台执行, main 直接接执行下一行    
-    go wash()                                    // 新建协程, 类似于将 wash 放后台执行, main 直接接执行下一行  
+    go cook()                                    // 新建协程, 类似于将 cook 放后台执行, main 直接接执行下一行
+    go wash()                                    // 新建协程, 类似于将 wash 放后台执行, main 直接接执行下一行
 
     wg.Wait()                                    // 等待所有的协程执行完成
     Println(time.Now())                          // 所有协程执行完后打印时间
@@ -65,7 +75,7 @@ main 也是一个协程, main 中若不设置 wg.Wait() 等待其余协程完成
 通道容量为 0, 不能存值, 发送语句和结束语句需要都执行, 否则一方会一直等待另一方导致阻塞  
 发送语句先执行, 则发送语句阻塞, 等待接收语句执行  
 接受语句先执行, 则接受语句阻塞, 等待发送语句执行  
-以上特性常用于协程同步, 无缓冲通道也被称为同步通道  
+以上特性常用于协程同步, 无缓冲通道也被称为同步通道
 
 ```go
 import (
@@ -79,7 +89,7 @@ var wg sync.WaitGroup
 func main() {
     Printf("start at %v\n", time.Now())
     ch := make(chan int, 0)                      // 初始化通道, 设置缓冲容量为 0
-    wg.Add(1)                                     
+    wg.Add(1)
     go receive(ch)                               // 创建协程
     ch <- 3                                      // 向通道写入数据, 等待接收语句执行, 数据接收后执行下一句
     Printf("send at %v\n", time.Now())
@@ -99,7 +109,7 @@ func receive(c chan int) {
 
 ### 有缓冲通道
 
-通道容量大于 0, 通道允许在容量未满时存值, 容量存满时变成无缓冲通道  
+通道容量大于 0, 通道允许在容量未满时存值, 容量存满时变成无缓冲通道
 
 ```go
 import (
@@ -112,8 +122,8 @@ var wg sync.WaitGroup
 
 func main() {
     Printf("start at %v\n", time.Now())
-    ch := make(chan int, 2)                      // 初始化通道, 设置缓冲容量为 2 
-    wg.Add(2)                                     
+    ch := make(chan int, 2)                      // 初始化通道, 设置缓冲容量为 2
+    wg.Add(2)
     go receive(ch)                               // 创建协程接收通道的值
     go send(ch)                                  // 创建协程向通道传值
     wg.Wait()

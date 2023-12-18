@@ -1,14 +1,25 @@
+---
+author: facsert
+pubDatetime: 2023-07-12 09:29:19
+title: 00.Go Environment
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Go
+description: "Go 环境配置"
+---
+
 <!--
  * @Author       : facsert
  * @Date         : 2023-07-12 09:29:19
- * @LastEditTime: 2023-11-27 23:30:00
+ * @LastEditTime : 2023-11-27 23:30:00
  * @Description  : edit description
 -->
 
-# Golang
-
-- [安装](#安装)
-- [开始](#开始)
+[安装](#安装)
+[版本管理](#版本管理)
+[开始](#开始)
 
 ## 安装
 
@@ -23,7 +34,7 @@
  > /usr/local/go
 ```
 
-将 `/usr/local/go/bin` 添加进环境目录, 使得系统在环境目录中找到 golang 的可执行文件  
+将 `/usr/local/go/bin` 添加进环境目录, 使得系统在环境目录中找到 golang 的可执行文件
 
 ```bash
  $ vi ~/.bashrc
@@ -34,14 +45,14 @@
  $ go env -w GOPROXY=https://goproxy.cn,direct   # 更换 go 默认下载源
 ```
 
-## 升级
+## 版本管理
 
 使用 gvm 管理 go 版本
 
 ```bash
  $ apt install bison
  $ bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
- 
+
  # 重启命令行, 查看可用的 go 版本
  $ gvm listall
  $ gvm install go1.21.4 -B
@@ -52,7 +63,7 @@
 
  >    go1.21.4
  >    system
- 
+
  # 切换 go 版本并设置全局默认版本
  $ gvm use go1.21.4 --default
  $ gvm list
@@ -84,7 +95,7 @@
  > go 1.20
 ```
 
-使用 go mod 创建项目会自动生成 go.mod 文件, 该文件会记录项目需要用的第三方包  
+使用 go mod 创建项目会自动生成 go.mod 文件, 该文件会记录项目需要用的第三方包
 
 ```go
 package main                                     // 声明包

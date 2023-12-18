@@ -1,11 +1,21 @@
+---
+author: facsert
+pubDatetime: 2022-10-10 15:28:43
+title: Docker Container
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - docker
+description: "Docker 容器"
+---
+
 <!--
  * @Author       : facsert
- * @Date         : 2023-05-23 15:28:43
+ * @Date         : 2022-10-10 15:28:43
  * @LastEditTime : 2023-11-03 15:26:09
  * @Description  : edit description
 -->
-
-# Docker Container
 
 ## 容器列表
 
@@ -22,16 +32,16 @@ CONTAINER ID   IMAGE         COMMAND                  CREATED        STATUS     
 ee0c15a3a0ee   mongo         "docker-entrypoint.s…"   44 hours ago   Up 44 hours    0.0.0.0:8589->27017/tcp   demo       0B (virtual 700MB)
 ```
 
-|`CONTAINER ID`|`IMAGE`|`COMMAND`|`CREATED`|`STATUS`|`PORTS`|`NAMES`|`SIZE`|
-|:-|:-|:-|:-|:-|:-|:-|:-|
-|容器 ID|生成容器的镜像|启动容器时运行的命令|容器创建时间|容器状态|机器端口->容器端口|容器名称|容器大小|
+| `CONTAINER ID` | `IMAGE`        | `COMMAND`            | `CREATED`    | `STATUS` | `PORTS`            | `NAMES`  | `SIZE`   |
+| :------------- | :------------- | :------------------- | :----------- | :------- | :----------------- | :------- | :------- |
+| 容器 ID        | 生成容器的镜像 | 启动容器时运行的命令 | 容器创建时间 | 容器状态 | 机器端口->容器端口 | 容器名称 | 容器大小 |
 
 ```bash
  $ docker stop    <CONTAINER ID | NAMES>                                       # 关闭容器
  $ docker start   <CONTAINER ID | NAMES>                                       # 启动容器
  $ docker kill    <CONTAINER ID | NAMES>                                       # 杀死容器进程
  $ docker restart <CONTAINER ID | NAMES>                                       # 重启容器
- $ docker rm -f   <CONTAINER ID | NAMES>                                       # 强制删除容器(运行中的容器也会删除) 
+ $ docker rm -f   <CONTAINER ID | NAMES>                                       # 强制删除容器(运行中的容器也会删除)
 
  $ docker logs    <CONTAINER ID | NAMES>                                       # 显示指定容器 log
  $ docker top     <CONTAINER ID | NAMES>                                       # 列出指定容器进程
@@ -71,7 +81,7 @@ Options:
 ```
 
 ```bash
- $ docker run -it --rm ubuntu bash                                             # 以 ubuntu 镜像创建容器(自动命名), 创建后执行 bash, 退出后自动删除容器 
+ $ docker run -it --rm ubuntu bash                                             # 以 ubuntu 镜像创建容器(自动命名), 创建后执行 bash, 退出后自动删除容器
  $ docker run -itd -p 8589:27017 --name demo mongo                             # 以 mongo 镜像创建 demo 容器, 后台运行, 机器 8589 端口映射到容器 27017 端口
  $ docker run -it --rm -v /root/docker:/root debian bash                       # debian 镜像创建容器, 容器 /root 目录映射到主机 /root/docker 目录
 

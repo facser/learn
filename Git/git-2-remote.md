@@ -1,11 +1,21 @@
+---
+author: facsert
+pubDatetime: 2022-07-08 10:17:53
+title: Git Remote Repository
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - git
+description: "Git 远端仓库"
+---
+
 <!--
  * @Author       : facsert
- * @Date         : 2023-05-23 15:28:43
- * @LastEditTime : 2023-07-28 11:44:32
+ * @Date         : 2022-07-08 10:17:53
+ * @LastEditTime : 2022-12-15 23:01:55
  * @Description  : edit description
 -->
-
-# Git Remote repository
 
 ## 介绍
 
@@ -41,7 +51,7 @@
  > !main.pyc                                     # 强制跟踪所有 main.pyc
  > /*.log                                        # 忽略当前目录下 .log 结尾文件, 不影响上层的文件
  > temp/                                         # 忽略整个项目内所有 temp 文件夹
- > /lib/*.pyc                                    # 忽略当前 lib 目录 下一级的 pyc 文件, lib 下多层目录不受影响  
+ > /lib/*.pyc                                    # 忽略当前 lib 目录 下一级的 pyc 文件, lib 下多层目录不受影响
  > lib/**/.pyc                                   # 忽略项目内所有 lib 文件夹内的 pyc 文件
 
  $ git check-ignore -v <file>                    # 验证 igtignore 忽略文件或者路径
@@ -59,17 +69,17 @@
 
 ### 生成密钥
 
-|密钥|linux|windows|
-|:--:|:--:|:-:|
-|id_rsa (私钥)|`/root/.ssh/id_rsa`|`C:\Users\<user>\.ssh`|
-|id_rsa.pub (公钥)|`/root/.ssh/id_rsa.pub`|`C:\Users\<user>\.ssh`|
+|       密钥        |          linux          |        windows         |
+| :---------------: | :---------------------: | :--------------------: |
+|   id_rsa (私钥)   |   `/root/.ssh/id_rsa`   | `C:\Users\<user>\.ssh` |
+| id_rsa.pub (公钥) | `/root/.ssh/id_rsa.pub` | `C:\Users\<user>\.ssh` |
 
 生成两个密钥文件, 将**公钥**放到代码托管平台的账号设置中
 
 ```bash
  $ ssh-keygen                                    # 自动生成密钥
  $ ssh-keygen -t rsa -C "key message"            # 生成 rsa 类型带 key 注释信息的密钥
- 
+
  $ cat ~/.ssh/id_rsa.pub                         # 公钥以 ssh-rsa 开头, 注释信息结尾
  > ssh-rsa xxx....xxx key message
 ```
@@ -86,9 +96,9 @@ Github 账户 -> Settings -> Developer Settings -> Personal access tokens
 ```bash
  # 使用 ssh 连接携带令牌可以直接下载
  $ git clone https://{token}@github/{username}/{repo}.git
- 
+
  # 已有仓库添加令牌
- $ git remote set-url origin https://{token}@github.com/{username}/{repo}.git 
+ $ git remote set-url origin https://{token}@github.com/{username}/{repo}.git
 
  # 查看关联远端仓库(附带令牌)
  $ git remote -v

@@ -1,11 +1,21 @@
+---
+author: facsert
+pubDatetime: 2023-03-27 15:28:43
+title: Go Struct
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Go
+description: "Go 结构体"
+---
+
 <!--
  * @Author       : facsert
- * @Date         : 2023-05-23 15:28:43
+ * @Date         : 2023-03-27 15:28:43
  * @LastEditTime : 2023-07-28 11:39:56
  * @Description  : edit description
 -->
-
-# Golang struct
 
 ## Struct
 
@@ -35,7 +45,7 @@
  Printf("%#v\n", kertory)
  Printf("%#v\n", facsert)
 
- > main.Student{name:"kertory", city:"", age:18} // 未初始化的属性使用类型的零值 
+ > main.Student{name:"kertory", city:"", age:18} // 未初始化的属性使用类型的零值
  > main.Student{name:"facsert", city:"shanghai", age:0}
 ```
 
@@ -110,16 +120,16 @@ import (
  type Student struct {
      Name string                                 // 属性名大写其它模块可访问, 可以转 json
      city string                                 // 属性名小写其它模块不能访问也不能转 json
-     Age int     `json:"age"`                    // 可以通过定义 tag, 修改转化为 json 后 key 名称 
+     Age int     `json:"age"`                    // 可以通过定义 tag, 修改转化为 json 后 key 名称
 }
 
  facsert := Student{
-    Name: "facsert", 
+    Name: "facsert",
     city: "shanghai",
     Age: 18,
  }
 
- jsonStu, err := json.Marshal(facsert)           // struct 转 json 
+ jsonStu, err := json.Marshal(facsert)           // struct 转 json
  if err != nil {
    panic("json mashal failed")
  }

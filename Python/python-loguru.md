@@ -1,7 +1,19 @@
+---
+author: facsert
+pubDatetime: 2023-11-23 08:58:24
+title: Python loguru
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Python
+description: "Python 日志模块 loguru"
+---
+
 <!--
  * @Author       : facsert
  * @Date         : 2023-11-23 08:58:24
- * @LastEditTime: 2023-12-13 22:33:52
+ * @LastEditTime : 2023-12-13 22:33:52
  * @Description  : edit description
 -->
 
@@ -39,13 +51,13 @@ format:  '<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | <level>{level: <8}</le
   time : '<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green>'                       # 2023-11-23 09:04:56.749
   level: '<level>{level: <8}</level>'                                          # INFO     左对齐, 8 个字符, 空格补全
   model: '<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan>'     # __main__:<module>:10 函数名, 行号
-  msg  : '<level>{message}</level>'                                            # this is a info log 打印 log 
+  msg  : '<level>{message}</level>'                                            # this is a info log 打印 log
 ```
 
-|Tag|TRACE|DEBUG|INFO|SUCCESS|WARNING|ERROR|CRITICAL|
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|Severity|5|10|20|25|30|40|50|
-|methon|`trace`|`debug`|`info`|`success`|`warning`|`error`|`critical`|
+|   Tag    |  TRACE  |  DEBUG  |  INFO  |  SUCCESS  |  WARNING  |  ERROR  |  CRITICAL  |
+| :------: | :-----: | :-----: | :----: | :-------: | :-------: | :-----: | :--------: |
+| Severity |    5    |   10    |   20   |    25     |    30     |   40    |     50     |
+|  methon  | `trace` | `debug` | `info` | `success` | `warning` | `error` | `critical` |
 
 默认输出内容比较冗余, 可以通过 `logger.remove()` 删除默认输出, 然后通过 `logger.add()` 重新配置输出.
 
@@ -78,9 +90,9 @@ logger.add(
     serialize=_defaults.LOGURU_SERIALIZE,        # 是否将内容转换为 json
     backtrace=_defaults.LOGURU_BACKTRACE,
     diagnose=_defaults.LOGURU_DIAGNOSE,          # 异常跟踪，打印时是否显示变量值
-    enqueue=_defaults.LOGURU_ENQUEUE,            
+    enqueue=_defaults.LOGURU_ENQUEUE,
     context=_defaults.LOGURU_CONTEXT,
-    catch=_defaults.LOGURU_CATCH,                
+    catch=_defaults.LOGURU_CATCH,
 
     # 若 sink 为文件时, 可使用以下参数
     rotation:                                    # 设定创建新文件记的条件, 固定时间新建('00:00', '1 week'), 文件到达指定大小新建('500 MB')
