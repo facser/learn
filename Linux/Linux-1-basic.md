@@ -1,11 +1,21 @@
+---
+author: facsert
+pubDatetime: 2022-07-19 15:28:43
+title: Linux Basic
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Linux
+description: "Linux 基础使用"
+---
+
 <!--
  * @Author       : facsert
- * @Date         : 2023-05-23 15:28:43
+ * @Date         : 2022-07-19 15:28:43
  * @LastEditTime : 2023-07-29 16:29:55
  * @Description  : edit description
 -->
-
-# Linux Basic
 
 [linux 命令](https://www.linuxcool.com/)
 
@@ -51,7 +61,7 @@
  $ cat <file>                                    # 查看文件内容
 
  $ touch learn.log                               # 创建文件 learn.log
- $ mkdir seeds                                   # 创建文件夹 seeds  
+ $ mkdir seeds                                   # 创建文件夹 seeds
  $ cp learn.log seeds/                           # learn.log 复制到 seeds 文件夹下
  $ rm learn.log                                  # 删除当前目录下的 learn.log
  $ mv seeds/learn.log study.log                  # 将 seeds 下的 learn.log 移动到当前目录并重命名
@@ -74,7 +84,7 @@
 
  $ !!                                            # 执行上一条命令
  $ !<command key> + enter                        # 通过命令关键字和 enter 执行上一个包含关键字的命令
- 
+
  $ control + r + <command key>                   # 快捷键进入历史列表, 通过关键字查找, enter 执行命令
  > (reverse-i-search)`echo $': echo $PWD         # `echo $' 是输入关键字, : 后为匹配的命令, 方向键选择命令但不执行
 ```
@@ -90,7 +100,7 @@
  $ echo $PATH                                    # 执行命令时所搜寻的路径列表, 以 : 分隔(环境变量设置路径)
  > /usr/local/sbin:/usr/local/bin:/usr/bin
 
- $ echo $SHELL                                   # 当前使用的 shell 
+ $ echo $SHELL                                   # 当前使用的 shell
  > /bin/zsh
 
  $ echo $PWD                                     # 当前绝对路径
@@ -114,12 +124,12 @@ bash 执行脚本: 新建子 shell 执行脚本, 脚本中的 export 的变量�
 source 执行脚本: 脚本中的 export 变量加载入当前终端, 脚本结束仍然生效, 当前终端关闭后失效
 
 ```bash
- $ echo 'export linux="bash"' > bash.sh          # 生成脚本 bash.sh 
+ $ echo 'export linux="bash"' > bash.sh          # 生成脚本 bash.sh
  $ echo 'export linux="source"' > source.sh      # 生成脚本 source.sh
 
  $ bash bash.sh && echo "linux: $linux"          # 使用 bash 添加 linux 变量
  > linux:                                        # 脚本结束, 变量失效
- 
+
  $ source source.sh && echo "linux: $linux"      # 使用 source 执行脚本
  > linux: source shell                           # 脚本结束, 变量仍然生效
 ```
@@ -143,7 +153,7 @@ source 执行脚本: 脚本中的 export 变量加载入当前终端, 脚本结�
 
  $ kill <pid>                                    # 根据 pid 关掉指定进程
  $ kill 9481
- > [1]  + 9481 terminated  bash -x a.sh  
+ > [1]  + 9481 terminated  bash -x a.sh
 ```
 
 ## 用户
@@ -194,7 +204,7 @@ sudo 免密码
 
 ```bash
  $ touch ab a bc abc                             # 生成 ab a ba abc 4 个文件
- 
+
  $ ls ?b                                         # ? 可以指代任意单个字符
  > ab
 
@@ -206,11 +216,11 @@ sudo 免密码
 
 ```bash
  $ touch ab a bc abc                             # 生成 ab a ba abc 4 个文件
- 
+
  $ ls *                                          # * 可以指代任意多个字符
  > a  ab  abc  bc
 
- $ ls a*                                    
+ $ ls a*
  > a  ab  abc
 ```
 
@@ -219,7 +229,7 @@ sudo 免密码
 ```bash
  $ cat /etc/**/word                               # /etc/ 文件夹下所有 word 文件
 
- $ ls learn/**/*.md                               # 显示 learn 目录下所有 markdown 文件 
+ $ ls learn/**/*.md                               # 显示 learn 目录下所有 markdown 文件
  > a.md b.md c.md
 ```
 
@@ -236,9 +246,9 @@ sudo 免密码
 
 ### 输出重定向
 
-|输出重定向|输出重定向追加写入|输入重定向|读取标准输入直至分界符号|
-|:-:|:-:|:-:|:-:|
-|   `>`   |      `>>`      |   `<`    |        `<<`         |
+| 输出重定向 | 输出重定向追加写入 | 输入重定向 | 读取标准输入直至分界符号 |
+| :--------: | :----------------: | :--------: | :----------------------: |
+|    `>`     |        `>>`        |    `<`     |           `<<`           |
 
 ```bash
  $ <command> > <file>                            # 将命令返回值覆盖写入文件(原文件清空后写入)
@@ -265,13 +275,13 @@ sudo 免密码
 
 `&1`: 标准输出, 命令行输出, 能直接重定向至文件  
 `&2`: 标准错误, 命令执行错误输出, 需要将错误重定向至标准输出再指向文件  
-`/dev/null`: 空, 指代垃圾桶或回收站  
+`/dev/null`: 空, 指代垃圾桶或回收站
 
 ```bash
  $ mian                                          # 错误命令,显示错误输出
  > Command 'mian' not found
 
- $ data 2>/dev/null                              # 错误命令, 错误输出重定向至回收站, 不显示错误     
+ $ data 2>/dev/null                              # 错误命令, 错误输出重定向至回收站, 不显示错误
  $ date 2>/dev/null                              # 正确命令, 标准输出重定向至回收站, 不显示返回值
 
  $ data 2 > date.log                             # 命令行显示错误, 文件不显示, 错误输出无法直接重定向文件
@@ -280,8 +290,8 @@ sudo 免密码
 
 ## 单词缩写
 
-| 缩写 | 全称                  | 翻译        |
-| :---: | :-------------------- | :---------- |
+| 缩写  | 全称                | 翻译        |
+| :---: | :------------------ | :---------- |
 |   a   | `all`               | 全部        |
 |   b   | `backup`            | 备份        |
 |   c   | `count`             | 计数        |
@@ -298,26 +308,26 @@ sudo 免密码
 
 ### 符号
 
-|符号| 含义                  |
-|:-:|:-|
-|`>` | 输出重定向, 覆盖       |
-|`>>`| 输出重定向, 追加       |
-|`&` | 程序放入后台执行       |
-|`#` | 注释                  |
-|`&&`| 且, 左边成功才执行右边 |
+| 符号 | 含义                   |
+| :--: | :--------------------- |
+| `>`  | 输出重定向, 覆盖       |
+| `>>` | 输出重定向, 追加       |
+| `&`  | 程序放入后台执行       |
+| `#`  | 注释                   |
+| `&&` | 且, 左边成功才执行右边 |
 
 ### 正则表达式
 
-|  符号   | 模式                      |
-|:-:|:-|
-|`^`     | 锚定行首                   |
-|`$`     | 锚定行尾                   |
-|`()`    | 捆绑成一个整体             |
-|`.`     | 任意一个字符               |
-|`?`     | 前面字符或模式 0 或 1 次    |
-|`{m}`   | 前面字符或模式 m 次         |
-|`{m, n}`| 前面字符或模式次数在 m n 之间|
-|`+`     | 前面字符或模式 1 次或多次    |
-|`*`     | 前面字符或模式任意次         |
-|`[]`    | 括号范围内均可              |
-|`[^]`   | 括号范围之外均可            |
+|   符号   | 模式                          |
+| :------: | :---------------------------- |
+|   `^`    | 锚定行首                      |
+|   `$`    | 锚定行尾                      |
+|   `()`   | 捆绑成一个整体                |
+|   `.`    | 任意一个字符                  |
+|   `?`    | 前面字符或模式 0 或 1 次      |
+|  `{m}`   | 前面字符或模式 m 次           |
+| `{m, n}` | 前面字符或模式次数在 m n 之间 |
+|   `+`    | 前面字符或模式 1 次或多次     |
+|   `*`    | 前面字符或模式任意次          |
+|   `[]`   | 括号范围内均可                |
+|  `[^]`   | 括号范围之外均可              |

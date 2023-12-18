@@ -1,10 +1,21 @@
+---
+author: facsert
+pubDatetime: 2022-08-30 12:08:37
+title: Python eval
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Python
+description: "Python 标准函数 eval exec"
+---
+
 <!--
  * @Author       : facsert
- * @Date         : 2022-07-24 12:08:37
- * @LastEditTime: 2023-09-27 21:04:25
+ * @Date         : 2022-08-30 12:08:37
+ * @LastEditTime : 2023-09-27 21:04:25
  * @Description  : edit description
 -->
-# eval exec
 
 ## eval
 
@@ -44,13 +55,13 @@ eval 能评估字符串转换为表达式, 返回表达式的值
  glo_var = 'global variable'
  def eval_test():
     loc_val = 'local variable'
-    eval('print(glo_val + loc_val)', {}, {})     # 局内变量, 全局变量均受限 
+    eval('print(glo_val + loc_val)', {}, {})     # 局内变量, 全局变量均受限
  > name 'loc_val' is not defined
 
  glo_var = 'global variable'
  def eval_test():
     loc_val = 'local variable'
-    eval('print(glo_val + loc_val)', None, None) # 变量取值不受限制, 正常取值  
+    eval('print(glo_val + loc_val)', None, None) # 变量取值不受限制, 正常取值
  > name 'loc_val' is not defined
 ```
 
@@ -81,7 +92,7 @@ exec 将字符串转换为代码块, 返回值为 None
  exec(string, None, None)                        # 后两个默认参数, 默认值为 None
 
  exec('a = 2 + 3')                               # 与正常执行语句一致
- print(a)                                        
+ print(a)
  > 3
 
  eval('a = 2 + 3')                               # eval 无法执行语句
@@ -90,10 +101,10 @@ exec 将字符串转换为代码块, 返回值为 None
 
 
  a = exec('2 + 3')                               # exec 也可执行表达式, 但返回值为 None
- print(a)                                        
+ print(a)
  > None
 
  a = eval('2 + 3')                               # eval 能正常返回表达式结果
- print(a)                                        
+ print(a)
  > 5
 ```

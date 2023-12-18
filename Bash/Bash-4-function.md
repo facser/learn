@@ -1,17 +1,32 @@
+---
+author: facsert
+pubDatetime: 2023-10-09 20:03:44
+title: 04.Bash Function
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - bash
+description: "Bash 函数"
+---
+
 <!--
  * @Author: facsert
  * @Date: 2023-10-09 20:03:44
  * @LastEditTime: 2023-10-09 20:42:30
  * @LastEditors: facsert
- * @Description: 
+ * @Description:
 -->
 
-# Function
+[函数定义](#函数定义)
+[函数调用](#函数调用)
+[函数返回](#函数返回)
+[变量作用域](#变量作用域)
 
 ## 函数定义
 
 ```bash
-functionNamr() {
+functionName() {
     code
 }
 
@@ -29,40 +44,73 @@ function functionName {
 ```bash
 function hello() {                               # 定义函数
     local name=$1                                # 获取第一个参数的值
-    echo "Function hello $name"           
+    echo "Function hello $name"
 }
 
-hello "lily"                                     # 函数调用
+$ hello "lily"                                   # 函数调用
+> Function hello lily                            # 函数执行结果
+```
 
-Function hello lily                              # 函数执行结果
+函数允许使用参数, 参数使用 `$1`、`$2`、`$3` 等获取  
+`$0` 表示函数名  
+`$#` 表示参数个数  
+`$*` 表示所有参数  
+`$@` 表示所有参数
+
+```bash
+function func() {                               # 在 test.sh 中定义函数
+    for param in $*; do
+        echo "param $param"
+    done
+    echo "param length: $#"
+    echo "full param: $@"
+}
+func 1st 2nd 3rd                                 # 函数调用
+
+ $ bash test.sh                                  # 执行脚本
+ > param 1st
+ > param 2nd
+ > param 3rd
+ > param length: 3
+ > full param: 1st 2nd 3rd
 ```
 
 ## 函数返回
 
+使用 `return` 返回函数值, 返回值只能是数字  
+一般使用 `0` 表示执行成功, `1` 表示执行失败
+
 ```bash
-function max() {                               # 定义函数
-    local num1=$1
-    local num2=$2
-    [[ $num1 -gt $num2 ]] && return $num1
-    return $num2
+function max() {                                 # 定义函数
+    [[ $1 -gt $2 ]] && return $1 || return $2    # 返回值只允许数字
 }
 
-max 7 3                                          # 函数调用
-echo "max: $?"                                   # 获取函数返回值
+$ max 7 3; echo "max: $?"                        # 函数调用, 使用 $? 获取函数返回值
+> max: 7                                         # 打印函数返回值
 ```
 
-## 注意
+## 变量作用域
 
-函数内变量使用局域变量, 避免使用全局变量(同名覆盖)
+定义的变量默认为全局变量, 使用 `local` 定义为局部变量
+为避免使用全局变量污染(同名覆盖), 函数内变量使用局域变量
 
 ```bash
-function test() {
-    local name=$1                                # 声明局域变量, 仅函数内生效
-    index=$2                                     # 全局变量, 函数外可用
+count=0                                          # 定义全局变量 count
+function func() {
+    local index=0                                # 定义局内变量 index
+    for param in $*; do
+        count=$((count + 1))
+        index=$(expr $index + 1)
+    done
+    echo "local count: $count index: $index"     # 函数内打印
 }
 
-test "lily" 1                                    # 函数调用
-echo "name:$name index:$index"                   # 打印函数内变量
+func 1st 2nd 3rd                                 # 函数调用
+echo "global count: $count index: $index"        # 函数调用
+echo "param: $param"
 
-name: index:1                                    # 局域变量在函数外不可用, 全局变量在外可用
+ $ bash test.sh                                  # 执行脚本
+ > local count: 3 index: 3                       # 函数内部全局变量和局部变量都可用
+ > global count: 3 index:                        # 函数外局部变量不可用
+ > param: 3rd                                    # 函数内部变量污染全局变量
 ```

@@ -1,11 +1,21 @@
+---
+author: facsert
+pubDatetime: 2023-07-10 14:24:30
+title: Async
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - async
+description: "异步详解"
+---
+
 <!--
  * @Author       : facsert
  * @Date         : 2023-07-10 14:24:30
  * @LastEditTime : 2023-07-28 12:01:48
  * @Description  : edit description
 -->
-
-# 异步与多线程
 
 - 简述
 - 异步
@@ -27,9 +37,9 @@
 time |------- Device I/O -------|-- other --|
              long time           short time
 
-data <- CPU <- data -> Memory <- data -> device(Disk NIC) 
+data <- CPU <- data -> Memory <- data -> device(Disk NIC)
      ^          ^                 ^
-    fast      slowly            slowly   
+    fast      slowly            slowly
 ```
 
 I/O bound: I/O 密集操作, CPU 大部分时间在等硬盘和内存 I/O, CPU loading 低
@@ -60,20 +70,20 @@ I/O bond 因为 CPU 瓶颈无法发挥外部设备性能
 ```python
 import time
 from threading import Thread
-    
+
 def wait(name:str, delay:int):
     print(f"{name:<8} {delay} {time.strftime('%X')}")
     time.sleep(delay)
     print(f"{name:<8} {delay} {time.strftime('%X')}")
-    
+
 def main() -> None:
     first:Thread  = Thread(target=wait, args=('first', 4))
     second:Thread = Thread(target=wait, args=('second', 2))
     third:Thread  = Thread(target=wait, args=('third', 6))
-    
+
     [p.start() for p in (first, second, third)]
     [p.join() for p in (first, second, third)]
-  
+
 if __name__ == '__main__':
     main()
 
@@ -127,7 +137,7 @@ const main = () => {
 
 main()
 
-// 同步读取 3 个文件消耗 30s 
+// 同步读取 3 个文件消耗 30s
 first  Wed Nov 23 2022 16:44:21 GMT+0800 (China Standard Time)
 first  Wed Nov 23 2022 16:44:31 GMT+0800 (China Standard Time)
 second Wed Nov 23 2022 16:44:31 GMT+0800 (China Standard Time)
@@ -180,7 +190,7 @@ func main() {
 
     // time.Sleep(3 * time.Second)
     fmt.Println("Over")
-    wg.Wait()                                                                      
+    wg.Wait()
 }
 
 
@@ -242,7 +252,7 @@ const main = () => {
     // recordSync("third ", 4000000000)
     console.log("Over")
 }
-  
+
 main()
 
 first  4 Tue Nov 22 2022 11:04:58 GMT+0800 (China Standard Time)
@@ -266,7 +276,7 @@ third  Read Finish
 third  4000000000 Tue Nov 29 2022 10:32:40 GMT+0800 (China Standard Time)
 third  4000000000 Tue Nov 29 2022 10:32:45 GMT+0800 (China Standard Time)
 Over
-second 2 Tue Nov 29 2022 10:32:45 GMT+0800 (China Standard Time)  
+second 2 Tue Nov 29 2022 10:32:45 GMT+0800 (China Standard Time)
 first  4 Tue Nov 29 2022 10:32:45 GMT+0800 (China Standard Time)
 third  6 Tue Nov 29 2022 10:32:46 GMT+0800 (China Standard Time)
 ```
@@ -295,20 +305,20 @@ def wait(name:str, delay:int) -> None:
     print(f"{name:<8} {delay} {time.strftime('%X')}")
     time.sleep(delay)
     print(f"{name:<8} {delay} {time.strftime('%X')}")
-    
+
 async def main():
     await asyncio.gather(
         asyncio.to_thread(wait, 'first',  4),
         asyncio.to_thread(wait, 'second', 2),
         asyncio.to_thread(wait, 'third',  6),
-    )    
+    )
 
     await asyncio.gather(
         asyncio.to_thread(record, 'first',  60000000),
         asyncio.to_thread(record, 'second', 10000000),
         asyncio.to_thread(record, 'third',  30000000),
     )
-    
+
 if __name__ == 'main':
     asyncio.run(main())
 
@@ -328,13 +338,13 @@ third    60000000 16:43:55
 
 # 执行单个千万量级的运算
 first    40000000 16:45:38
-first    40000000 16:45:41                               
+first    40000000 16:45:41
 
 second   20000000 16:46:13
-second   20000000 16:46:15                             
+second   20000000 16:46:15
 
 third    60000000 16:46:32
-third    60000000 16:46:36                                
+third    60000000 16:46:36
 ```
 
 > 由于 GIL 的存在, asyncio.to_thread() 通常只能被用来将 IO 密集型函数变为非阻塞的
@@ -371,7 +381,7 @@ const main = () => {
     record("third ", 4000000000).then(msg => console.log(msg));
     console.log("Over")
 }
-  
+
 main()
 
 // 异步执行 3 个十亿量级运算
@@ -418,20 +428,20 @@ def record(name: str, end: int, ) -> None:
     for i in range(end):
         sum += i
     print(f"{name:<8} {end} {time.strftime('%X')}")
-        
-def main():    
+
+def main():
     first:Thread  = Thread(target=record, args=('first',  40000000))
     second:Thread = Thread(target=record, args=('second', 20000000))
     third:Thread  = Thread(target=record, args=('third',  60000000))
 
     [p.start() for p in (first, second, third)]
     [p.join() for p in (first, second, third)]
-    
+
 if __name__ == '__main__':
     main()
 
 
-first    40000000 15:27:18                       
+first    40000000 15:27:18
 third    60000000 15:27:18
 second   20000000 15:27:24
 first    40000000 15:27:28
@@ -462,20 +472,20 @@ def record(name: str, end: int, ) -> None:
     for i in range(end):
         sum += i
     print(f"{name:<8} {end} {time.strftime('%X')}")
-        
-def main():    
+
+def main():
     first:Thread  = Process(target=record, args=('first',  40000000))
     second:Thread = Process(target=record, args=('second', 20000000))
     third:Thread  = Process(target=record, args=('third',  60000000))
 
     [p.start() for p in (first, second, third)]
     [p.join() for p in (first, second, third)]
-    
+
 if __name__ == '__main__':
     main()
 
 
-first    40000000 15:22:03                      
+first    40000000 15:22:03
 second   20000000 15:22:03
 third    60000000 15:22:03
 second   20000000 15:22:04

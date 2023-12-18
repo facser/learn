@@ -1,7 +1,19 @@
+---
+author: facsert
+pubDatetime: 2022-07-18 15:02:16
+title: Linux File
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Linux
+description: "Linux 文件操作"
+---
+
 <!--
  * @Author       : facsert
  * @Date         : 2022-07-18 15:02:16
- * @LastEditTime: 2023-10-08 21:22:48
+ * @LastEditTime : 2023-10-08 21:22:48
  * @Description  : edit description
 -->
 
@@ -9,27 +21,27 @@
 
 ## 特殊目录文件
 
-|位置|全称|说明|
-|:-:|:-|:-|
-|`/etc` |Configuration Files   |系统和软件的配置文件|
-|`/usr` |Unix Software Resource|应用程序默认安装位置|
-|`/dev` |Device Files          |系统外围设备|
-|`/mnt` |Mount Directory       |空目录, 用于临时挂载文件系统|
-|`/bin` |User Binaries         |所有用户可用的基本命令|
-|`/home`|Home Directories      |普通用户的主目录|
-|`/proc`|Process Information   |虚拟文件系统, 以映射系统与进程在内存中的信息|
+|  位置   | 全称                   | 说明                                         |
+| :-----: | :--------------------- | :------------------------------------------- |
+| `/etc`  | Configuration Files    | 系统和软件的配置文件                         |
+| `/usr`  | Unix Software Resource | 应用程序默认安装位置                         |
+| `/dev`  | Device Files           | 系统外围设备                                 |
+| `/mnt`  | Mount Directory        | 空目录, 用于临时挂载文件系统                 |
+| `/bin`  | User Binaries          | 所有用户可用的基本命令                       |
+| `/home` | Home Directories       | 普通用户的主目录                             |
+| `/proc` | Process Information    | 虚拟文件系统, 以映射系统与进程在内存中的信息 |
 
-|位置|说明|
-|:-|:-|
-|`/etc/environment`                    |任意用户打开命令行加载, 系统环境变量|
-|`/etc/profile`                        |任意用户打开命令行加载|
-|`/etc/bash.bashrc`                    |任意用户打开命令行加载|
-|`~/.profile`                          |当前用户打开命令行时执行的文件|
-|`~/.bashrc`                           |当前用户打开 bash 命令行时执行的文件|
-|`/etc/ssh/sshd_config`                |ssh 服务配置文件|
-|`/etc/apt/source.list`                |(Ubuntu) apt 下载源文件|
-|`/var/cache/apt/archives/`            |(Ubuntu) apt 下载包安放位置|
-|`/ect/rc.d/rc.local`                  |系统启动时执行的文件(centos, redhat)|
+| 位置                       | 说明                                 |
+| :------------------------- | :----------------------------------- |
+| `/etc/environment`         | 任意用户打开命令行加载, 系统环境变量 |
+| `/etc/profile`             | 任意用户打开命令行加载               |
+| `/etc/bash.bashrc`         | 任意用户打开命令行加载               |
+| `~/.profile`               | 当前用户打开命令行时执行的文件       |
+| `~/.bashrc`                | 当前用户打开 bash 命令行时执行的文件 |
+| `/etc/ssh/sshd_config`     | ssh 服务配置文件                     |
+| `/etc/apt/source.list`     | (Ubuntu) apt 下载源文件              |
+| `/var/cache/apt/archives/` | (Ubuntu) apt 下载包安放位置          |
+| `/ect/rc.d/rc.local`       | 系统启动时执行的文件(centos, redhat) |
 
 ## 文件查看
 
@@ -39,7 +51,7 @@
 
 ```bash
  $ tree <path>                                   # 显示目录的树状层级图
- 
+
  > Zip/
    ├── targe.tar.gz
    └── main.sh
@@ -107,7 +119,7 @@ change directory 切换工作路径
 
 ```bash
  $ cd <path>                                     # 切换到 <paht> 目录
- 
+
  $ cd ..                                         # 返回上级目录
  $ cd -                                          # 回到上次所有在目录
 
@@ -166,8 +178,8 @@ move: 移动文件或文件夹
  $ mv -v                                         # --verbose 显示过程, 打印原名及更改后名
  $ mv -f                                         # --force 强制移动, 存在同名则覆盖
  $ mv -n                                         # --no-clobber 存在同名文件则不移动
- 
- $ mv -bv main.sh master.sh                      # 文件重命名, 同名文件修改文件名令 mv 命令得以成功执行  
+
+ $ mv -bv main.sh master.sh                      # 文件重命名, 同名文件修改文件名令 mv 命令得以成功执行
  > renamed 'main.sh' -> 'master.sh' (backup: 'master.sh~')
  > master.sh  master.sh~
 ```
@@ -214,13 +226,13 @@ copy 复制文件
  > ./temp/a.txt
  > ./temp/b.txt
 
- $ find temp -regex ".*\.txt$"                   # 当前目录的 temp 文件夹下符合正则表达式的文件                              
+ $ find temp -regex ".*\.txt$"                   # 当前目录的 temp 文件夹下符合正则表达式的文件
  > temp/a.txt                                    # .* 任意字符任意次, \.txt$ 以 .txt 结尾
  > temp/b.txt
 
  $ find <dir> <options> -exec <command> {} \;    # 对查找到的文件进行操作
  $ find . -name "*.sh" -exec rm {} \;            # 删除当前目录下后缀为 .sh 文件
- $ find . -name "*.py" -exec mv {} /root \;      # 将当前目录下后缀为 .py 文件移动到 /root 
+ $ find . -name "*.py" -exec mv {} /root \;      # 将当前目录下后缀为 .py 文件移动到 /root
 
  $ find . -type f -exec sh -c 'echo >{}' \;      # 清空当前目录下所有文件内容
 ```
@@ -236,7 +248,7 @@ concatenate 读取文件内容
  $ cat -n <file>                                 # 打印文件内容并添加行数
  > 1  1st
  > 2  2nd
- > 3  3rd  
+ > 3  3rd
 ```
 
 #### [head](https://www.linuxcool.com/head)
@@ -248,11 +260,11 @@ concatenate 读取文件内容
 ```bash
  $ head <file>                                   # 显示文件的前 10 行
  $ head -n 5 <file>                              # --lines 显示文件前 5 行
- $ head -c 20 <file>                             # --bytes 显示文件前 20 个字符 
+ $ head -c 20 <file>                             # --bytes 显示文件前 20 个字符
 
  $ tail <file>                                   # 显示文件的后 10 行
  $ tail -n 5 <file>                              # --lines 显示文件后 5 行
- $ tail -c 20 <file>                             # --bytes 显示文件最后 20 个字符 
+ $ tail -c 20 <file>                             # --bytes 显示文件最后 20 个字符
 
  $ head -c 5 log
  > 1st

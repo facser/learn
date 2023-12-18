@@ -1,11 +1,25 @@
+---
+author: facsert
+pubDatetime: 2022-07-03 17:44:44
+title: 02.Bash Branch
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - bash
+description: "Bash 条件分支"
+---
+
 <!--
  * @Author       : facsert
  * @Date         : 2023-07-07 17:44:44
- * @LastEditTime: 2023-10-08 21:42:22
+ * @LastEditTime: 2023-12-13 22:51:29
  * @Description  : edit description
 -->
 
-# Branch
+[if 分支](#if-分支)
+[表达式](#表达式)
+[case 分支](#case-分支)
 
 ## if 分支
 
@@ -14,7 +28,7 @@ if 分支是 shell 中的最常见的分支
 ```shell
 if <expression> ; then                           # expression 返回值为 0 表示条件成立
     commands                                     # 表达式成立才会执行 command
-fi
+fi                                               # 分支语句结束
 
 if [[ 3 > 2 ]]; then                             #  3 > 2 条件成立
     echo -e " 3 bigger thean 2\n"                # 执行打印
@@ -29,30 +43,30 @@ fi
 
 ### 多重分支
 
-```shell
+```bash
 if <expression>; then                            # command 返回值为 0 表示条件成立
     commands
-elif <expression>; then                          # if 不成立, 判断 elif        
+elif <expression>; then                          # if 不成立, 判断 elif
     commands
 else                                             # if 和 elif 均不成立才执行
     commands
 fi
 
 if true; then                                    # 命令执行成功表示条件成立
-    echo "first if"; 
+    echo "first if";
 elif true; then                                  # 上个 if 条件不成立才会执行判断
     echo "else if";
 else                                             # 上述分支均不成立才会执行
-    echo "else"; 
-fi       
+    echo "else";
+fi
 
 > first if                                       # 执行第一个成立的 if 条件
 ```
 
-### 表达式
+## 表达式
 
 表达式有很多形式, 数值或字符串比较需要使用括号包含  
-Linux 命令也可以作为表达式, 命令返回值 0 为 true, 返回值不为 0 为 false  
+Linux 命令也可以作为表达式, 命令返回值 0 为 true, 返回值不为 0 为 false
 
 ```shell
 test < expression >                              # 常用作 if 判断的表达式, 与 [ expression ] 等价
@@ -60,16 +74,17 @@ test < expression >                              # 常用作 if 判断的表达�
 [[ expression ]]                                 # 较上述额外支持正则, 括号内空格是必须的
 
 
-if [[ $USER == "root" ]]; then                   
+if [[ $USER == "root" ]]; then
     echo "user is root"
 else
-    echo "not user root"
+    echo "not root user"
 fi
 
 [[ $USER == "root" ]] && echo "user is root"     # &&(且) 表达式为 true 才会执行后半段
 [[ $USER == "root" ]] || echo "not user root"    # ||(或) 表达式为 false 才会执行后半段
+[[ $? -eq 0 ]] && echo "succ" || echo "fail"     # 同时使用 && 和 ||
 
- $ true && echo $?                               # true 返回值为 0, 前半部分 true, 继续执行后半段    
+ $ true && echo $?                               # true 返回值为 0, 前半部分 true, 继续执行后半段
  > 0
  $ false || echo $?                              # false 返回值 1, 前半部分 false, 继续执行后半段
  > 1
@@ -81,19 +96,19 @@ fi
 ### 数值比较
 
 单中括号数值比较不支持 `> < ==` 等符号, 使用 `-eq -ne -lt -le -gt -ge` 代替  
-双中括号数值比较支持 `> < ==` 符号也支持 `-eq -ne -lt -le -gt -ge`  
+双中括号数值比较支持 `> < ==` 符号也支持 `-eq -ne -lt -le -gt -ge`
 
 ```bash
  $ [ 3 -eq 3 ]                                   # equal 数值相等表示 true
  $ [ 3 -ne 3 ]                                   # not equal 数值不相等表示 true
  $ [ 3 -lt 3 ]                                   # less than 小于
- $ [ 3 -le 3 ]                                   # less equal 小于等于 
+ $ [ 3 -le 3 ]                                   # less equal 小于等于
  $ [ 3 -gt 3 ]                                   # greater than 大于
  $ [ 3 -ge 3 ]                                   # greater equal 大于等于
 
  $ [ 0 -ne 0 ]; echo $?
  > 0
- 
+
  $ [ 3 > 2 ] && echo "true"                      # 执行命令 "3" 结果写入 2 文件, 执行成功打印 true
  > true
 ```
@@ -108,7 +123,7 @@ fi
 
  $ [ "abc" == "abc" ]                            # 字符串相等为 true
  $ [ "abc" != "abc" ]                            # 字符串不相等为 true
- 
+
  $ name=""
  $ [ $name == "linux" ] || echo "no linux"       # name 为空, 从 == 开始执行, 报错
  > bash: [: ==: unary operator expected
@@ -125,7 +140,7 @@ fi
 
  $ [[ ! -e file ]] && touch file                 # 如果 file 不存在则创建 file
  $ [[ ! -d /root/path ]] && mkdir -p /root/path  # 如果路径不存在测创建路径
- 
+
  $ [ -f file ] && cat file || echo "1st" > file  # file 存在则读取 file, 不存在则创建并写入 "1st"
  > 1st
 ```
@@ -135,7 +150,7 @@ fi
 ```bash
 [[ expression ]]                                 # 仅双括号支持正则表达式
 
-[[ "abc" =~ "b" ]]                               # true 判断 abc 是否包含 b 
+[[ "abc" =~ "b" ]]                               # true 判断 abc 是否包含 b
 [[ "01:01:01" =~ ([0-9]{2}\:){2}[0-9]{2} ]]      # true 正则匹配时间格式, 正则表达式不能用引号包含
 [[ "10.0.0.1" =~ ([0-9]{1,3}\.){3}[0-9]{1,3} ]]  # true 正则匹配 IPV4
 ```
@@ -172,13 +187,17 @@ fi
 
 ## case 分支
 
+使用 case 作为多重判断条件, 支持正则表达式, 支持多行
+
 ```bash
 case expression in
     pattern1 )
         commands;;
     pattern2 )
         commands;;
-    esac
+    *)
+        commands;;
+esac
 
 index=2
 case $index in
@@ -190,7 +209,5 @@ case $index in
         echo "index is 1";;
     *)
         echo "index not in 1,2,3";;
-    esac
+esac
 ```
-
-

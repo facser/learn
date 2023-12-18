@@ -1,11 +1,21 @@
+---
+author: facsert
+pubDatetime: 2022-07-08 10:17:53
+title: Git Local Repository
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - git
+description: "Git 本地仓库"
+---
+
 <!--
  * @Author       : facsert
- * @Date         : 2023-05-23 15:28:43
- * @LastEditTime : 2023-07-28 11:44:20
+ * @Date         : 2022-07-08 10:17:53
+ * @LastEditTime : 2022-12-15 23:00:54
  * @Description  : edit description
 -->
-
-# Git Local Repository
 
 ## 介绍
 
@@ -17,7 +27,7 @@
 仓库所有配置及版本文件均保存在 .git 文件夹中
 
 ```bash
- $ mkdir -p ~/Desktop/repository                 # 在左面创建 repository 文件夹 
+ $ mkdir -p ~/Desktop/repository                 # 在左面创建 repository 文件夹
  $ cd ~/Desktop/repository                       # 进入 repository 文件夹
 
  $ git init                                      # 在 repository 目录下创建本地仓库
@@ -34,11 +44,11 @@
 git 用一下3种描述表示**文件状态**, 进一步可划分为**未追踪**和**已追踪**
 工作区 -- `git add` --> 暂存区 -- `git commit` --> 本地仓库
 
-|区域|描述|状态|
-|:--|:--:|:--:|
-|`Untracked files`|新增文件|文件处于工作区, 未被追踪|
-|`Changes not staged for commit`|有新修改的文件|文件处于工作区, 新修改未被追踪|
-|`Changes to be committed`|无修改的文件|文件处于暂存区, 修改已追踪|
+| 区域                            |      描述      |              状态              |
+| :------------------------------ | :------------: | :----------------------------: |
+| `Untracked files`               |    新增文件    |    文件处于工作区, 未被追踪    |
+| `Changes not staged for commit` | 有新修改的文件 | 文件处于工作区, 新修改未被追踪 |
+| `Changes to be committed`       |  无修改的文件  |   文件处于暂存区, 修改已追踪   |
 
 ```bash
  $ git status                                    # 查看本地仓库状态, 有新增文件未被记录
@@ -99,7 +109,7 @@ git 用一下3种描述表示**文件状态**, 进一步可划分为**未追踪*
  > Author: facser <root@facser>
  > Date:   Mon Feb 13 20:42:18 2023 +0800
 
-    first commit                                 # 本次版本描述 
+    first commit                                 # 本次版本描述
 ```
 
 > git-log - Show commit logs

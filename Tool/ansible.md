@@ -1,11 +1,22 @@
+---
+author: facsert
+pubDatetime: 2023-06-03 17:44:44
+title: Ansible
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Ansible
+  - Tool
+description: "自动化运维工具 Ansible"
+---
+
 <!--
  * @Author       : facsert
- * @Date         : 2023-07-07 17:44:44
- * @LastEditTime: 2023-10-11 21:51:31
+ * @Date         : 2023-06-03 17:44:44
+ * @LastEditTime : 2023-10-11 21:51:31
  * @Description  : edit description
 -->
-
-# Ansible
 
 ## 介绍
 
@@ -16,9 +27,8 @@
 安装
 
 ```bash
- $ apt install ansible 
+ $ apt install ansible
 ```
-
 
 ### 配置节点
 
@@ -33,9 +43,7 @@ localhost
 
 ```
 
-
 ## 命令
-
 
 ```bash
  $ ansible
@@ -48,13 +56,12 @@ localhost
  $ ansilbe all -m shell -a "ifconfig"
 ```
 
-
 ### 查询
 
 ```bash
  $ ansible --version
  $ ansible all --list-host
- $ 
+ $
 
 ```
 
@@ -67,11 +74,9 @@ localhost
 
 ### 文件
 
-
 ```bash
  $ ansible node -m copy -a "src=/root/local dst=/root/remote"
  $ ansible node -m fetch -a "src=/root/remote dst=/root/local"
 ```
-
 
 ## Playbook

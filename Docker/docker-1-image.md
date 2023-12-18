@@ -1,17 +1,27 @@
+---
+author: facsert
+pubDatetime: 2022-10-10 15:28:43
+title: Docker image
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - docker
+description: "Docker 镜像"
+---
+
 <!--
  * @Author       : facsert
- * @Date         : 2023-05-23 15:28:43
+ * @Date         : 2022-10-10 15:28:43
  * @LastEditTime : 2023-07-28 17:01:11
  * @Description  : edit description
 -->
-
-# Docker Image
 
 ## 介绍
 
 镜像是容器的模板, 所有容器都通过镜像创建的  
 一个镜像可以生成任意数量的容器  
-可以使用官方镜像或者自定义镜像  
+可以使用官方镜像或者自定义镜像
 
 ## 镜像列表
 
@@ -31,9 +41,9 @@
  > pipreqs     1.0     d4633ae3a8af  2 months ago  1.08GB
 ```
 
-|`REPOSITORY`|`TAG`|`IMAGE ID`|`CREATED`|`SIZE`|
-|:-|:-|:-|:-|:-|
-|镜像仓库源|镜像 tag|镜像 ID|镜像创建时间|镜像大小|
+| `REPOSITORY` | `TAG`    | `IMAGE ID` | `CREATED`    | `SIZE`   |
+| :----------- | :------- | :--------- | :----------- | :------- |
+| 镜像仓库源   | 镜像 tag | 镜像 ID    | 镜像创建时间 | 镜像大小 |
 
 ## 拉取镜像
 
@@ -47,7 +57,7 @@
  $ docker pull [OPTIONS] NAME[:TAG|@DIGEST]
  Options:
    -a, --all-tags                Download all tagged images in the repository
-       --disable-content-trust   Skip image verification (default true)  
+       --disable-content-trust   Skip image verification (default true)
 
  $ docker pull ubuntu:20.04
 ```
@@ -58,8 +68,8 @@
 ```bash
  $ docker login [person registry]
  > docker login registry.facser:8081
- Username (facser): facser 
- Password: 
+ Username (facser): facser
+ Password:
  Login Succeeded
 
  $ docker pull registry.facser:8081/ubuntu:20.04
@@ -73,7 +83,7 @@
    -f, --force      Force removal of the image
        --no-prune   Do not delete untagged parents
 
- $ docker images 
+ $ docker images
  > REPOSITORY  TAG     IMAGE ID      CREATED       SIZE
  > mongo       latest  0850fead9327  12 days ago   700MB
  > pipreqs     1.0     d4633ae3a8af  2 months ago  1.08GB
@@ -90,20 +100,20 @@
 
  $ docker search ubuntu
  > NAME               DESCRIPTION                                     STARS   OFFICIAL   AUTOMATED
- > ubuntu             Ubuntu is a Debian-based Linux operating sys…   15368   [OK]                
- > websphere-liberty  WebSphere Liberty multi-architecture images …   290     [OK]     
+ > ubuntu             Ubuntu is a Debian-based Linux operating sys…   15368   [OK]
+ > websphere-liberty  WebSphere Liberty multi-architecture images …   290     [OK]
 ```
 
-|`NAME`|`DESCRIPTION`|`STARS`|`OFFICIAL`|`AUTOMATED`|
-|:-|:-|:-|:-|:-|
-|镜像名称|镜像名称|点赞数|是否官方|是否自动构建|
+| `NAME`   | `DESCRIPTION` | `STARS` | `OFFICIAL` | `AUTOMATED`  |
+| :------- | :------------ | :------ | :--------- | :----------- |
+| 镜像名称 | 镜像名称      | 点赞数  | 是否官方   | 是否自动构建 |
 
 - 保存镜像
 
 ```bash
  $ docker save [OPTIONS] IMAGE [IMAGE...]
  $ docker save 0850fead9327 > mongo.tar.gz
- 
+
  $ ll
  > -rw-r--r-- 1 root  root   23K Mar  7 21:10 mongo.tar.gz
 ```
@@ -115,7 +125,7 @@
  $ docker history 0850fead9327
 
  > IMAGE         CREATED      CREATED BY                          SIZE  COMMENT
- > 0850fead9327  12 days ago  /bin/sh -c #(nop)  CMD ["mongod"]   0B         
+ > 0850fead9327  12 days ago  /bin/sh -c #(nop)  CMD ["mongod"]   0B
 ```
 
 - 修改镜像 tag
@@ -128,7 +138,7 @@ REPOSITORY  TAG  IMAGE ID      CREATED       SIZE
 mongo-base  v1   43761bd5b76d  41 hours ago  00MB
 mongo-base  v2   43761bd5b76d  41 hours ago  700MB
 
-$ docker tag mongo-base:v2  mongo-person:1.0.0                           
+$ docker tag mongo-base:v2  mongo-person:1.0.0
 
 ❯ docker images
 REPOSITORY    TAG    IMAGE ID      CREATED       SIZE
@@ -145,7 +155,7 @@ mongo-person  1.0.0  43761bd5b76d  41 hours ago  700MB
 
  Options:
    --file, -f                                                                  # 指定要使用的Dockerfile路径；
-   --tag, -t                                                                   # 镜像的名字及标签(name:tag 或 name, 允许多个) 
+   --tag, -t                                                                   # 镜像的名字及标签(name:tag 或 name, 允许多个)
    --no-cache                                                                  # 不使用缓存
 
  $ docker build -t nginx-base:v1 .                                             # "." 查找当前目录下的 Dockerfile 构建镜像
@@ -166,18 +176,18 @@ ARG USERNAME="facser"                                                          #
 LABEL version="1.0.0" description="ubuntu image by $USERNAME"                  # 添加镜像元数据
 
 ADD nginx-1.8.0.tar.gz $path                                                   # 将系统下文件复制到镜像中目录下
-ADD epel-release-latest-7.noarch.rpm $path 
+ADD epel-release-latest-7.noarch.rpm $path
 
 WORKDIR $path                                                                  # 设定镜像中工作目录, 并转到改目录, 类似 cd 命令, 可以多次设置
 
 RUN rpm -ivh /usr/local/epel-release-latest-7.noarch.rpm &&\                   # 执行 shell 命令
-    yum install -y wget lftp gcc gcc-c++ make openssl-devel pcre-devel pcre &&\ 
+    yum install -y wget lftp gcc gcc-c++ make openssl-devel pcre-devel pcre &&\
     yum clean all &&\
     cd $path/nginx-1.8.0 &&\
     ./configure --prefix=/usr/local/nginx --user=www --group=www --with-http_ssl_module --with-pcre &&\
     make &&\
     make install &&\
-    echo "daemon off;" >> /etc/nginx.conf 
+    echo "daemon off;" >> /etc/nginx.conf
 
 CMD /usr/sbin/nginx                                                            # 生成容器后执行的命令, 会被 docker run 生成容器时初始命令覆盖
 ```
@@ -225,7 +235,7 @@ RUN date                                                                       #
 RUN ["/bin/sh", "-c", "date"]                                                  # 和上命令完全一致
 RUN ["/bin/bash", "-c", "date"]                                                # 通过 bash 执行 date 命令 (命令执行失败继续执行)
 
-RUN echo "line first"  >> /root/run.log                                        # 执行 3 个 RUN 指令, 创建 3 个镜像层 
+RUN echo "line first"  >> /root/run.log                                        # 执行 3 个 RUN 指令, 创建 3 个镜像层
 RUN echo "line second" >> /root/run.log                                        # 层数越多占用空间更大
 RUN echo "line third"  >> /root/run.log                                        # 创建失败时, 从失败的上一层 RUN 继续, 重新创建速度更快
 
@@ -243,7 +253,7 @@ CMD /bin/bash                                                                  #
  $ docker run -it --name nginx-demo nginx-base echo "create mongo container"   # echo 命令覆盖 /bin/bash 指令
 ```
 
-注: 创建容器时, 若执行的命令在一定时间内能完成, 则容器在执行完命令就会关闭  
+注: 创建容器时, 若执行的命令在一定时间内能完成, 则容器在执行完命令就会关闭
 
 - echo "hello docker", 创建容器在执行完 echo 命令后便关闭改容器
-- /bin/bash, 该命令未收到 exit 退出前会一直执行, 该容器会保持运行状态  
+- /bin/bash, 该命令未收到 exit 退出前会一直执行, 该容器会保持运行状态

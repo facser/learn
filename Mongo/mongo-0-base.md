@@ -1,11 +1,21 @@
+---
+author: facsert
+pubDatetime: 2023-04-14 15:28:43
+title: Mongo Configuration
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Mongo
+description: "Mongo 基本配置"
+---
+
 <!--
  * @Author       : facsert
- * @Date         : 2023-05-23 15:28:43
+ * @Date         : 2023-04-14 15:28:43
  * @LastEditTime : 2023-07-28 11:46:45
  * @Description  : edit description
 -->
-
-# Mongo
 
 ## 示例
 
@@ -30,8 +40,8 @@
 ## mongo 容器
 
 ```bash
- $ docker exec -it mongodb bash 
- 
+ $ docker exec -it mongodb bash
+
  $ mongosh                                       # 进入 mongo shell, 早期版本使用 mongo 命令
  >
 ```
@@ -46,10 +56,10 @@
 test                                             # 数据库名称
     student                                      # 集合名称
         <id1>: {'_id': <id1>, 'name': 'John'}    # 文档，类似行, 一个文档包含一个 json 数据
-        <id2>: {'_id': <id2>, 'name': 'peter'}  
+        <id2>: {'_id': <id2>, 'name': 'peter'}
     teacher                                      # 集合名称
         <id1>: {'_id': <id1>, 'name': 'John'}    # 文档，类似行, 一个文档包含一个 json 数据
-        <id2>: {'_id': <id2>, 'name': 'peter'}  
+        <id2>: {'_id': <id2>, 'name': 'peter'}
 
 ```
 
@@ -71,9 +81,9 @@ test                                             # 数据库名称
  > db.stats()                                    // 数据库 test 的信息
  {
   db: 'redis',
-  collections: 0,                                
+  collections: 0,
   views: 0,
-  objects: 0,                                    
+  objects: 0,
   avgObjSize: 0,
   dataSize: 0,
   storageSize: 0,
@@ -87,7 +97,7 @@ test                                             # 数据库名称
  }
 
  > db.dropDatabase()                             // 删除数据库 redis
- { ok: 1, dropped: 'redis' }      
+ { ok: 1, dropped: 'redis' }
 ```
 
 ## 集合
@@ -101,11 +111,11 @@ test                                             # 数据库名称
  > db.log.drop()                                 // 删除 log 集合
 ```
 
-|option|type|description|
-|:-:|:-:|:-|
-|`capped`|Boolean|true: 集合启用 size 限制, 超过部分自动覆盖最早的条目。启动该选项同时也需指定 size 数值|
-|`size`|number|设定集合最大可使用字节数。capped 为 true 时设置|
-|`max` |number|设置集合能容纳的最大文档数量。Size限制优先于数量限制。文档数量未到 max, size 到达限制时也会触发文档覆盖|
+|  option  |  type   | description                                                                                             |
+| :------: | :-----: | :------------------------------------------------------------------------------------------------------ |
+| `capped` | Boolean | true: 集合启用 size 限制, 超过部分自动覆盖最早的条目。启动该选项同时也需指定 size 数值                  |
+|  `size`  | number  | 设定集合最大可使用字节数。capped 为 true 时设置                                                         |
+|  `max`   | number  | 设置集合能容纳的最大文档数量。Size限制优先于数量限制。文档数量未到 max, size 到达限制时也会触发文档覆盖 |
 
 ## 文档
 

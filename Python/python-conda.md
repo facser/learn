@@ -1,11 +1,23 @@
+---
+author: facsert
+pubDatetime: 2023-09-27 21:03:53
+title: Python Anaconda
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Python
+  - Anaconda
+description: "Python 版本控制工具 Anaconda"
+---
+
 <!--
  * @Author: facsert
  * @Date: 2023-09-27 21:03:53
  * @LastEditTime: 2023-11-01 21:28:56
  * @LastEditors: facsert
- * @Description: 
+ * @Description:
 -->
-# conda
 
 Anaconda 是一个 python 版本管理器, 能快速创建虚拟环境, 管理 python 版本,安装包等.
 
@@ -67,7 +79,7 @@ Anaconda 是一个 python 版本管理器, 能快速创建虚拟环境, 管理 p
 
 ```bash
  $ conda env remove -n <name>                               # 删除指定环境
- 
+
  $ conda env remove -n py3.7                                # 删除 py3.7 环境
  > Remove all packages in environment /root/anaconda3/envs/py3.7:
 ```
@@ -75,16 +87,16 @@ Anaconda 是一个 python 版本管理器, 能快速创建虚拟环境, 管理 p
 ## 包管理
 
 ```bash
- $ conda list -n <name>               
+ $ conda list -n <name>
  $ conda list -n py3.7                                      # 列出环境内所有包
  > # packages in environment at /root/anaconda3/envs/py39:
  > #
- > # Name  
+ > # Name
  > ......
 
  $ conda install -n <name> <pkg1> <pkg2>                   # 指定环境安装包
  $ conda install -n  py39  toml  yaml                      # py39 环境安装 toml 和 yaml 包
- 
+
  $ conda uninstall <pkg> -n <name>                         # 指定环境卸载包
  $ conda uninstall yaml -n py39
 
@@ -107,7 +119,7 @@ Anaconda 是一个 python 版本管理器, 能快速创建虚拟环境, 管理 p
 - windows: C:\Users\%USER%\.condarc
 
 ```bash
- $ cat .condarc
+ $ cat ~/.condarc
  > channels:
  > - http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
  > - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
@@ -126,6 +138,7 @@ Anaconda 是一个 python 版本管理器, 能快速创建虚拟环境, 管理 p
 channels:
   - defaults
 show_channel_urls: true
+ssl_verify: false
 default_channels:
   - https://mirrors.bfsu.edu.cn/anaconda/pkgs/main
   - https://mirrors.bfsu.edu.cn/anaconda/pkgs/r

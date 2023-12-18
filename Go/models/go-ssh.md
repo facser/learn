@@ -1,11 +1,22 @@
+---
+author: facsert
+pubDatetime: 2023-07-28 09:31:54
+title: Go SSH
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Go
+  - ssh
+description: "Go SSH 连接"
+---
+
 <!--
  * @Author       : facsert
  * @Date         : 2023-07-28 09:31:54
  * @LastEditTime : 2023-07-28 11:35:22
  * @Description  : edit description
 -->
-
-# Go ssh
 
 Go 实现 ssh 连接远端并发送命令执行  
 `golang.org/x/crypto/ssh`
@@ -30,13 +41,13 @@ Go 实现 ssh 连接远端并发送命令执行
 ### 流程
 
 ```bash
-# ssh.Dial 配置 server 信息生成 client 对象  
-# client 创建一个 session 执行 linux 命令并获取返回值  
+# ssh.Dial 配置 server 信息生成 client 对象
+# client 创建一个 session 执行 linux 命令并获取返回值
 
       server config               new                      command
 ssh.Dial ---> client(*ssh.Client) ---> session(*ssh.Session) ---> server
                          1                      N
-                         
+
 # 单个 client 可以创建多个 session 执行 linux 指令
 # session 执行指令失败或者命令返回值不为 0 则报错
 ```
@@ -60,7 +71,7 @@ func Run(client *ssh.Client, command string) (string, error) { ... }
 ## 实现
 
 `func Connect(server Server) (*ssh.Client, error)`  
-接受一个 Server 结构体, 通过 server 属性生成 *ssh.Client 对象
+接受一个 Server 结构体, 通过 server 属性生成 \*ssh.Client 对象
 
 ```go
 func Connect(server Server) (*ssh.Client, error) {

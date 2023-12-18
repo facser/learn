@@ -1,21 +1,33 @@
+---
+author: facsert
+pubDatetime: 2023-07-09 09:29:19
+title: Go Swagger
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Go
+  - Gin
+  - Swagger
+description: "Swagger UI 配置 Gin API"
+---
+
 <!--
  * @Author       : facsert
- * @Date         : 2023-07-12 09:29:19
+ * @Date         : 2023-07-09 09:29:19
  * @LastEditTime : 2023-07-28 11:38:21
  * @Description  : edit description
 -->
-
-# Go Swagger
 
 ## 安装
 
 下载 swagger 关联的库
 
 ```bash
- $ go get -u github.com/swaggo/swag/cmd/swag     # 命令行工具                          
- $ go get -u github.com/swaggo/gin-swagger          
+ $ go get -u github.com/swaggo/swag/cmd/swag     # 命令行工具
+ $ go get -u github.com/swaggo/gin-swagger
  $ go get -u github.com/swaggo/files
- 
+
  $ go install github.com/swaggo/swag/cmd/swag    # 编译生产可执行文件放入$GOPATH/bin
  $ swag -v
  > swag version v1.8.12
@@ -32,7 +44,7 @@ package main
 
 import (
     "github.com/gin-gonic/gin"                   // 引入 gin
-    swaggerFiles "github.com/swaggo/files"      
+    swaggerFiles "github.com/swaggo/files"
     ginSwagger "github.com/swaggo/gin-swagger"
     "net/http"
     _ "swag/docs"                                // <projectName>/docs  swag 替换为项目名称
@@ -61,22 +73,22 @@ func main() {
 }
 ```
 
-![main](../assets/Swag-main.png)
+<!-- ![main](../assets/Swag-main.png) -->
 
-|字段|说明|示例|
-|:-|:-|:-|
-|`@title`        |(必填)大标题                    |`Swagger`|
-|`@version`      |(必填)版本                      |`1.0.0`|
-|`@description`  |描述                            |`Swagger Test`|
-|`@host`         |运行服务主机 IP 地址             |`10.58.14.96:8080`|
-|`@BasePath`     |API基本路径(会添加在所有API路由前)|`/`|
-|`@schemes`      |请求的传输协议                   |`http https`|
-|`@contact.name` |联系人信息                       |`facsert`|
-|`@contact.url`  |联系人信息网址                   |`https://facsert.github.io/`|
-|`@contact.email`|联系人邮件                       |`facsert@outlook.com`|
-|`@termsOfService`|API服务条款                      |`http://swagger.io/terms/`|
-|`@license.name`  |(必填)API许可证名称              |`Apache 2.0`|
-|`@license.url`   |API许可证网址                    |`http://www.apache.org/licenses/LICENSE-2.0.html`|
+| 字段              | 说明                               | 示例                                              |
+| :---------------- | :--------------------------------- | :------------------------------------------------ |
+| `@title`          | (必填)大标题                       | `Swagger`                                         |
+| `@version`        | (必填)版本                         | `1.0.0`                                           |
+| `@description`    | 描述                               | `Swagger Test`                                    |
+| `@host`           | 运行服务主机 IP 地址               | `10.58.14.96:8080`                                |
+| `@BasePath`       | API基本路径(会添加在所有API路由前) | `/`                                               |
+| `@schemes`        | 请求的传输协议                     | `http https`                                      |
+| `@contact.name`   | 联系人信息                         | `facsert`                                         |
+| `@contact.url`    | 联系人信息网址                     | `https://facsert.github.io/`                      |
+| `@contact.email`  | 联系人邮件                         | `facsert@outlook.com`                             |
+| `@termsOfService` | API服务条款                        | `http://swagger.io/terms/`                        |
+| `@license.name`   | (必填)API许可证名称                | `Apache 2.0`                                      |
+| `@license.url`    | API许可证网址                      | `http://www.apache.org/licenses/LICENSE-2.0.html` |
 
 部分字段如 `@title` `@version` `@license.name` 是必填字段，字段首字母不区分大小写
 其余字段可填，可不填写
@@ -96,20 +108,20 @@ func webRoot(context *gin.Context) {
 }
 ```
 
-![main](../assets/Swag-api.png)
+<!-- ![main](../assets/Swag-api.png) -->
 
-|字段|说明|示例|
-|:-|:-|:-|
-|`@tags`    |一组API的组名      |`User`|
-|`@id`      |API唯一标识        |`root page`|
-|`@summary` |API简短描述        |`show info`|
-|`@Router`  |(必填)路由和请求方法|`/root/user [get]`|
-|`@Param`   |接口参数           |`name path string true "username"`|
-|`@Accept`  |请求体的MIME类型数据|`json`|
-|`@Produce` |响应体的MIME类型数据|`json`|
-|`@Success` |响应成功内容        |`200 {object} string "response success"`|
-|`@Failure` |响应失败内容        |`400 {object} string "response fail"`|
-|`@Response`|响应失败内容        |`500 {object} string "response fail"`|
+| 字段        | 说明                 | 示例                                     |
+| :---------- | :------------------- | :--------------------------------------- |
+| `@tags`     | 一组API的组名        | `User`                                   |
+| `@id`       | API唯一标识          | `root page`                              |
+| `@summary`  | API简短描述          | `show info`                              |
+| `@Router`   | (必填)路由和请求方法 | `/root/user [get]`                       |
+| `@Param`    | 接口参数             | `name path string true "username"`       |
+| `@Accept`   | 请求体的MIME类型数据 | `json`                                   |
+| `@Produce`  | 响应体的MIME类型数据 | `json`                                   |
+| `@Success`  | 响应成功内容         | `200 {object} string "response success"` |
+| `@Failure`  | 响应失败内容         | `400 {object} string "response fail"`    |
+| `@Response` | 响应失败内容         | `500 {object} string "response fail"`    |
 
 部分字段如 `@Router` 是必填字段，缺失则不显示，字段首字母不区分大小写
 其余字段根据不同接口影响功能测试
@@ -119,7 +131,7 @@ func webRoot(context *gin.Context) {
 `MIME` 类型即请求体和响应体的类型
 
 ```go
-// @Accept  application/json                   请求体是 json 类型数据          
+// @Accept  application/json                   请求体是 json 类型数据
 // @Accept  application/xml                    请求体是 XML 格式数据
 // @Accept  application/x-www-form-urlencoded  请求体是表单类型
 // @Produce text/plain                         响应纯文本数据
@@ -132,7 +144,7 @@ func webRoot(context *gin.Context) {
 `@Response  {return Code}  {param type}  {date type} commit`
 
 ```go
-// @Success 200     {array}  model.Account          
+// @Success 200     {array}  model.Account
 // @Header  200     {string} Token "qwerty"
 // @Failure 400,404 {object} httputil.HTTPError
 // @Failure default {object} httputil.DefaultError
@@ -151,9 +163,9 @@ func webRoot(context *gin.Context) {
 
 ```go
 // @Param userId   path     int    true "UserID"    minimum(0) minimum(9)
-// @Param username query    string true "Username"  minLength(0) maxLength(9)  
+// @Param username query    string true "Username"  minLength(0) maxLength(9)
 // @Param levle    path     int    true "Levle"     enums(1, 2, 3)
-// @Param user     body     User   true "User"         
+// @Param user     body     User   true "User"
 // @Param file     formData file   true "File upload"
 ```
 

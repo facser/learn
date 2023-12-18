@@ -1,11 +1,21 @@
+---
+author: facsert
+pubDatetime: 2023-03-23 15:28:43
+title: 04.Go Map
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Go
+description: "Go Map 类型数据"
+---
+
 <!--
  * @Author       : facsert
- * @Date         : 2023-05-23 15:28:43
- * @LastEditTime: 2023-09-07 22:22:44
+ * @Date         : 2023-03-23 15:28:43
+ * @LastEditTime : 2023-09-07 22:22:44
  * @Description  : edit description
 -->
-
-# Golang
 
 ## Map
 
@@ -33,7 +43,7 @@ Printf("int map %#v\n", intMap)
 Printf("str map %#v\n", strMap)
 Printf("str map length %v\n", len(strMap))
 
-> int map map[string]int{"one":1, "two":2}      
+> int map map[string]int{"one":1, "two":2}
 > str map map[string]string{"a":"a", "b":"b"}    // map 可添加数据, 允许超过容量
 > str map length 3                               // 无法使用 cap 查看 map 容量, 可以使用 len 查看长度
 ```
@@ -49,8 +59,8 @@ intMap := map[string]int {
 }
 
 copyMap := intMap                                // map 是引用类型, 传递的是引用并非数据的拷贝
-copyMap["2nd"] = 2                                                  
-intMap["1st"] = 4                               
+copyMap["2nd"] = 2
+intMap["1st"] = 4
 
 Printf("intMap %#v\n", intMap)
 Printf("copyMap %#v\n", copyMap)
@@ -69,7 +79,7 @@ intMap := map[string]int {
    "1st": 1,
    "2nd": 2,
    "3rd": 3,
-} 
+}
 
 copyMap := make(map[string]int, 3)
 
@@ -91,7 +101,7 @@ map 使用 [key] 取值
  intMap := map[string]int {
     "1st": 1,
     "2nd": 2,
- } 
+ }
 
  value, ok := intMap["3rd"]                      // map 取值
 

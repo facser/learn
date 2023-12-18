@@ -1,11 +1,21 @@
+---
+author: facsert
+pubDatetime: 2023-07-10 19:20:02
+title: C Basic
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - C
+description: "C 语言基本介绍"
+---
+
 <!--
  * @Author       : facsert
  * @Date         : 2023-05-25 19:20:02
  * @LastEditTime : 2023-07-28 11:46:18
  * @Description  : edit description
 -->
-
-# C
 
 ## 示例
 
@@ -23,8 +33,8 @@ int main(void) {                                 // 定义执行入口, 入口�
 使用 GCC 编译
 
 ```bash
-$ gcc main.c -o main                             # 编译 main.c 文件成可执行文件 main 
-$ ./main                                         # 执行 main 
+$ gcc main.c -o main                             # 编译 main.c 文件成可执行文件 main
+$ ./main                                         # 执行 main
 > hello world!                                   # 显示执行结果
 ```
 
@@ -87,7 +97,7 @@ num
 ```
 
 ```c
-int add (int x, int y) {                         // <return type> <function name> (<arg type> <arg name>) {  
+int add (int x, int y) {                         // <return type> <function name> (<arg type> <arg name>) {
     int sum = x + y;                             // code block
     return sum;                                  // code block
 }                                                // }  function end
@@ -98,11 +108,11 @@ int add (int x, int y) {                         // <return type> <function name
 ```c
 branch:    if     else  switch  case  default
 loop:      for    do    while
-jump:      break  goto  return  continue 
+jump:      break  goto  return  continue
 
-Functions: sizeof typedef 
-Type:      void   int    char   float    double 
-           union  enum   struct   
-Modifiers: short  long   signed unsigned 
+Functions: sizeof typedef
+Type:      void   int    char   float    double
+           union  enum   struct
+Modifiers: short  long   signed unsigned
            const  static auto   register extern  volatile
 ```

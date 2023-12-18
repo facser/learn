@@ -1,11 +1,22 @@
+---
+author: facsert
+pubDatetime: 2022-08-28 15:28:43
+title: zsh
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - zsh
+  - Tool
+description: "zsh 是一个高效美观的 shell"
+---
+
 <!--
  * @Author       : facsert
- * @Date         : 2023-05-23 15:28:43
+ * @Date         : 2022-08-28 15:28:43
  * @LastEditTime : 2023-07-28 11:50:52
  * @Description  : edit description
 -->
-
-# ZSH
 
 最近使用 mac 的时候发现, mac 默认的 shell 是 zsh, 顺手查了一下 bash 和 zsh 区别
 然后就发现了新天地
@@ -19,23 +30,23 @@ zsh能基本完美兼容bash的命令，并且使用起来更加优雅
 - 快速跳转
 - 热键绑定
 - 框架主题
-  
+
 ### 命令提示
 
 ```zsh
  $ command  <Tab>                                # 输入命令, 按下 Tab 会显示可执行参数
 
- $ date -<Tab>                                   # 使用 Tab 查看提示                                                         
+ $ date -<Tab>                                   # 使用 Tab 查看提示
  > --date       -d         -- output date specified by string
  > --help                  -- output help and exit
- > --file       -f         -- output dates specified in file 
+ > --file       -f         -- output dates specified in file
 ```
 
 ### 智能补全
 
 ```zsh
  $ cd /h/f/D <Tab>                               # 路径缩写补全
- > cd /home/facser/Desktop/ 
+ > cd /home/facser/Desktop/
 
  $ cd /home/facser/ <Tab> <Tab>                  # 连续两次 Tab 进入选择模式
 ```
@@ -90,7 +101,7 @@ zsh能基本完美兼容bash的命令，并且使用起来更加优雅
  $ which zsh                                     # 查看 zsh 执行文件位置
  $ chsh -s /bin/zsh                              # /bin/zsh 需要和 zsh 执行文件位置一致
 
- $ ~/.zshrc                                      # 启动 zsh 时执行的配置文件 
+ $ ~/.zshrc                                      # 启动 zsh 时执行的配置文件
  $ source ~/.zshrc                               # 配置立即生效
 ```
 
@@ -112,7 +123,7 @@ zsh能基本完美兼容bash的命令，并且使用起来更加优雅
  $ vi ~/.zshrc                                   # 修改 zsh 配置文件
 
  > ZSH_THEME="<主题>"                              # 更换 .oh-my-zsh 主题
- > export ZSH="<.oh-my-zsh位置>"                   # 定义 .oh-my-zsh 位置   
+ > export ZSH="<.oh-my-zsh位置>"                   # 定义 .oh-my-zsh 位置
 ```
 
 注: .oh-my-zsh 的位置是可变的, 只要在 .zshrc 配置中指定即可
@@ -125,7 +136,7 @@ zsh能基本完美兼容bash的命令，并且使用起来更加优雅
  $ git clone --depth=1 https://gitee.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
  $ vi ~/.zshrc                                   # 修改 zsh 主题
- > ZSH_THEME="powerlevel10k/powerlevel10k" 
+ > ZSH_THEME="powerlevel10k/powerlevel10k"
 
 $ source ~/.zshrc                                # 配置立即生效
 

@@ -1,11 +1,21 @@
+---
+author: facsert
+pubDatetime: 2023-09-25 15:28:43
+title: Python Type
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Python
+description: "Python 类型注解"
+---
+
 <!--
  * @Author       : facsert
- * @Date         : 2023-05-23 15:28:43
+ * @Date         : 2023-09-25 15:28:43
  * @LastEditTime : 2023-07-28 11:50:12
  * @Description  : edit description
 -->
-
-# Python 类型注解
 
 ## 引申
 
@@ -111,7 +121,7 @@ python 类型注解:
 
 ### Callable
 
-函数, 匿名函数, 包含 __call__ 方法的对象
+函数, 匿名函数, 包含 **call** 方法的对象
 
 Callable[[args_type], return_type]
 
@@ -152,7 +162,7 @@ Callable[[args_type], return_type]
  from typing import NewType
 
 matrix = NewType('matrix', list[list[int]])      # 自定义类型并命名
-nums = NewType('nums', list[int])               
+nums = NewType('nums', list[int])
 strings = NewType('strings', str)
 
 a: matrix = matrix([[1,2], [2,3]])               # 需要实例化赋值
@@ -163,9 +173,9 @@ c: strings = strings('str')
 ### 类型别名
 
 ```python
- 
+
  matrix = list[list[int]]                        # 自定义类型并命名
- nums = list[int]              
+ nums = list[int]
  strings = str
 
  a: matrix = matrix([[1,2], [2,3]])              # 无需实例化与正常类型解一致
@@ -186,7 +196,7 @@ c: strings = strings('str')
      name: str
      age: int
      email: str
-     
+
  victory: Person = Person(
      id = 3,
      name = 'victory',

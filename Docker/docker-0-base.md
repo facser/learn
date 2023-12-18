@@ -1,11 +1,21 @@
+---
+author: facsert
+pubDatetime: 2022-10-10 15:28:43
+title: Docker config
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - docker
+description: "Docker 基本配置"
+---
+
 <!--
  * @Author       : facsert
- * @Date         : 2023-05-23 15:28:43
- * @LastEditTime: 2023-11-13 22:38:51
+ * @Date         : 2022-10-10 15:28:43
+ * @LastEditTime : 2023-12-06 20:35:54
  * @Description  : edit description
 -->
-
-# Docker Base
 
 ## 安装
 
@@ -16,12 +26,12 @@ Docker 安装
  # 卸载原有 docker
  apt-get autoremove docker docker-ce docker-engine  docker.io  containerd runc
  for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
- 
- # 删除 docker 配置和根目录
+
+ # 删除 docker 配置和根目录, 杀死 docker 进程后 umount
  rm -rf /etc/systemd/system/docker.service.d
  umount /var/lib/docker
  rm -rf /var/lib/docker
- 
+
  # 添加 docker 下载源
  sudo apt-get update
  sudo apt-get install ca-certificates curl gnupg
@@ -35,11 +45,17 @@ Docker 安装
    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
  sudo apt-get update
 
- # 安装 docker
+ # 工具安装 docker
  sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
  docker --version
- > Docker version 24.0.7, build afdd53b                                      
+ > Docker version 24.0.7, build afdd53b
+
+ # 脚本安装
+ curl -fsSL https://get.docker.com -o get-docker.sh
+ sudo sh get-docker.sh --mirror Aliyun
+ docker --version
+ > Docker version 24.0.7, build afdd53b
 ```
 
 ## 配置
@@ -56,8 +72,8 @@ Docker 安装
     "log-level": "info",                                                       # 显示日志等级 (debug|info|warn|error|fatal, 默认为 info)
     "log-driver": "json-file",                                                 # log 驱动
     "log-opts": {                                                              # 容器默认日志驱动程序选项
-        "max-size": "100m", 
-        "max-file": "3" 
+        "max-size": "100m",
+        "max-file": "3"
     },
     "data-root": "/var/lib/docker"                                             # docker 运行及日志保存位置 (默认 /var/lib/docker)
 }
@@ -67,11 +83,11 @@ Docker 安装
 
 ```json
 {
-    "registry-mirrors": [
-        "http://hub-mirror.c.163.com",
-        "https://docker.mirrors.ustc.edu.cn",
-        "https://registry.docker-cn.com"
-    ]
+  "registry-mirrors": [
+    "http://hub-mirror.c.163.com",
+    "https://docker.mirrors.ustc.edu.cn",
+    "https://registry.docker-cn.com"
+  ]
 }
 ```
 
@@ -80,7 +96,7 @@ Docker 安装
 ```bash
  $ systemctl daemon-reload                                                     # 重新加载 docker 配置文件
  $ systemctl restart docker                                                    # 重新启动 docker
- 
+
  $ systemctl status docker
  > ...
  > Activate: activate(running)
@@ -105,7 +121,7 @@ Docker 安装
     create      创建一个新容器
     exec        在容器中执行一条命令
     images      列出镜像
-    kill        杀死一个或多个正在运行的容器    
+    kill        杀死一个或多个正在运行的容器
     logs        取得容器的日志
     pause       暂停一个或多个容器的所有进程
     ps          列出所有容器

@@ -1,3 +1,15 @@
+---
+author: facsert
+pubDatetime: 2023-10-25 11:56:31
+title: Python Magic Method
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Python
+description: "Python 魔术方法"
+---
+
 <!--
  * @Author       : facsert
  * @Date         : 2023-10-25 11:56:31
@@ -5,9 +17,7 @@
  * @Description  : edit description
 -->
 
-# 魔术方法
-
-## __new__ and __init__
+## **new** and **init**
 
 `__new__` : 在对象实例化前时候调用，返回一个对象
 `__init__`: 在对象创建之后调用, 用来初始化对象属性

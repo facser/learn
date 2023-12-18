@@ -1,11 +1,21 @@
+---
+author: facsert
+pubDatetime: 2023-04-02 15:28:43
+title: Go File IO
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Go
+description: "Go 文件 IO"
+---
+
 <!--
  * @Author       : facsert
- * @Date         : 2023-05-23 15:28:43
+ * @Date         : 2023-04-02 15:28:43
  * @LastEditTime : 2023-07-28 11:37:54
  * @Description  : edit description
 -->
-
-# Golang
 
 ## read file
 
@@ -107,12 +117,12 @@ func writeAdd(fileName, s string) {                                  // 追加�
 
 ## OpenFile 模式
 
-|model|mean|
-|:-:|:-:|
-|`O_RDONLY`|文件打开模式, 只能选 3 选 1, read only 缩写, 只读|
-|`O_WRONLY`|文件打开模式, 只能选 3 选 1, write only 缩写, 只写|
-|`O_RDWR`  |文件打开模式, 只能选 3 选 1, read write 缩写, 读写|
-|`O_APPEND`|文件操作模式, 可多选搭配, append, 追加写入|
-|`O_TRUNC` |文件操作模式, 可多选搭配, truncate 缩写, 打开文件时清空文件|
-|`O_CREATE`|文件操作模式, 可多选搭配, create, 文件不存在则创建|
-|`O_EXCL`  |文件操作模式, 可多选搭配, exclusive 缩写, 和 O_CREATE 模式一起使用, 文件必须不存在|
+|   model    |                                        mean                                        |
+| :--------: | :--------------------------------------------------------------------------------: |
+| `O_RDONLY` |                 文件打开模式, 只能选 3 选 1, read only 缩写, 只读                  |
+| `O_WRONLY` |                 文件打开模式, 只能选 3 选 1, write only 缩写, 只写                 |
+|  `O_RDWR`  |                 文件打开模式, 只能选 3 选 1, read write 缩写, 读写                 |
+| `O_APPEND` |                     文件操作模式, 可多选搭配, append, 追加写入                     |
+| `O_TRUNC`  |            文件操作模式, 可多选搭配, truncate 缩写, 打开文件时清空文件             |
+| `O_CREATE` |                 文件操作模式, 可多选搭配, create, 文件不存在则创建                 |
+|  `O_EXCL`  | 文件操作模式, 可多选搭配, exclusive 缩写, 和 O_CREATE 模式一起使用, 文件必须不存在 |

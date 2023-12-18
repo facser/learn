@@ -1,11 +1,21 @@
+---
+author: facsert
+pubDatetime: 2023-03-29 15:28:43
+title: Go Interface
+postSlug: ""
+featured: false
+draft: false
+tags:
+  - Go
+description: "Go 接口"
+---
+
 <!--
  * @Author       : facsert
- * @Date         : 2023-05-23 15:28:43
+ * @Date         : 2023-03-29 15:28:43
  * @LastEditTime : 2023-07-28 11:40:03
  * @Description  : edit description
 -->
-
-# Golang interface
 
 ## 引申
 
@@ -20,8 +30,8 @@ func (p people) sing() { ... }                   // 定义结构体方法 sing
 func (p people) play() { ... }                   // 定义结构体方法 play
 
 func activate(singer s, player p) {              // 定义函数, 参数为 singer 和 player 类型
-    s.sing()                                     
-    p.play()                                     
+    s.sing()
+    p.play()
 }
 ```
 
@@ -31,7 +41,7 @@ People 即使具有 singer 类型和 player 类型的行为, 但由于类型限�
 为了解决以上问题产生了接口类型这一概念
 
 ```go
-type singer interface { sing() }                 // 定义 singer 接口类型, 只要实现 sing() 即可作为 singer 类型使用 
+type singer interface { sing() }                 // 定义 singer 接口类型, 只要实现 sing() 即可作为 singer 类型使用
 type player interface { play() }                 // 定义 player 接口类型, 只要实现 play() 即可作为 player 类型使用
 
 type People struct { name string }               // 定义 People 结构体
@@ -41,7 +51,7 @@ func (p people) play() { ... }                   // 定义结构体方法 play
 func activate(singer s, player p) {              // 定义函数, 参数为 singer 和 player 类型
     s.sing()
     p.play()
-}                     
+}
 
 human := People{ name: "facser" }                // 实例化 People, People 实现了 sing() play()
 activate(human, human)                           // 第一个 human 作为 singer 类型，第二个 human 作为 player 类型
