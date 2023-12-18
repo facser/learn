@@ -19,24 +19,17 @@ description: "自动化运维监控工具 Prometheus"
  * @Description:
 -->
 
-## 工具介绍
+## 性能监控
 
-Prometheus   系统监控和报警系统
-node_exporter  节点信息采集工具
-process-exporter 进程信息采集工具
+node_exporter 数据收集
+prometheus 数据处理和监控
+grafana 数据可视化
 
-loki     log 聚合系统
-promtail 节点 log 采集工具
-
-alertmanager 报警系统
-grafana 数据可视化面板
-
-## Prometheus
+### Prometheus
 
 [Prometheus Download](https://prometheus.io/download/)
 
 ```bash
- # 解压安装包, 创建数据目录, 创建配置文件
  $ tar -zxvf prometheus-2.45.1.linux-amd64.tar.gz
  $ cd prometheus-2.45.1.linux-amd64 && mkdir -p data
  $ vi prometheus.yml
@@ -47,31 +40,33 @@ grafana 数据可视化面板
 ```yaml
 # my global config
 global:
-  scrape_interval: 15s                           # 每 15s 收集一次 xx-exporter 的数据
-  evaluation_interval: 15s                       # 每隔 15s 计算一次所有规则, 用于告警判断(默认 1m)
-  # scrape_timeout: 10s                          # 获取数据的超时时间, 默认 10s
+  scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
 
-alerting:                                        # Alertmanager 配置
+# Alertmanager configuration
+alerting:
   alertmanagers:
     - static_configs:
         - targets:
-          # - alertmanager:9093                  # 配置 alertmanager 服务
+          # - alertmanager:9093
 
-rule_files:                                      # 外部告警规则文件
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
   # - "first_rules.yml"
   # - "second_rules.yml"
 
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
 scrape_configs:
-
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
   - job_name: "prometheus"
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
     static_configs:
       - targets: ["localhost:9090"]
-  
-  # 添加外部采集服务, 如 node_exporter process-exporter
-  # - job_name: "node_exporter"
-  #   static_configs:
-  #     - targets: ["localhost:9100"]
-
 ```
 
 默认端口: 9090
@@ -90,12 +85,13 @@ scrape_configs:
  > ts=2023-12-07T09:13:17.910Z caller=main.go:1004 level=info msg="Server is ready to receive web requests."
 ```
 
-注意: 添加 `--web.enable-lifecycle` 启用热重载, 执行 `curl -X POST http://localhost:9090/-/reload` 重载
-浏览器打开 `http://localhost:9000` 打开 prometheus 控制台
+config.file: 指定配置文件
+web.enable-lifecycle: 热重载, 修改配置文件后, 使用 http 请求重载(`curl -X POST http://localhost:9090/-/reload`)
 
-## node_exporter
+浏览器打开 `http://localhost:9000`
 
-在监控节点运行 node_exporter 采集节点信息
+### node_exporter
+
 [node_exporter Download](https://prometheus.io/download/)
 
 ```bash
@@ -108,9 +104,9 @@ scrape_configs:
  > ts=1970-02-06T18:49:59.679Z caller=tls_config.go:277 level=info msg="TLS is disabled." http2=false address=0.0.0.0:9100
 ```
 
-浏览器打开 `http://localhost:9100` 进入 node_exporter 控制台  
-Prometheus 配置文件添加 node_export 监控, 重载 Prometheus  
-Prometheus 根据节点信息获取 node_exporter 采集的监控数据
+浏览器打开 `http://localhost:9100`
+
+Prometheus 配置文件添加 node_export 监控, 重启 Prometheus
 
 ```yaml
 scrape_configs:
@@ -119,14 +115,14 @@ scrape_configs:
 
   - job_name: "node_export"
     static_configs:
-      - targets: ["<节点 HOST>:9100"]
+      - targets: ["localhost:9100"]
 ```
 
-## grafana
+### grafana
 
-Grafana 用于展示 Prometheus 采集的监控数据, 通过 promQL 语句绘制图表或使用第三方模板进行数据可视化  
 [Grafana Download](https://grafana.com/grafana/download?pg=graf&plcmt=deploy-box-1)
-[Grafana Template](https://grafana.com/grafana/dashboards/)
+
+选择平台和链接下载包
 
 ```bash
  $ tar -zxvf grafana-enterprise-9.5.9.linux-arm64.tar.gz
@@ -140,13 +136,14 @@ Grafana 用于展示 Prometheus 采集的监控数据, 通过 promQL 语句绘�
 初始用户 admin  
 初始密码 admin
 
-## process_exporter
+## 进程监控
 
-process_exporter 用于监控进程和线程等更细致的信息  
+### process_exporter
+
 [process-exporter](https://github.com/ncabatoff/process-exporter)
+下载对应版本包, 将包放入被测机器
 
 ```bash
- # 解压包, 创建配置文件
  $ tar -zxvf process-exporter-0.7.9.linux-arm64.tar.gz
  $ cd process-exporter-0.7.9.linux-arm64
  $ vi config.yaml
@@ -176,7 +173,7 @@ process_names:
 打开浏览器 `http://localhost:9256/metrics`
 若系统种存在监控的进程, log 必定出现 `cpu_seconds_total` 字段
 
-```bash
+```log
 namedprocess_namegroup_cpu_seconds_total{groupname="map[:sshd]",mode="system"} 0.19000000000000128
 namedprocess_namegroup_cpu_seconds_total{groupname="map[:sshd]",mode="user"} 0.009999999999999787
 namedprocess_namegroup_cpu_seconds_total{groupname="map[:python]",mode="system"} 0.010000000000019327
@@ -192,14 +189,15 @@ scrape_configs:
 
   - job_name: "process_exporter"
     static_configs:
-      - targets: ["<节点 HOST>:9256"]
+      - targets: ["localhost:9256"]
 ```
 
 Prometheus `http://localhost:9090/service-discovery?search=` 查询所有监控的服务
 
-## loki
+## log 监控
 
-Loki 是一个模仿 Prometheus 的日志聚合系统, 也可以使用 Grafana 作为展示界面
+### loki
+
 [Github Loki](https://github.com/grafana/loki/releases/)
 
 官方配置
@@ -234,7 +232,7 @@ schema_config:
         period: 24h
 
 ruler:
-  alertmanager_url: http://localhost:9093        # 添加告警服务路由
+  alertmanager_url: http://localhost:9093
 # By default, Loki will send anonymous, but uniquely-identifiable usage and configuration
 # analytics to Grafana Labs. These statistics are sent to https://stats.grafana.org/
 #
@@ -255,7 +253,7 @@ ruler:
  $ ./loki-linux-amd64 -config.file=$PWD/loki-config.yaml
 ```
 
-## promtail
+### promtail
 
 [Github Promtail](https://github.com/grafana/loki/releases/)
 
@@ -295,6 +293,8 @@ scrape_configs:
 ```
 
 http://localhost:9080 promtail 界面查看
+
+curl -X POST http://localhost:9090/-/reload prometheus
 
 ## Alertmanager
 
