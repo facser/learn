@@ -85,6 +85,8 @@ zsh能基本完美兼容bash的命令，并且使用起来更加优雅
  $ zsh                                           # 使用 zsh 命令启动 zsh
 
  $ echo $SHELL                                   # 查看当前 shell
+ > /bin/bash
+
  $ which zsh                                     # 查看 zsh 执行文件位置
  $ chsh -s /bin/zsh                              # /bin/zsh 需要和 zsh 执行文件位置一致
 
@@ -148,7 +150,6 @@ $ p10k configure                                 # 重新设置主题配置
  $ source ~/.zshrc                               # 配置立即生效
 ```
 
-
 ### zsh-autosuggestions
 
 补全历史命令
@@ -165,7 +166,7 @@ $ p10k configure                                 # 重新设置主题配置
  $ source ~/.zshrc                               # 配置立即生效
 ```
 
-### z 
+### z
 
 仅输入文件即可跳转到曾经进入的文件目录(oh-my-zsh自带,无需下载)
 
@@ -200,4 +201,3 @@ $ p10k configure                                 # 重新设置主题配置
  $ x package.zip
 
 ```
-
