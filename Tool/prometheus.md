@@ -136,8 +136,6 @@ scrape_configs:
 初始用户 admin  
 初始密码 admin
 
-下载数据模板 `http://10.145.7.139:9093/`
-
 ## 进程监控
 
 ### process_exporter
@@ -345,14 +343,14 @@ receivers: # 定义接受人群组
           to: "facsert"
 
 inhibit_rules:
-  - source_match:                                # 未发送告警抑制规则
-      severity: 'critical'
-    target_match:                                # 已发送告警抑制规则
-      severity: 'warning'
-    equal: ['alertname', 'dev', 'instance']
+  - source_match:
+      severity: "critical"
+    target_match:
+      severity: "warning"
+    equal: ["alertname", "dev", "instance"]
 ```
 
-邮件模板 email.tmpl
+邮件模板
 
 ```tmpl
 {{ define "email.default.message" }}
@@ -438,37 +436,4 @@ inhibit_rules:
 
 http://localhost:9093 promtail 界面查看
 
-重启 alermanager 服务  curl -X POST http://localhost:9093/-/reload alertmanager
-
-prometheus 配置告警规则 rule.yaml
-
-```yaml
-groups:
-- name: Disconnect                               # 组名称
-  rules:
-  - alert: SQS RTS disconnect                    # 告警名
-    expr: sum(up{job="SQS-RTS"}) == 0            # 监控指标表达式，这里是验证 agent_linux 节点是否是可访问的
-    for: 1m                                      # 持续时间，1分钟内表达式持续生效则报警，避免瞬间故障引起报警的可能性
-    labels:                                      # 自定义字段, 在模板使用 {{ .$alert.Labels.xxxx }} 获取字段对应的值
-      severity: critical  
-      instance: "10.39.104.165"
-      # alertname:
-      # job:
-      # team:
-    annotations:
-      summary: SQS node disconnect for 1m        # 警报描述
-      description: "监控节点断连"
-      value: "{{ $value }}"
-
-  - alert: PVD RTS disconnect 
-    expr: sum(up{job="PVD-RTS"}) == 0  
-    for: 1m  
-    labels:
-      severity: critical   
-      instance: "10.39.104.18" 
-    annotations:
-      summary: "PVD node disconnect for 1m"      # 警报描述
-      description: "监控节点断连"
-      value: "{{ $value }}"
-```
-
+重启 alermanager 服务 curl -X POST http://localhost:9093/-/reload alertmanager
