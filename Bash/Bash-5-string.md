@@ -98,3 +98,9 @@ $ echo "${s:0:3}"                                # 从序号 0 开始, 获取 3 
  $ echo ${var,,}
  > abc123xyz
 ```
+
+## 筛选
+
+```bash
+ $ echo "num: 22 index: 4" | grep -oP "[0-9]+"   # 筛选
+```
