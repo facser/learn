@@ -95,6 +95,15 @@ Debian vim 初始设置难以使用, 修改 vim 配置文件
  PasswordAuthentication yes                      # 允许用户密码作为口令验证
 
  $ systemctl restart sshd                        # 重启 ssh 服务，令配置生效
+ $ service sshd restart                          # 重启 ssh 服务，令配置生效
+```
+
+```bash
+ $ /usr/sbin/sshd -T                             # 测试 ssh 配置文件 /etc/ssh/sshd_config
+ > sshd: no hostkeys available -- exiting.       # 提示没有 hostkey
+
+ $ ssh-keygen -A                                 # 生成 hostkey
+ $ systemctl restart sshd                        # 重启 ssh 服务，令配置生效
 ```
 
 ## host 配置
