@@ -19,7 +19,7 @@ description: "Python HTTP 模块 requests"
  * @Description:
 -->
 
-requests 是一个简单强大的 http请求库，支持同步和异步。
+requests 是一个简单强大的 http请求库，支持同步和异步
 
 ## 安装
 
@@ -74,15 +74,237 @@ server: uvicorn
 
 ## 发送请求
 
+request 支持 4 种基本请求方法: GET, POST, PUT, DELETE
+
+### GET
+
+GET 请求可在 url 中携带参数, 以 `?` 分界, `&` 分割多个参数  
+如: `http://localhost:8001/node/get?name=lily&age=18`
+
 ```python
 import requests
 
-# 发送 GET 请求
-r = requests.get('http://localhost:8001/node/get?id=1')
+r = requests.get('http://localhost:8001/node/get?name=lily')
+r = requests.get('http://localhost:8001/node/get', param={'name': 'lily'})
+
 print(r.status_code)
 print(r.text)
+```
 
-# 发送 POST 请求
-data = {'id': 1}
-r = requests.post('http://localhost:8001/node/get', data=data)
+requests.get 参数说明:
+
+- url: 请求的 URL
+- params: 请求的 URL 中的参数
+- data: 请求的 body 数据
+- headers: 请求的 header 数据
+- cookies: 请求的 cookie 数据
+- files: 请求的上传文件数据
+- auth: 认证信息
+- timeout: 超时时间
+- allow_redirects: 是否允许重定向
+- proxies: 代理服务器
+
+### POST
+
+POST 请求一般用于向服务器发送数据, 如: 表单提交, 文件上传等  
+POST 请求在请求体中发送数据, 如: `http://localhost:8001/node/post`
+
+```python
+import requests
+
+r = requests.post('http://localhost:8001/node/post', data={'name': 'lily'})
+```
+
+requests.post 参数说明:
+
+- url: 请求的 URL
+- data: 请求的 body 数据
+- json: 请求的 JSON 数据
+- headers: 请求的 header 数据
+- cookies: 请求的 cookie 数据
+- files: 请求的上传文件数据
+- auth: 认证信息
+- timeout: 超时时间
+- allow_redirects: 是否允许重定向
+
+## Response
+
+### Response.text
+
+返回响应体的文本内容
+
+```python
+import requests
+
+r = requests.get('http://localhost:8001/node/get?name=lily')
+print(r.text)
+```
+
+### Response.json
+
+返回响应体的 JSON 数据
+
+```python
+import requests
+
+r = requests.get('http://localhost:8001/node/get?name=lily')
+print(r.json())
+```
+
+### Response.status_code
+
+返回响应状态码
+
+```python
+import requests
+
+r = requests.get('http://localhost:8001/node/get?name=lily')
+print(r.status_code)
+```
+
+### Response.headers
+
+返回响应头
+
+```python
+import requests
+
+r = requests.get('http://localhost:8001/node/get?name=lily')
+print(r.headers)
+```
+
+### Response.url
+
+返回请求的 URL
+
+```python
+import requests
+
+r = requests.get('http://localhost:8001/node/get?name=lily')
+print(r.url)
+```
+
+### Response.cookies
+
+返回响应的 cookies
+
+```python
+import requests
+
+r = requests.get('http://localhost:8001/node/get?name=lily')
+print(r.cookies)
+```
+
+### Response.encoding
+
+返回响应的编码格式
+
+```python
+import requests
+
+r = requests.get('http://localhost:8001/node/get?name=lily')
+print(r.encoding)
+```
+
+### Response.raise_for_status
+
+如果响应状态码不是 200, 则抛出异常
+
+```python
+import requests
+
+r = requests.get('http://localhost:8001/node/get?name=lily')
+r.raise_for_status()
+```
+
+### Response.content
+
+返回响应体的二进制内容
+
+```python
+import requests
+
+r = requests.get('http://localhost:8001/node/get?name=lily')
+print(r.content)
+```
+
+### Response.iter_lines
+
+返回响应体的迭代器, 迭代器每迭代一次, 就返回一行内容
+
+```python
+import requests
+
+r = requests.get('http://localhost:8001/node/get?name=lily')
+for line in r.iter_lines():
+    print(line)
+```
+
+### Response.iter_content
+
+返回响应体的迭代器, 迭代器每迭代一次, 就返回一部分内容
+
+```python
+import requests
+
+r = requests.get('http://localhost:8001/node/get?name=lily')
+for chunk in r.iter_content(chunk_size=1024):
+    print(chunk)
+
+```
+
+### Response.close
+
+关闭响应体
+
+```python
+import requests
+
+r = requests.get('http://localhost:8001/node/get?name=lily')
+r.close()
+```
+
+### Response.raw
+
+返回原始的响应对象
+
+```python
+import requests
+
+r = requests.get('http://localhost:8001/node/get?name=lily')
+print(r.raw)
+```
+
+## 文件
+
+requests 支持文件上传和下载
+
+### 上传文件
+
+```python
+import requests
+
+files = {'file': open('test.txt', 'rb')}
+r = requests.post('http://localhost:8001/node/upload', files=files)
+
+# 上传文件, 并指定文件名
+files = {'file': ('test.txt', open('test.txt', 'rb'))}
+r = requests.post('http://localhost:8001/node/upload', files=files)
+```
+
+### 下载文件
+
+```python
+import requests
+
+# 小文件下载
+r = requests.get('http://localhost:8001/node/download')
+with open('test.txt', 'wb') as f:
+    f.write(r.content)
+
+# 流式下载, 边下边存, 适合大文件
+r = requests.get('http://localhost:8001/node/download')
+with open('test.txt', 'wb') as f:
+    for chunk in r.iter_content(1024):
+        f.write(chunk)
 ```
