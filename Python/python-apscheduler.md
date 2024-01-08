@@ -86,3 +86,57 @@ def job_func():
 scheduler = BlockingScheduler()
 scheduler.add_job(job_func, CronTrigger(second='*/5'))
 ```
+
+## interval 触发器
+
+interval 触发参数:
+second: 每秒触发一次  
+minute: 每分钟触发一次  
+hour: 每小时触发一次  
+day: 每天触发一次  
+week: 每周触发一次  
+month: 每月触发一次  
+year: 每年触发一次  
+
+```py
+schedule.add_job(func, 'interval', seconds=5)
+schedule.add_job(func, 'interval', minute=5)
+schedule.add_job(func, 'interval', hour=5)
+schedule.add_job(func, 'interval', day=5)
+```
+
+## cron 触发器
+
+cron 触发器参数:
+year (int|str) – 4-digit year  
+month (int|str) – month (1-12)  
+day (int|str) – day of month (1-31)  
+week (int|str) – ISO week (1-53)  
+day_of_week (int|str) – number or name of weekday (0-6 or mon,tue,wed,thu,fri,sat,sun)  
+hour (int|str) – hour (0-23)  
+minute (int|str) – minute (0-59)  
+second (int|str) – second (0-59)  
+start_date (datetime|str) – earliest possible date/time to trigger on (inclusive)  
+end_date (datetime|str) – latest possible date/time to trigger on (inclusive)  
+timezone (datetime.tzinfo|str) – time zone to use for the date/time calculations (defaults to scheduler timezone)  
+jitter (int|None) – delay the job execution by jitter seconds at most  
+
+```py
+schedule.add_job(func, 'cron', minute='*/5')     
+schedule.add_job(func, 'cron', hour=12, minute=30)
+schedule.add_job(func, 'cron', day_of_week='fri-sun')
+```
+
+## date 触发器
+
+date 触发器参数:
+year: 4 位年份  
+month: 1-12 月份  
+day: 1-31 天  
+hour: 0-23 小时  
+minute: 0-59 分钟  
+second: 0-59 秒
+
+```py
+schedule.add_job(func, 'date', run_date='2024-01-08 10:30:00')
+```
