@@ -113,6 +113,12 @@ scrape_configs:
  $ ./node_exporter
  > ts=1970-02-06T18:49:59.679Z caller=tls_config.go:274 level=info msg="Listening on" address=0.0.0.0:9100
  > ts=1970-02-06T18:49:59.679Z caller=tls_config.go:277 level=info msg="TLS is disabled." http2=false address=0.0.0.0:9100
+
+ # 自定义 HOST 和 端口
+ $ ./node_exporter --web.listen-address 127.0.0.1:8080
+ 
+ # 指定配置文件
+ $ ./node_exporter --web.config.file="config.yaml"
 ```
 
 浏览器打开 `http://localhost:9100` 进入 node_exporter 控制台  
@@ -274,7 +280,7 @@ server:
 positions:
   filename: /tmp/positions.yaml
 
-clients: # 机器需要与 loki 服务通信
+clients:                                            # 机器需要与 loki 服务通信
   - url: http://193.168.1.123:3100/loki/api/v1/push # url 需与 loki 路由和端口一致
 
 scrape_configs:
