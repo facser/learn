@@ -85,7 +85,7 @@ GET 请求可在 url 中携带参数, 以 `?` 分界, `&` 分割多个参数
 import requests
 
 r = requests.get('http://localhost:8001/node/get?name=lily')
-r = requests.get('http://localhost:8001/node/get', param={'name': 'lily'})
+r = requests.get('http://localhost:8001/node/get', params={'name': 'lily'})
 
 print(r.status_code)
 print(r.text)
