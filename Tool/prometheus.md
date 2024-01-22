@@ -363,12 +363,10 @@ inhibit_rules:
     equal: ["alertname", "dev", "instance"]
 ```
 
-
 group_by: 分组方式, 按 prometheus 告警规则配置文件内的 labels 下的字段值相同为一组  
 group_wait: 触发组内第一个告警后, 先不发告警, 等待 group_wait 时间, 看是否有同组告警, 有则合并告警, 仅发送一次  
 group_interval: 组内已发送告警后, 同组出现新告警; 先不发, 等待 group_interval 时间, 看是否有同组新告警, 连同已发送信息, 并合并再次发送  
 repeat_interval: 已发送告警, 告警一直未复位; 等待 repeat_interval 时间, 再次发送同样的告警
-
 
 使用 prometheus 监控 node1 node2 node3 机器
 
