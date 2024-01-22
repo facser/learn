@@ -38,6 +38,17 @@ db.drop_collection('student')                    # 删除集合
 collection.rename('person')                      # 重命名集合
 ```
 
+集合约束
+
+ASCENDING: 升序
+DESCENDING: 降序
+
+```py
+collection.create_index([("index", ASCENDING)])  # 集合按升序索引
+collection.create_index("index", unique=True)    # 集合按升序索引(默认值), 且 index 唯一
+
+```
+
 ## Add
 
 ```py
@@ -47,8 +58,8 @@ item.inserted_id                                 # 插入数据的 id
 
 collection.insert_one({'id':1, 'name': 'John'})
 
-items = collection.insert_many(iterable[dict])   # 查询多个数据
-[print(i.inserted_id) for i in items]            # 打印多个插入数据的 id
+item = collection.insert_many(iterable[dict])    # 查询多个数据
+item.inserted_ids                                # 打印多个插入数据的 id
 
 
 collection.insert_many([
