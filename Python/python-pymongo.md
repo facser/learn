@@ -72,12 +72,12 @@ collection.insert_many([
 
 pymongo 通过键值对匹配查询, 也可以通过一些特殊字段描述条件
 
-$eq: 值等于, {'name': 'John'} name 为 Jhon 的数据
-$ne: 值不等于, {'name': {'$ne': 'John'}} name 不等于 John 的值
-$lt, $lte: 小于, 小于等于 {'num': {'$lt': 10}} num 小于 10 的数据
-$gt, $gte: 大于, 大于等于 {'num': {'$gte': 10}}  num 大于等于 10 的数据
-$in: 在范围内 {'index': {'$in': [1, 2, 3]}} index 的值是 1, 2, 3 的数据
-$regex: 符合正则表达式 {'name': {'$regex': '^J'}} name 符合正则的数据
+`$eq`: 值等于, {'name': 'John'} name 为 Jhon 的数据
+`$ne`: 值不等于, {'name': {'$ne': 'John'}} name 不等于 John 的值
+`$lt, $lte`: 小于, 小于等于 {'num': {'$lt': 10}} num 小于 10 的数据
+`$gt, $gte`: 大于, 大于等于 {'num': {'$gte': 10}}  num 大于等于 10 的数据
+`$in`: 在范围内 {'index': {'$in': [1, 2, 3]}} index 的值是 1, 2, 3 的数据
+`$regex`: 符合正则表达式 {'name': {'$regex': '^J'}} name 符合正则的数据
 
 逻辑与: {'num': {'$gt':10, '$lt': 20}} num 大于 10 且小于 20 的数据
 逻辑或: {'$or': [{'name': 'John'}, {'index': 3}]} name 为 John 或 index 为 3 的数据
